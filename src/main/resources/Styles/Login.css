@@ -1,0 +1,52 @@
+
+.mainLogin{
+
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3A69A5 50%, #144c94 100%);
+    -fx-alignment: center;
+}
+
+.mainLogin #loginLbl{
+    -fx-text-fill: #09418a;
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+}
+
+.mainLogin VBox{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-background-radius: 10;
+}
+
+.mainLogin TextField, PasswordField{
+    -fx-prompt-text-fill: #1758ab;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.2em;
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-opacity: 0.5;
+    -fx-pref-width: 200;
+    -fx-pref-height: 35;
+    -fx-effect: dropshadow(one-pass-box, #dedede, 0, 1, 1 ,1);
+}
+
+
+.mainLogin Button {
+    -fx-background-color: linear-gradient(to bottom, #1758ab, #7999e8);
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+    -fx-background-radius: 100;
+}
+
+.mainLogin Button:hover {
+    -fx-background-color: #d9d4d4;
+    -fx-cursor: hand;
+}
+
+
+.mainLogin #errorLabel{
+    -fx-font-size: 1em;
+    -fx-font-weight: bold;
+    -fx-fill: #FFFFFF;
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.calendarfx.view.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="mainLogin" stylesheets="@../Styles/Login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.LoginController">
+   <VBox fillWidth="false" layoutX="80.0" layoutY="263.0" prefHeight="197.0" prefWidth="240.0" spacing="20.0" AnchorPane.bottomAnchor="140.2" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="263.0">
+      <Label id="loginLbl" text="Login">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></Label>
+      <TextField fx:id="userInput" promptText="Username">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></TextField>
+      <PasswordField fx:id="passwordInput" opacity="0.5" promptText="Password" />
+   </VBox>
+   <Label id="errorLabel" fx:id="loginErrorLabel" layoutX="80.0" layoutY="524.0" text="Error: " textFill="WHITE" />
+   <Circle fill="WHITE" layoutX="200.0" layoutY="471.0" radius="31.0" strokeType="INSIDE" />
+   <Button id="loginButton" fx:id="loginButton" layoutX="180.0" layoutY="451.0" mnemonicParsing="false">
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+      <graphic>
+         <FontAwesomeIconView fill="WHITE" glyphName="ARROW_RIGHT" selectionStart="1" size="18" />
+      </graphic>
+   </Button>
+   <ImageView fitHeight="171.0" fitWidth="152.0" layoutX="125.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.39999999999998">
+      <Image url="@../Images/logo.png" />
+   </ImageView>
+</AnchorPane>

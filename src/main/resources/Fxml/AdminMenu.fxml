@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="700.0" prefWidth="200.0" styleClass="mainMenu" stylesheets="@../Styles/Menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.AdminMenuController">
+   <AnchorPane prefHeight="700.0" prefWidth="200.0">
+      <VBox layoutX="25.0" layoutY="120.0" prefHeight="500.0" prefWidth="150.0" styleClass="mainMenu">
+         <Button id="apptBtn" fx:id="appointmentsBtn" mnemonicParsing="false" text="Appointments">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR_CHECK_ALT" size="20" />
+            </graphic>
+            <font>
+               <Font size="11.0" />
+            </font>
+         </Button>
+         <Button fx:id="clientsBtn" mnemonicParsing="false" text="Clients">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="20" />
+            </graphic>
+         </Button>
+         <Button fx:id="servicesBtn" mnemonicParsing="false" text="Services">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="LIST" size="20" />
+            </graphic>
+         </Button>
+         <Button fx:id="inventoryBtn" mnemonicParsing="false" text="Inventory">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="DATABASE" size="20" />
+            </graphic>
+         </Button>
+         <Button fx:id="staffBtn" mnemonicParsing="false" text="Staff">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20" />
+            </graphic>
+         </Button>
+         <Button fx:id="invoicesBtn" mnemonicParsing="false" text="Invoices">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
+            </graphic>
+         </Button>
+         <Button fx:id="reportsBtn" mnemonicParsing="false" text="Reports">
+            <graphic>
+               <FontAwesomeIconView glyphName="BAR_CHART" size="20" />
+            </graphic>
+         </Button>
+      </VBox>
+      <ImageView fitHeight="85.0" fitWidth="79.0" layoutX="63.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../Images/logo.png" />
+      </ImageView>
+      <HBox layoutX="25.0" layoutY="635.0" prefHeight="50.0" prefWidth="150.0" styleClass="mainMenu">
+         <Button id="buttonEnd" fx:id="configBtn" mnemonicParsing="false">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="SLIDERS" size="20" />
+            </graphic>
+         </Button>
+         <Button id="buttonEnd" fx:id="logoutBtn" mnemonicParsing="false">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="20" />
+            </graphic>
+         </Button>
+      </HBox>
+   </AnchorPane>
+</VBox>

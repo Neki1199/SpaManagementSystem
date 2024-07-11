@@ -1,0 +1,100 @@
+.mainMenu{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3A69A5 50%, #144c94 100%);
+    -fx-alignment: center;
+    -fx-spacing: 30;
+}
+
+.mainMenu FontAwesomeIconView{
+    -fx-fill: #ffffff;
+    -fx-size: 50;
+}
+
+.mainMenu #bottomHbox{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+    -fx-background-radius: 0 0 5 5;
+    -fx-effect: dropshadow(three-pass-box, #000000, 10, 0, 0, 5);
+}
+
+.mainMenu #thebox{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+    -fx-padding: 10;
+    -fx-background-radius: 5 5 0 0;
+}
+
+.mainMenu #thebox Button{
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-background-color: #3A69A5;
+    -fx-alignment: center;
+    -fx-pref-width: 50;
+    -fx-pref-height: 30;
+    -fx-background-radius: 10;
+}
+
+.mainMenu #thebox Button:hover {
+    -fx-background-color: #d9d4d4;
+    -fx-cursor: hand;
+}
+
+.mainMenu HBox Label{
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-background-radius: 5;
+    -fx-spacing: 20;
+    -fx-pref-width: 152;
+    -fx-pref-height: 46;
+    -fx-font-weight: bold;
+}
+
+.mainMenu TabPane #tab{
+    -fx-background-color: #3A69A563;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-pref-width: 150;
+    -fx-pref-height: 30;
+}
+
+.mainMenu TabPane AnchorPane{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-background-radius: 0 0 5 5;
+}
+
+.mainMenu TableView #time{
+    -fx-background-color: rgba(146, 193, 250, 0.39);
+    -fx-font-weight: bold;
+    -fx-pref-width: 50;
+}
+
+.mainMenu TableView Label{
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-pref-width: 180;
+    -fx-pref-height: 40;
+    -fx-padding: 0;
+}
+
+.mainMenu ListView{
+    -fx-cell-size: 10;
+    -fx-background-color: #bebebe;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 5;
+}
+
+.mainMenu ListView Label{
+    -fx-text-alignment: center;
+    -fx-padding: 10;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-pref-width: 310;
+    -fx-pref-height: 90;
+    -fx-background-radius: 5;
+}
+
+
