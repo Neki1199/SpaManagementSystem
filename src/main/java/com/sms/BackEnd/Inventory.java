@@ -1,18 +1,11 @@
 package com.sms.BackEnd;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Inventory {
-    private final int id;
-    private final String name;
-    private final int qty;
-    private final double cost;
-    private final String description;
+    private int id;
+    private String name;
+    private int qty;
+    private double cost;
+    private String description;
 
     public Inventory(int id, String name, int qty, double cost, String description) {
         this.id = id;
@@ -22,46 +15,57 @@ public class Inventory {
         this.description = description;
     }
 
-
-    public static List<Inventory> getInventoryFromDatabase() {
-        List<Inventory> inventory = new ArrayList<>();
-        String url = "jdbc:sqlite:src/main/resources/SQLiteSMS/sms.db";
-        try (Connection connection = DriverManager.getConnection(url);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM inventory")) {
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("productId");
-                String name = resultSet.getString("productName");
-                int qty = resultSet.getInt("quantity");
-                double cost = resultSet.getDouble("cost");
-                String description = resultSet.getString("description");
-                inventory.add(new Inventory(id, name, qty, cost, description));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return inventory;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getQty() {
         return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     public double getCost() {
         return cost;
     }
 
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
     public String getDescription() {
         return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", qty=" + qty +
+                ", cost=" + cost +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
+
+
 

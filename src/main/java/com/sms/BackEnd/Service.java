@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
-    private final int id;
-    private final String name;
-    private final String description;
-    private final double price;
-    private final String serviceType;
-    private final int duration;
-    private final String staffType;
+    private int id;
+    private String name;
+    private String description;
+    private double price;
+    private String serviceType;
+    private int duration;
+    private String staffType;
 
     public Service(int id, String name, String description, double price, String serviceType, int duration, String staffType) {
         this.id = id;
@@ -26,56 +26,73 @@ public class Service {
         this.staffType = staffType;
     }
 
-    public static List<Service> getServicesFromDatabase() {
-        List<Service> services = new ArrayList<>();
-        String url = "jdbc:sqlite:src/main/resources/SQLiteSMS/sms.db";
-        try (Connection connection = DriverManager.getConnection(url);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM services")) {
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("serviceId");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                double price = resultSet.getDouble("price");
-                String serviceType = resultSet.getString("serviceType");
-                int duration = resultSet.getInt("duration");
-                String staffType = resultSet.getString("staffType");
-
-                services.add(new Service(id, name, description, price, serviceType, duration, staffType));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return services;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getPrice() {
         return price;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public String getServiceType() {
         return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public int getDuration() {
         return duration;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     public String getStaffType() {
         return staffType;
+    }
+
+    public void setStaffType(String staffType) {
+        this.staffType = staffType;
+    }
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", serviceType='" + serviceType + '\'' +
+                ", duration=" + duration +
+                ", staffType='" + staffType + '\'' +
+                '}';
     }
 }
 

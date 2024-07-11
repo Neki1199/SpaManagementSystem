@@ -8,59 +8,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Invoice {
-    private final int invoiceId;
-    private final int clientId;
-    private final int services;
-    private final int product;
-    private final int amount;
+    private int invoiceId;
+    private int clientId;
+    private int services;
+    private int product;
+    private int amount;
 
-    public Invoice(int id, int clientId, int services, int product, int amount) {
-        this.invoiceId = id;
+    public Invoice(int invoiceId, int clientId, int services, int product, int amount) {
+        this.invoiceId = invoiceId;
         this.clientId = clientId;
         this.services = services;
         this.product = product;
         this.amount = amount;
     }
 
-    public static List<Invoice> getInvoicesFromDatabase() {
-        List<Invoice> invoices = new ArrayList<>();
-        String url = "jdbc:sqlite:src/main/resources/SQLiteSMS/sms.db";
-        try (Connection connection = DriverManager.getConnection(url);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM invoices")) {
+    public int getInvoiceId() {
+        return invoiceId;
+    }
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("invId");
-                int clientId = resultSet.getInt("clientId");
-                int services = resultSet.getInt("services");
-                int product = resultSet.getInt("product");
-                int amount = resultSet.getInt("amount");
-                invoices.add(new Invoice(id, clientId, services, product, amount));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return invoices;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public int getClientId() {
         return clientId;
     }
 
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
     public int getServices() {
         return services;
+    }
+
+    public void setServices(int services) {
+        this.services = services;
     }
 
     public int getProduct() {
         return product;
     }
 
+    public void setProduct(int product) {
+        this.product = product;
+    }
+
     public int getAmount() {
         return amount;
     }
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceId=" + invoiceId +
+                ", clientId=" + clientId +
+                ", services=" + services +
+                ", product=" + product +
+                ", amount=" + amount +
+                '}';
     }
 }
 
