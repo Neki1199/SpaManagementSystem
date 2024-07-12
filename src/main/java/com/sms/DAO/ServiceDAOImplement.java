@@ -4,10 +4,7 @@ import com.sms.BackEnd.Employee;
 import com.sms.BackEnd.Service;
 import com.sms.DataModels.ConnectDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -60,12 +57,45 @@ public class ServiceDAOImplement implements ServiceDAO {
 
     @Override
     public int insert(Service service) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "INSERT INTO services(name, description, price, serviceType, duration, staffType) VALUES(?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, service.getName());
+        ps.setString(2, service.getDescription());
+        ps.setDouble(3, service.getPrice());
+        ps.setString(4, service.getServiceType());
+        ps.setInt(5, service.getDuration());
+        ps.setString(6, service.getStaffType());
+
+        int result = ps.executeUpdate();
+        // So can be autoincremented
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            service.setId(generatedKeys.getInt(1));
+        }
+        ConnectDB.closeStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override
     public int update(Service service) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "UPDATE services set serviceId = ?, name = ?, description = ?, price = ?, serviceType = ?, duration = ?, staffType = ? where serviceId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, service.getId());
+        ps.setString(2, service.getName());
+        ps.setString(3, service.getDescription());
+        ps.setDouble(4, service.getPrice());
+        ps.setString(5, service.getServiceType());
+        ps.setInt(6, service.getDuration());
+        ps.setString(7, service.getStaffType());
+        ps.setInt(8, service.getId());
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
+
     }
 
     @Override
@@ -75,7 +105,14 @@ public class ServiceDAOImplement implements ServiceDAO {
 
     @Override
     public int delete(int id) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "DELETE FROM services WHERE serviceId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override

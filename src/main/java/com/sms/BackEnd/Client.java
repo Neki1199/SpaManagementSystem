@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-    private int id;
+    private Integer id;
     private String name;
     private int phone;
     private String notes;
     private String email;
 
-    public Client(int id, String name, int phone, String notes, String email) {
+    public Client(Integer id, String name, int phone, String notes, String email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -19,11 +19,11 @@ public class Client {
         this.email = email;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

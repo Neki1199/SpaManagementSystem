@@ -2,10 +2,8 @@ package com.sms.DAO;
 
 import com.sms.BackEnd.Inventory;
 import com.sms.DataModels.ConnectDB;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +49,38 @@ public class InvDAOImplement implements InventoryDAO{
 
     @Override
     public int insert(Inventory inventory) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "INSERT INTO inventory(productName, quantity, cost, description) VALUES(?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, inventory.getName());
+        ps.setInt(2, inventory.getQty());
+        ps.setDouble(3, inventory.getCost());
+        ps.setString(4, inventory.getDescription());
+
+        int result = ps.executeUpdate();
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            inventory.setId(generatedKeys.getInt(1));
+        }        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+
+        return result;
     }
 
     @Override
     public int update(Inventory inventory) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "UPDATE inventory set productId = ?, productName = ?, quantity = ?, cost = ?, description = ? WHERE productId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, inventory.getId());
+        ps.setString(2, inventory.getName());
+        ps.setInt(3, inventory.getQty());
+        ps.setDouble(4, inventory.getCost());
+        ps.setString(5, inventory.getDescription());
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override
@@ -66,6 +90,13 @@ public class InvDAOImplement implements InventoryDAO{
 
     @Override
     public int delete(int id) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "DELETE FROM inventory WHERE productId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 }

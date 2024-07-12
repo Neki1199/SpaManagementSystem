@@ -3,10 +3,7 @@ package com.sms.DAO;
 import com.sms.BackEnd.Employee;
 import com.sms.DataModels.ConnectDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +45,42 @@ public class EmpDAOImplement implements EmployeeDAO {
 
     @Override
     public int insert(Employee employee) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "INSERT INTO employees(fullName, role, phoneNo, isAdmin, username, password) VALUES(?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, employee.getName());
+        ps.setString(2, employee.getRole());
+        ps.setInt(3, employee.getPhone());
+        ps.setInt(4, employee.getAdmin());
+        ps.setString(5, employee.getUsername());
+        ps.setString(6, employee.getPassword());
+        int result = ps.executeUpdate();
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            employee.setId(generatedKeys.getInt(1));
+        }
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
+
     }
 
     @Override
     public int update(Employee employee) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "UPDATE employees set empId = ?, fullName = ?, role = ?, phoneNo = ?, isAdmin = ?, username = ?, password = ? where empID = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, employee.getId());
+        ps.setString(2, employee.getName());
+        ps.setString(3, employee.getRole());
+        ps.setInt(4, employee.getPhone());
+        ps.setInt(5, employee.getAdmin());
+        ps.setString(6, employee.getUsername());
+        ps.setString(7, employee.getPassword());
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override
@@ -63,7 +90,14 @@ public class EmpDAOImplement implements EmployeeDAO {
 
     @Override
     public int delete(int id) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "DELETE FROM employees WHERE empID = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override

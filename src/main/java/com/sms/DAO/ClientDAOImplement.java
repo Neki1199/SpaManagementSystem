@@ -1,13 +1,9 @@
 package com.sms.DAO;
 
 import com.sms.BackEnd.Client;
-import com.sms.BackEnd.Service;
 import com.sms.DataModels.ConnectDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,13 +50,39 @@ public class ClientDAOImplement implements ClientDAO{
     }
 
     @Override
-    public int insert(Client obj) throws SQLException {
-        return 0;
+    public int insert(Client client) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        String sql = "INSERT INTO clients(fullName, phoneNo, notes, email) VALUES(?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, client.getName());
+        ps.setInt(2, client.getPhone());
+        ps.setString(3, client.getNotes());
+        ps.setString(4, client.getEmail());
+
+        int result = ps.executeUpdate();
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            client.setId(generatedKeys.getInt(1));
+        }
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override
-    public int update(Client obj) throws SQLException {
-        return 0;
+    public int update(Client client) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        String sql = "UPDATE clients set clientId = ?, fullName = ?, phoneNo = ?, notes = ?, email = ? WHERE clientId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, client.getId());
+        ps.setString(2, client.getName());
+        ps.setInt(3, client.getPhone());
+        ps.setString(4, client.getNotes());
+        ps.setString(5, client.getEmail());
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 
     @Override
@@ -70,6 +92,13 @@ public class ClientDAOImplement implements ClientDAO{
 
     @Override
     public int delete(int id) throws SQLException {
-        return 0;
+        Connection con = ConnectDB.getConnection();
+        String sql = "DELETE FROM clients WHERE clientId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        int result = ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
+        return result;
     }
 }

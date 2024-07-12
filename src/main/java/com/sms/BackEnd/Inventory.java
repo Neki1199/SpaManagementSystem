@@ -1,13 +1,13 @@
 package com.sms.BackEnd;
 
 public class Inventory {
-    private int id;
+    private Integer id;
     private String name;
     private int qty;
     private double cost;
     private String description;
 
-    public Inventory(int id, String name, int qty, double cost, String description) {
+    public Inventory(Integer id, String name, int qty, double cost, String description) {
         this.id = id;
         this.name = name;
         this.qty = qty;
@@ -15,11 +15,11 @@ public class Inventory {
         this.description = description;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

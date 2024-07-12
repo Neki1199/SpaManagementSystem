@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class Employee {
-    private int id;
+    private Integer id;
     private String name;
     private String role;
     private int phone;
@@ -14,7 +14,7 @@ public class Employee {
     private String password;
     private String username;
 
-    public Employee(int id, String name, String role, int phone, int admin, String password, String username) {
+    public Employee(Integer id, String name, String role, int phone, int admin, String password, String username) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -24,11 +24,11 @@ public class Employee {
         this.username = username;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

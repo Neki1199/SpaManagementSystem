@@ -1,7 +1,7 @@
 package com.sms.BackEnd;
 
 public class Appointment {
-    private int appointmentId;
+    private Integer appointmentId;
     private int clientId;
     private int serviceId;
     private int staffId;
@@ -9,7 +9,7 @@ public class Appointment {
     private String hour;
     private String status;
 
-    public Appointment(int appointmentId, int clientId, int serviceId, int staffId, String date, String hour, String status) {
+    public Appointment(Integer appointmentId, int clientId, int serviceId, int staffId, String date, String hour, String status) {
         this.appointmentId = appointmentId;
         this.clientId = clientId;
         this.serviceId = serviceId;
@@ -19,11 +19,11 @@ public class Appointment {
         this.status = status;
     }
 
-    public int getAppointmentId() {
+    public Integer getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(int appointmentId) {
+    public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
 

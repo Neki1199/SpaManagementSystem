@@ -1,21 +1,15 @@
 package com.sms;
 
-import com.sms.BackEnd.Employee;
-import com.sms.BackEnd.Service;
-import com.sms.DAO.EmpDAOImplement;
-import com.sms.DAO.ServiceDAO;
-import com.sms.DAO.ServiceDAOImplement;
+import com.sms.BackEnd.*;
+import com.sms.DAO.*;
 
 import java.sql.SQLException;
 
 public class Tester {
     public static void main(String[] args) throws SQLException {
-        ServiceDAO serviceDAO = new ServiceDAOImplement();
-        Service theService = serviceDAO.getServiceByName("Facial Hygiene");
-        String serviceType = theService.getServiceType();
-        System.out.println(serviceType);
+        ServiceDAO appointmentDAO = new ServiceDAOImplement();
 
-
-
+        Service appointment = new Service(null, "Reflexology", "Foot massage", 25.00, "Massage", 45, "Beautician");
+        System.out.println(appointmentDAO.insert(appointment));
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private double price;
@@ -16,7 +16,7 @@ public class Service {
     private int duration;
     private String staffType;
 
-    public Service(int id, String name, String description, double price, String serviceType, int duration, String staffType) {
+    public Service(Integer id, String name, String description, double price, String serviceType, int duration, String staffType) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,11 +26,11 @@ public class Service {
         this.staffType = staffType;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
