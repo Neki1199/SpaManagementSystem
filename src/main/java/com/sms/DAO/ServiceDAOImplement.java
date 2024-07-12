@@ -77,4 +77,28 @@ public class ServiceDAOImplement implements ServiceDAO {
     public int delete(int id) throws SQLException {
         return 0;
     }
+
+    @Override
+    public Service getServiceByName(String serviceName) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        Service service = null;
+
+        String sql = "SELECT serviceId, name, description, price, serviceType, duration, staffType FROM services WHERE name = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, serviceName);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int serviceId = rs.getInt("serviceId");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            double price = rs.getDouble("price");
+            String serviceType = rs.getString("serviceType");
+            int duration = rs.getInt("duration");
+            String staffType = rs.getString("staffType");
+
+            service = new Service(serviceId, name, description, price, serviceType, duration, staffType);
+        }
+        return service;
+    }
 }

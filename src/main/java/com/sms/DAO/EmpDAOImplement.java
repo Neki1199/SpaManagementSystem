@@ -43,17 +43,7 @@ public class EmpDAOImplement implements EmployeeDAO {
         String sql = "SELECT * FROM employees";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            int eID = rs.getInt("empID");
-            String fullName = rs.getString("fullName");
-            String role = rs.getString("role");
-            int phoneNo = rs.getInt("phoneNo");
-            int isAdmin = rs.getInt("isAdmin");
-            String username = rs.getString("username");
-            String password = rs.getString("password");
-            employeeList.add(new Employee(eID, fullName, role, phoneNo, isAdmin, username, password));
-        }
-        return employeeList;
+        return getEmployees(employeeList, rs);
     }
 
     @Override
@@ -75,5 +65,32 @@ public class EmpDAOImplement implements EmployeeDAO {
     public int delete(int id) throws SQLException {
         return 0;
     }
+
+    @Override
+    public List<Employee> getByType(String theRole) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        List<Employee> employeeList = new ArrayList<>();
+        String sql = "SELECT * FROM employees WHERE role = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, theRole);
+        ResultSet rs = ps.executeQuery();
+        return getEmployees(employeeList, rs);
+    }
+
+    private List<Employee> getEmployees(List<Employee> employeeList, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int eID = rs.getInt("empID");
+            String fullName = rs.getString("fullName");
+            String role = rs.getString("role");
+            int phoneNo = rs.getInt("phoneNo");
+            int isAdmin = rs.getInt("isAdmin");
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            Employee employee = new Employee(eID, fullName, role, phoneNo, isAdmin, username, password);
+            employeeList.add(employee);
+        }
+        return employeeList;
+    }
+
 }
 

@@ -1,34 +1,26 @@
 package com.sms.Controllers;
 
 import com.sms.Calendar.DayView;
-import com.sms.DAO.AptDAOImplement;
-import com.sms.DAO.DAO;
-import com.sms.DAO.EmpDAOImplement;
-import com.sms.DAO.EmployeeDAO;
-import javafx.beans.property.SimpleObjectProperty;
+import com.sms.DAO.*;
 
 import com.sms.BackEnd.Client;
-import com.sms.BackEnd.Service;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import com.sms.BackEnd.Employee;
-import com.sms.BackEnd.Appointment;
+import java.util.*;
+import java.util.List;
+
+import com.sms.BackEnd.*;
+import javafx.scene.layout.Pane;
 
 
 // Will control calendar UI
@@ -45,6 +37,22 @@ public class AppointmentController extends Node implements Initializable {
     public Button delete;
     public List<Employee> employees;
     public DatePicker datePicker1;
+    public ChoiceBox<String> choiceBoxClient;
+    public ChoiceBox<String> hourBox;
+    public ChoiceBox<String> minuteBox;
+    public ChoiceBox<String> choiceBoxService;
+    public ChoiceBox<String> choiceBoxEmployee;
+    public DatePicker datePickerAddAppointment;
+    public Button addClientBtn;
+    public Pane dialogAdd;
+    public Button addAppoitnmentBtn;
+    public Button cancelBtn;
+
+    List<Client> clients = new ArrayList<>();
+    List<Service> services = new ArrayList<>();
+    ClientDAO clientDAO = new ClientDAOImplement();
+    ServiceDAO serviceDAO = new ServiceDAOImplement();
+    EmployeeDAO employeeDAO = new EmpDAOImplement();
 
 
     @Override
@@ -56,11 +64,134 @@ public class AppointmentController extends Node implements Initializable {
             e.printStackTrace();
         }
 
-        // Initialize other views here
-//        initializeWeekView();
-//        initializeMonthView();
-//        initializeListAllView();
+        // Add clients into add appointment choiceBox
+        add.setOnAction(event -> {
+            try {
+                showAddButtonDialog();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
+        choiceBoxService.setOnAction(event ->{
+            try{
+                String serviceSelected = choiceBoxService.getValue();
+                if (serviceSelected != null && !serviceSelected.equals("Choose service")) {
+                    populateEmployeeChoiceBox(serviceSelected);
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        });
+
+        cancelBtn.setOnAction(event -> {dialogAdd.setVisible(false);});
+
+
+
+
+//        try {
+//            WeekView weekView = new WeekView(this);
+//            weekView.initializeWeekView();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            MonthView monthView = new MonthView(this);
+//            monthView.initializeMonthView();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            ListAllView listAllView = new ListAllView(this);
+//            listAllView.initializeListAllView();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
     }
+
+
+    // Event when add Button is clicked (set visible the dialog, and all clients to choicebox)
+    public void showAddButtonDialog() throws SQLException {
+        dialogAdd.setVisible(true);
+        choiceBoxClient.getItems().clear();
+        choiceBoxService.getItems().clear();
+        choiceBoxEmployee.getItems().clear();
+        hourBox.getItems().clear();
+        minuteBox.getItems().clear();
+        populateClientChoiceBox();
+        populateServiceChoiceBox();
+        addTimesChoiceBox();
+        datePickerAddAppointment.setValue(LocalDate.now());
+        choiceBoxEmployee.setValue("Choose Employee"); // Set default value for choiceBoxEmployee
+
+    }
+
+    // To add strings inside all choiceBox (except times)
+    public void populateClientChoiceBox() throws SQLException {
+        // add clients choicebox
+        clients = clientDAO.getAll();
+        if(!clients.isEmpty()){
+            for (Client client : clients) {
+                choiceBoxClient.getItems().add(client.getName());
+            }
+            choiceBoxClient.setValue("Choose existent client");
+        } else {
+            choiceBoxClient.setValue("No clients");
+        }
+    }
+
+    public void populateServiceChoiceBox() throws SQLException {
+        // add services choices into choicebox
+        // TODO: Make it to appear in groups (Massage, Treatment, Beauty)
+        // TODO: Make it like a search box and in groups
+        services = serviceDAO.getAll();
+        choiceBoxService.setValue("Choose service");
+        if(!services.isEmpty()){
+            for (Service service : services) {
+                choiceBoxService.getItems().add(service.getName());
+            }
+            choiceBoxService.setValue("Choose service");
+        } else {
+            choiceBoxService.setValue("No services");
+        }
+    }
+
+    public void populateEmployeeChoiceBox(String serviceSelected) throws SQLException {
+        // add employee choices on choicebox depending on service selected
+        choiceBoxEmployee.getItems().clear();
+        Service theService = serviceDAO.getServiceByName(serviceSelected);
+        String serviceType = theService.getServiceType();
+
+        switch (serviceType) {
+            case "Massage" -> employees = employeeDAO.getAll();
+            case "Treatment", "Beauty" -> {
+                employees = employeeDAO.getByType("Beautician");
+                employees.addAll(employeeDAO.getByType("Supervisor"));
+            }
+            case "Physio" -> employees = employeeDAO.getByType("Physiotherapist");
+        }
+        for (Employee employee : employees) {
+            choiceBoxEmployee.getItems().add(employee.getName());
+        }
+        choiceBoxEmployee.setValue("Choose Employee");
+    }
+
+
+    public void addTimesChoiceBox() throws SQLException {
+        for (int hour = 8; hour <= 21; hour++) {
+            LocalTime time = LocalTime.of(hour, 0);
+            hourBox.getItems().add(time.format(DateTimeFormatter.ofPattern("HH")));
+        }
+        for (int minute = 0; minute < 60; minute += 15) {
+            minuteBox.getItems().add(String.valueOf(minute));
+        }
+        hourBox.setValue("08");
+        minuteBox.setValue("00");
+    }
+
 
     // To get the label color of the Employee doing that service
     public static String getColorForEmployee(int employeeId) {
@@ -98,6 +229,5 @@ public class AppointmentController extends Node implements Initializable {
         public String getTime() {
             return time;
         }
-
-
-    }}
+    }
+}

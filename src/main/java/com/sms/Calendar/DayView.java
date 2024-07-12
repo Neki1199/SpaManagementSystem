@@ -53,6 +53,7 @@ public class DayView {
 
         for (Employee employee : appointmentController.employees) {
             TableColumn<AppointmentController.TimeSlot, Label> employeeColumn = new TableColumn<>(employee.getName());
+            employeeColumn.setPrefWidth(180);
             employeeColumn.setCellValueFactory(cellData -> {
                 AppointmentController.TimeSlot timeSlot = cellData.getValue();
                 return new SimpleObjectProperty<>(timeSlot.getAppointmentDetails(employee.getName()));
