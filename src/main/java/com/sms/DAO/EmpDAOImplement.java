@@ -59,8 +59,6 @@ public class EmpDAOImplement implements EmployeeDAO {
         if (generatedKeys.next()) {
             employee.setId(generatedKeys.getInt(1));
         }
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
 
     }
@@ -78,8 +76,6 @@ public class EmpDAOImplement implements EmployeeDAO {
         ps.setString(6, employee.getUsername());
         ps.setString(7, employee.getPassword());
         int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
     }
 
@@ -95,8 +91,6 @@ public class EmpDAOImplement implements EmployeeDAO {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
     }
 
@@ -108,7 +102,29 @@ public class EmpDAOImplement implements EmployeeDAO {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, theRole);
         ResultSet rs = ps.executeQuery();
+        // Do not add close
         return getEmployees(employeeList, rs);
+    }
+
+    @Override
+    public Employee getEmployeeByName(String name) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        Employee employee = null;
+        String sql = "SELECT empID, fullName, role, phoneNo, isAdmin, username, password FROM employees WHERE fullName = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int eID = rs.getInt("empID");
+            String fullName = rs.getString("fullName");
+            String role = rs.getString("role");
+            int phoneNo = rs.getInt("phoneNo");
+            int isAdmin = rs.getInt("isAdmin");
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            employee = new Employee(eID, fullName, role, phoneNo, isAdmin, username, password);
+        }
+        return employee;
     }
 
     private List<Employee> getEmployees(List<Employee> employeeList, ResultSet rs) throws SQLException {

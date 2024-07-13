@@ -47,7 +47,7 @@ public class DayView {
         });
     }
 
-    private void initializeColumnsAndData() throws SQLException {
+    public void initializeColumnsAndData() throws SQLException {
         appointmentController.timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         appointmentController.employees = employeeDAO.getAll();
 
@@ -87,7 +87,7 @@ public class DayView {
     }
 
     // To Create all: label, info in AppointmentColumn
-    private void onDateSelected() throws SQLException {
+    public void onDateSelected() throws SQLException {
         LocalDate selectedDate = appointmentController.datePicker.getValue();
         if (selectedDate != null) {
             String formattedDate = selectedDate.toString();
@@ -98,7 +98,7 @@ public class DayView {
     }
 
 
-    private void populateAppointments(List<Appointment> appointments) throws SQLException {
+    public void populateAppointments(List<Appointment> appointments) throws SQLException {
         // Clear current appointment details
         for (AppointmentController.TimeSlot slot : timeSlots) {
             slot.appointmentDetails.clear();

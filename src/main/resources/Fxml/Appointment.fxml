@@ -73,6 +73,7 @@
                 <RowConstraints maxHeight="30.399999999999995" minHeight="10.0" prefHeight="30.399999999999995" valignment="CENTER" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <ChoiceBox fx:id="choiceBoxClient" prefWidth="150.0" GridPane.rowIndex="1" />
             <Button id="button" fx:id="addClientBtn" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" text="Add new" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -87,7 +88,7 @@
         </ChoiceBox>
         <ChoiceBox fx:id="choiceBoxEmployee" prefWidth="150.0" GridPane.rowIndex="2" />
         <DatePicker fx:id="datePickerAddAppointment" GridPane.rowIndex="3" />
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <Label alignment="CENTER" text="Hour">
                     <font>
                         <Font name="System Bold" size="12.0" />
@@ -97,13 +98,14 @@
                 <Label text="Minute" />
                 <ChoiceBox fx:id="minuteBox" prefWidth="60.0" />
             </HBox>
-            <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <GridPane.margin>
                     <Insets />
                 </GridPane.margin>
                 <Button id="button" fx:id="addAppoitnmentBtn" mnemonicParsing="false" text="Add Appointment" />
                 <Button id="button" fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
             </HBox>
+         <Label id="errorlbl" fx:id="errorLabel" text="Error:" visible="false" GridPane.rowIndex="4" />
         <opaqueInsets>
             <Insets />
         </opaqueInsets>

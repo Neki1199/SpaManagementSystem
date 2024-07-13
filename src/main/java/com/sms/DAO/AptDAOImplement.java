@@ -73,9 +73,6 @@ public class AptDAOImplement implements AppointmentDAO{
         if (generatedKeys.next()) {
             appointment.setAppointmentId(generatedKeys.getInt(1));
         }
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
-
         return result;
     }
 
@@ -94,9 +91,6 @@ public class AptDAOImplement implements AppointmentDAO{
         ps.setInt(8, appointment.getAppointmentId());
 
         int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
-
         return result;
     }
 
@@ -113,8 +107,6 @@ public class AptDAOImplement implements AppointmentDAO{
         ps.setInt(1, id);
 
         int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
 
         return result;
     }

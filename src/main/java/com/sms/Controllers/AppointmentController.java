@@ -2,9 +2,10 @@ package com.sms.Controllers;
 
 import com.sms.Calendar.AddAppointmentView;
 import com.sms.Calendar.DayView;
-import com.sms.DAO.*;
 
-import com.sms.BackEnd.Client;
+import com.sms.DAO.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,7 +25,7 @@ import com.sms.BackEnd.*;
 import javafx.scene.layout.Pane;
 
 
-// Will control calendar UI
+// Controls calendar UI
 
 public class AppointmentController extends Node implements Initializable {
 
@@ -48,20 +49,27 @@ public class AppointmentController extends Node implements Initializable {
     public Pane dialogAdd;
     public Button addAppoitnmentBtn;
     public Button cancelBtn;
+    public Label errorLabel;
 
+    public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
+    public DayView dayView = new DayView(this);
+    AddAppointmentView appointmentView = new AddAppointmentView(this);
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            DayView dayView = new DayView(this);
             dayView.initializeDayView();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        AddAppointmentView appointmentView = new AddAppointmentView(this);
-        appointmentView.initializeView();
+
+        try {
+            appointmentView.initializeView();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
 //        try {
@@ -88,8 +96,6 @@ public class AppointmentController extends Node implements Initializable {
     }
 
 
-
-
     // To get the label color of the Employee doing that service
     public static String getColorForEmployee(int employeeId) {
         String color = "";
@@ -109,14 +115,13 @@ public class AppointmentController extends Node implements Initializable {
 
     // Represents a row in table
     public static class TimeSlot {
-        private final String time;
+        public String time;
         public final Map<String, Label> appointmentDetails;
 
         public TimeSlot(String time) {
             this.time = time;
             this.appointmentDetails = new HashMap<>();
         }
-
         public Label getAppointmentDetails(String employeeName) {
             return appointmentDetails.get(employeeName);
         }

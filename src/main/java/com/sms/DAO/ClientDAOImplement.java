@@ -27,6 +27,7 @@ public class ClientDAOImplement implements ClientDAO{
 
             client = new Client(clientId, fullName, phoneNo, notes, email);
         }
+
         return client;
     }
 
@@ -46,6 +47,7 @@ public class ClientDAOImplement implements ClientDAO{
             Client client = new Client(clientId, fullName, phoneNo, notes, email);
             clients.add(client);
         }
+
         return clients;
     }
 
@@ -64,8 +66,6 @@ public class ClientDAOImplement implements ClientDAO{
         if (generatedKeys.next()) {
             client.setId(generatedKeys.getInt(1));
         }
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
     }
 
@@ -100,5 +100,26 @@ public class ClientDAOImplement implements ClientDAO{
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
         return result;
+    }
+
+    @Override
+    public Client getClientByName(String name) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        Client client = null;
+
+        String sql = "SELECT clientId, fullName, phoneNo, notes, email FROM clients WHERE fullName = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int clientId = rs.getInt("clientId");
+            String fullName = rs.getString("fullName");
+            int phoneNo = rs.getInt("phoneNo");
+            String notes = rs.getString("notes");
+            String email = rs.getString("email");
+            client = new Client(clientId, fullName, phoneNo, notes, email);
+        }
+        return client;
     }
 }

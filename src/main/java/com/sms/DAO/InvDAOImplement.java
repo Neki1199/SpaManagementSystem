@@ -25,6 +25,8 @@ public class InvDAOImplement implements InventoryDAO{
 
             inventory = new Inventory(productId, productName, quantity, cost, description);
         }
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
         return inventory;
 
     }
@@ -44,6 +46,8 @@ public class InvDAOImplement implements InventoryDAO{
             String description = rs.getString("description");
             inventoryList.add(new Inventory(productId, productName, quantity, cost, description));
         }
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
         return inventoryList;
     }
 
@@ -61,9 +65,9 @@ public class InvDAOImplement implements InventoryDAO{
         ResultSet generatedKeys = ps.getGeneratedKeys();
         if (generatedKeys.next()) {
             inventory.setId(generatedKeys.getInt(1));
-        }        ConnectDB.closePreparedStatement(ps);
+        }
+        ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
-
         return result;
     }
 

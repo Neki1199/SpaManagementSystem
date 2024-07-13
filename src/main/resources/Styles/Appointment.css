@@ -110,9 +110,11 @@ ListView Label{
 
 #pane{
     -fx-pref-width: 200;
-    -fx-pref-height: 180;
-    -fx-background-color: rgb(232, 243, 216);
+    -fx-pref-height: 220;
+    -fx-background-color: rgb(255, 255, 255);
     -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 3, 1, 0, 1);
+
 }
 
 #pane Label{
@@ -131,4 +133,10 @@ ListView Label{
     -fx-font-weight: bold;
     -fx-pref-height: 30;
     -fx-background-radius: 10;
+}
+
+#errorlbl{
+    -fx-pref-width: 250;
+    -fx-alignment: center-left;
+
 }

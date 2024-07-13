@@ -1,10 +1,14 @@
 package com.sms.Calendar;
 
+import com.sms.BackEnd.Appointment;
 import com.sms.BackEnd.Client;
 import com.sms.BackEnd.Employee;
 import com.sms.BackEnd.Service;
 import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,12 +26,15 @@ public class AddAppointmentView {
     ClientDAO clientDAO = new ClientDAOImplement();
     ServiceDAO serviceDAO = new ServiceDAOImplement();
     EmployeeDAO employeeDAO = new EmpDAOImplement();
+    AppointmentDAO appointmentDAO = new AptDAOImplement();
+
+    private final ObservableList<AppointmentController.TimeSlot> timeSlots = FXCollections.observableArrayList();
 
     public AddAppointmentView(AppointmentController appointmentController) {
         this.aptCon = appointmentController;
     }
 
-    public void initializeView(){
+    public void initializeView() throws SQLException {
         // Add clients into add appointment choiceBox
         aptCon.add.setOnAction(event -> {
             try {
@@ -48,11 +55,36 @@ public class AddAppointmentView {
             }
         });
 
+        aptCon.addAppoitnmentBtn.setOnAction(event ->{
+            try{
+                getAllData();
+                aptCon.dayView.onDateSelected();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        });
+
+        aptCon.datePickerAddAppointment.setOnAction(event -> {
+            try {
+                LocalDate selectedDate = aptCon.datePickerAddAppointment.getValue();
+                if (selectedDate != null) {
+                    String formattedDate = selectedDate.toString();
+                    List<Appointment> appointments;
+                    appointments = appointmentDAO.getFromDate(formattedDate);
+                    aptCon.dayView.populateAppointments(appointments);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
         aptCon.cancelBtn.setOnAction(event -> {aptCon.dialogAdd.setVisible(false);});
     }
 
     // Event when add Button is clicked (set visible the dialog, and all clients to choicebox)
     public void showAddButtonDialog() throws SQLException {
+        aptCon.errorLabel.setVisible(false);
         aptCon.dialogAdd.setVisible(true);
         aptCon.choiceBoxClient.getItems().clear();
         aptCon.choiceBoxService.getItems().clear();
@@ -118,16 +150,40 @@ public class AddAppointmentView {
     }
 
 
-    public void addTimesChoiceBox() throws SQLException {
+    public void addTimesChoiceBox() {
         for (int hour = 8; hour <= 21; hour++) {
             LocalTime time = LocalTime.of(hour, 0);
             aptCon.hourBox.getItems().add(time.format(DateTimeFormatter.ofPattern("HH")));
         }
         for (int minute = 0; minute < 60; minute += 15) {
-            aptCon.minuteBox.getItems().add(String.valueOf(minute));
+            LocalTime time = LocalTime.of(0, minute);
+            aptCon.minuteBox.getItems().add(time.format(DateTimeFormatter.ofPattern("mm")));
         }
         aptCon.hourBox.setValue("08");
         aptCon.minuteBox.setValue("00");
     }
 
+    public void getAllData() throws SQLException {
+        String clientSelected = aptCon.choiceBoxClient.getValue();
+        String serviceSelected = aptCon.choiceBoxService.getValue();
+        String employeeSelected = aptCon.choiceBoxEmployee.getValue();
+        LocalDate dateNoFormat = aptCon.datePickerAddAppointment.getValue();
+        String dateSelected = dateNoFormat.toString();
+        int hourSelected = Integer.parseInt(aptCon.hourBox.getValue());
+        int minuteSelected = Integer.parseInt(aptCon.minuteBox.getValue());
+        if (serviceSelected != null && !serviceSelected.equals("Choose service") && employeeSelected != null && !employeeSelected.equals("Choose employee") && !dateSelected.equals("Choose date")){
+            Client client = clientDAO.getClientByName(clientSelected);
+            Service service = serviceDAO.getServiceByName(serviceSelected);
+            Employee employee = employeeDAO.getEmployeeByName(employeeSelected);
+            LocalTime time = LocalTime.of(hourSelected, minuteSelected);
+            String hour = time.format(DateTimeFormatter.ofPattern("HH:mm"));
+            Appointment newAppointment = new Appointment(null, client.getId(), service.getId(), employee.getId(), dateSelected, hour, "Not Paid");
+            appointmentDAO.insert(newAppointment);
+            aptCon.dialogAdd.setVisible(false);
+            aptCon.appointmentTable.refresh();
+        } else {
+            aptCon.errorLabel.setText("Error: enter all details");
+            aptCon.errorLabel.setVisible(true);
+        }
+    }
 }

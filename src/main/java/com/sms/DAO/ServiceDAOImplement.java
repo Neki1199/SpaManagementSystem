@@ -73,8 +73,6 @@ public class ServiceDAOImplement implements ServiceDAO {
         if (generatedKeys.next()) {
             service.setId(generatedKeys.getInt(1));
         }
-        ConnectDB.closeStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
     }
 
@@ -92,8 +90,6 @@ public class ServiceDAOImplement implements ServiceDAO {
         ps.setString(7, service.getStaffType());
         ps.setInt(8, service.getId());
         int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
 
     }
@@ -110,8 +106,6 @@ public class ServiceDAOImplement implements ServiceDAO {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
         return result;
     }
 
