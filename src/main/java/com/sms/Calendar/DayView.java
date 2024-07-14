@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DayView {
-    AppointmentController appointmentController;
+    AppointmentController aptController;
 
     EmployeeDAO employeeDAO = new EmpDAOImplement();
     AppointmentDAO appointmentDAO = new AptDAOImplement();
@@ -27,18 +27,18 @@ public class DayView {
     private final ObservableList<AppointmentController.TimeSlot> timeSlots = FXCollections.observableArrayList();
 
     public DayView(AppointmentController appointmentController){
-        this.appointmentController = appointmentController;
+        this.aptController = appointmentController;
     }
 
     public void initializeDayView() throws SQLException {
         // Create all columns and add the hours
         initializeColumnsAndData();
         // set initial date in DatPicker
-        appointmentController.datePicker.setValue(LocalDate.now());
+        aptController.datePicker.setValue(LocalDate.now());
         // load appointments for initial date
         onDateSelected();
         // add listener to DatePicker
-        appointmentController.datePicker.setOnAction(event -> {
+        aptController.datePicker.setOnAction(event -> {
             try {
                 onDateSelected();
             } catch (SQLException e) {
@@ -48,12 +48,12 @@ public class DayView {
     }
 
     public void initializeColumnsAndData() throws SQLException {
-        appointmentController.timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        appointmentController.employees = employeeDAO.getAll();
+        aptController.timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        aptController.employees = employeeDAO.getAll();
 
-        for (Employee employee : appointmentController.employees) {
+        for (Employee employee : aptController.employees) {
             TableColumn<AppointmentController.TimeSlot, Label> employeeColumn = new TableColumn<>(employee.getName());
-            employeeColumn.setPrefWidth(180);
+            employeeColumn.setPrefWidth(170);
             employeeColumn.setCellValueFactory(cellData -> {
                 AppointmentController.TimeSlot timeSlot = cellData.getValue();
                 return new SimpleObjectProperty<>(timeSlot.getAppointmentDetails(employee.getName()));
@@ -71,8 +71,7 @@ public class DayView {
                     }
                 }
             });
-
-            appointmentController.appointmentTable.getColumns().add(employeeColumn);
+            aptController.appointmentTable.getColumns().add(employeeColumn);
         }
 
         // Slots from 8am to 22pm
@@ -83,12 +82,12 @@ public class DayView {
                 timeSlots.add(new AppointmentController.TimeSlot(time.format(DateTimeFormatter.ofPattern("HH:mm"))));
             }
         } // set all timeSlots into table
-        appointmentController.appointmentTable.setItems(timeSlots);
+        aptController.appointmentTable.setItems(timeSlots);
     }
 
     // To Create all: label, info in AppointmentColumn
     public void onDateSelected() throws SQLException {
-        LocalDate selectedDate = appointmentController.datePicker.getValue();
+        LocalDate selectedDate = aptController.datePicker.getValue();
         if (selectedDate != null) {
             String formattedDate = selectedDate.toString();
             List<Appointment> appointments;
@@ -149,16 +148,22 @@ public class DayView {
                             label = new Label();
                             if (i == 0) {
                                 label.setText(appointmentText);
+                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 20 6 0 0;");
+                            } else if (i == span-1) {
+                                label.setStyle("-fx-background-color: " + backgroundColor + ";-fx-background-radius: 0 0 20 6;" +
+                                        "-fx-alignment: bottom-center; -fx-text-fill: black");
+                                label.setText("...............................................");
                             } else {
+                                label.setStyle("-fx-background-color: " + backgroundColor + ";");
                                 label.setText("");
                             }
-                            label.setStyle("-fx-background-color: " + backgroundColor + ";");
+
                             slot.setAppointmentDetails(employeeName, label);
                         }
                     }
                 }
             }
         }
-        appointmentController.appointmentTable.refresh();
+        aptController.appointmentTable.refresh();
     }
 }

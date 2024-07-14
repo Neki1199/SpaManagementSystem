@@ -63,10 +63,34 @@ TabPane AnchorPane{
     -fx-background-radius: 0 0 5 5;
 }
 
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header{
+    -fx-background-color: linear-gradient(to bottom, #a1b8d3, #5486c2);
+}
+.table-view .table-cell{
+    -fx-padding: -0.1em;
+    -fx-border-color: #ffffff;
+}
+.table-row-cell:odd{
+    -fx-background-color: #eeeeee;
+}
+.table-row-cell:even{
+    -fx-background-color: #ffffff;
+}
+.table-view .virtual-flow .scroll-bar{
+    -fx-background-color: transparent;
+}
+
 TableView #time{
     -fx-background-color: rgba(146, 193, 250, 0.39);
     -fx-font-weight: bold;
     -fx-pref-width: 50;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-radius: 2;
 }
 
 TableView Label{
@@ -77,7 +101,6 @@ TableView Label{
     -fx-font-weight: bold;
     -fx-pref-width: 170;
     -fx-pref-height: 40;
-    -fx-padding: 0;
 }
 
 ListView{
@@ -138,5 +161,4 @@ ListView Label{
 #errorlbl{
     -fx-pref-width: 250;
     -fx-alignment: center-left;
-
 }

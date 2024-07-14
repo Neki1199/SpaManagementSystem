@@ -61,7 +61,7 @@ public class AppointmentController extends Node implements Initializable {
         try {
             dayView.initializeDayView();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
 
@@ -99,15 +99,15 @@ public class AppointmentController extends Node implements Initializable {
     // To get the label color of the Employee doing that service
     public static String getColorForEmployee(int employeeId) {
         String color = "";
-        if (employeeId == 0) {
+        if (employeeId == 1) {
             color = "#FF6666";
-        } else if (employeeId == 1) {
-            color = "#3F8A3F";
         } else if (employeeId == 2) {
-            color = "#4545F1";
+            color = "#3F8A3F";
         } else if (employeeId == 3) {
-            color = "#FCB66D";
+            color = "#4545F1";
         } else if (employeeId == 4) {
+            color = "#FCB66D";
+        } else if (employeeId == 5) {
             color = "#793979";
         }
         return color;

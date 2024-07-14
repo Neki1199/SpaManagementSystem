@@ -50,6 +50,9 @@
            <graphic>
                <FontAwesomeIconView glyphName="PLUS" size="18" />
            </graphic>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
         </Button>
         <Button fx:id="edit" mnemonicParsing="false">
            <graphic>

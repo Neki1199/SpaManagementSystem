@@ -6,9 +6,6 @@ import com.sms.BackEnd.Employee;
 import com.sms.BackEnd.Service;
 import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,7 +16,7 @@ import java.util.List;
 
 public class AddAppointmentView {
 
-    private AppointmentController aptCon;
+    private final AppointmentController aptCon;
 
     List<Client> clients = new ArrayList<>();
     List<Service> services = new ArrayList<>();
@@ -27,8 +24,6 @@ public class AddAppointmentView {
     ServiceDAO serviceDAO = new ServiceDAOImplement();
     EmployeeDAO employeeDAO = new EmpDAOImplement();
     AppointmentDAO appointmentDAO = new AptDAOImplement();
-
-    private final ObservableList<AppointmentController.TimeSlot> timeSlots = FXCollections.observableArrayList();
 
     public AddAppointmentView(AppointmentController appointmentController) {
         this.aptCon = appointmentController;
@@ -40,7 +35,7 @@ public class AddAppointmentView {
             try {
                 showAddButtonDialog();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
 
@@ -51,8 +46,7 @@ public class AddAppointmentView {
                     populateEmployeeChoiceBox(serviceSelected);
                 }
             }catch(SQLException e){
-                e.printStackTrace();
-            }
+                throw new RuntimeException(e);            }
         });
 
         aptCon.addAppoitnmentBtn.setOnAction(event ->{
@@ -60,8 +54,7 @@ public class AddAppointmentView {
                 getAllData();
                 aptCon.dayView.onDateSelected();
             } catch(SQLException e){
-                e.printStackTrace();
-            }
+                throw new RuntimeException(e);            }
         });
 
         aptCon.datePickerAddAppointment.setOnAction(event -> {
@@ -73,13 +66,14 @@ public class AddAppointmentView {
                     appointments = appointmentDAO.getFromDate(formattedDate);
                     aptCon.dayView.populateAppointments(appointments);
                 }
+                aptCon.datePicker.setValue(selectedDate);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
         });
 
-        aptCon.cancelBtn.setOnAction(event -> {aptCon.dialogAdd.setVisible(false);});
+        aptCon.cancelBtn.setOnAction(event -> aptCon.dialogAdd.setVisible(false));
     }
 
     // Event when add Button is clicked (set visible the dialog, and all clients to choicebox)

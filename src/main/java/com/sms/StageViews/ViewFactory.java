@@ -21,7 +21,7 @@ public class ViewFactory {
         if (menuStaffContent == null) {
             try {
                 menuStaffContent = new FXMLLoader(getClass().getResource("/Fxml/StaffMenu.fxml")).load();
-            } catch (Exception e) {e.printStackTrace();}
+            } catch (Exception e) {throw new RuntimeException(e);}
         }
         return menuStaffContent;
     }
@@ -30,7 +30,7 @@ public class ViewFactory {
         if (menuAdminContent == null) {
             try {
                 menuAdminContent = new FXMLLoader(getClass().getResource("/Fxml/AdminMenu.fxml")).load();
-            } catch (Exception e) {e.printStackTrace();}
+            } catch (Exception e) {throw new RuntimeException(e);}
         }
         return menuAdminContent;
     }
@@ -38,7 +38,7 @@ public class ViewFactory {
     // Method to show the Login View
     public void showLogin(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
-        createStage(loader);
+        createStageNonResizable(loader);
     }
 
     public void showStaff(){
@@ -55,16 +55,24 @@ public class ViewFactory {
         createStage(loader);
     }
 
-
-
-
-
     private static void createStage(FXMLLoader loader) {
         Scene scene = null;
         try{
             scene = new Scene(loader.load());
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {throw new RuntimeException(e);}
         Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Spa Management System");
+        stage.show();
+    }
+
+    private static void createStageNonResizable(FXMLLoader loader) {
+        Scene scene = null;
+        try{
+            scene = new Scene(loader.load());
+        } catch (Exception e) {throw new RuntimeException(e);}
+        Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("Spa Management System");
         stage.show();
