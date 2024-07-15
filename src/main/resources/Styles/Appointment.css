@@ -67,19 +67,44 @@ TabPane AnchorPane{
     -fx-background-color: transparent;
 }
 
-.table-view .column-header{
-    -fx-background-color: linear-gradient(to bottom, #a1b8d3, #5486c2);
+.table-view .column-header {
+    -fx-background-color: transparent;
 }
+
+.table-view .column-header-employee1{
+    -fx-background-color: #fd5b5b;
+}
+.table-view .column-header-employee2{
+    -fx-background-color: #4e9d4e;
+}
+.table-view .column-header-employee3{
+    -fx-background-color: #4545F1;
+}
+.table-view .column-header-employee4{
+    -fx-background-color: #f3b55b;
+}
+.table-view .column-header-employee5{
+    -fx-background-color: #793979;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: white;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #f2f2f2;
+}
+
 .table-view .table-cell{
     -fx-padding: -0.1em;
     -fx-border-color: #ffffff;
 }
-.table-row-cell:odd{
-    -fx-background-color: #eeeeee;
-}
-.table-row-cell:even{
-    -fx-background-color: #ffffff;
-}
+
 .table-view .virtual-flow .scroll-bar{
     -fx-background-color: transparent;
 }
@@ -96,7 +121,7 @@ TableView #time{
 TableView Label{
     -fx-text-alignment: center;
     -fx-alignment: center;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #333232;
     -fx-font-size: 12;
     -fx-font-weight: bold;
     -fx-pref-width: 170;

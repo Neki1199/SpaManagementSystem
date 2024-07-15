@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="200.0" styleClass="mainMenu" stylesheets="@../Styles/Menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.StaffMenuController">
+<VBox prefHeight="700.0" prefWidth="200.0" styleClass="mainMenu" stylesheets="@../Styles/Menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.StaffMenuController">
     <AnchorPane prefHeight="700.0" prefWidth="200.0">
         <VBox layoutX="25.0" layoutY="214.0" prefHeight="272.0" prefWidth="150.0" styleClass="mainMenu">
             <Button id="apptBtn" fx:id="appointmentsBtn" mnemonicParsing="false" text="Appointments">
@@ -31,7 +31,7 @@
                 </graphic>
             </Button>
         </VBox>
-        <ImageView fitHeight="85.0" fitWidth="79.0" layoutX="63.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="129.0" fitWidth="169.0" layoutX="16.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../Images/logo.png" />
         </ImageView>
         <HBox layoutX="25.0" layoutY="620.0" prefHeight="50.0" prefWidth="150.0" styleClass="mainMenu">

@@ -100,15 +100,15 @@ public class AppointmentController extends Node implements Initializable {
     public static String getColorForEmployee(int employeeId) {
         String color = "";
         if (employeeId == 1) {
-            color = "#FF6666";
+            color = "#fcabab";
         } else if (employeeId == 2) {
-            color = "#3F8A3F";
+            color = "#bce8bc";
         } else if (employeeId == 3) {
-            color = "#4545F1";
+            color = "#7a7af1";
         } else if (employeeId == 4) {
-            color = "#FCB66D";
+            color = "#facaa1";
         } else if (employeeId == 5) {
-            color = "#793979";
+            color = "#a171a1";
         }
         return color;
     }

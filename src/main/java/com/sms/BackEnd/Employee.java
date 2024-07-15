@@ -11,17 +11,17 @@ public class Employee {
     private String role;
     private int phone;
     private int admin;
-    private String password;
     private String username;
+    private String password;
 
-    public Employee(Integer id, String name, String role, int phone, int admin, String password, String username) {
+    public Employee(Integer id, String name, String role, int phone, int admin, String username, String password) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.phone = phone;
         this.admin = admin;
-        this.password = password;
         this.username = username;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -89,8 +89,8 @@ public class Employee {
                 ", role='" + role + '\'' +
                 ", phone=" + phone +
                 ", admin=" + admin +
-                ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 

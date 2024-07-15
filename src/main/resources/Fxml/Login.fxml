@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="mainLogin" stylesheets="@../Styles/Login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@../Styles/Login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.LoginController">
    <VBox fillWidth="false" layoutX="80.0" layoutY="263.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="240.0" spacing="20.0" AnchorPane.bottomAnchor="140.2" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="263.0">
       <Label id="loginLbl" text="Login">
          <VBox.margin>
@@ -24,7 +24,6 @@
          </opaqueInsets></TextField>
       <PasswordField fx:id="passwordInput" opacity="0.5" promptText="Password" />
    </VBox>
-   <Label id="errorLabel" fx:id="loginErrorLabel" layoutX="80.0" layoutY="524.0" text="Error: " textFill="WHITE" />
    <Circle fill="WHITE" layoutX="200.0" layoutY="471.0" radius="31.0" strokeType="INSIDE" />
    <Button id="loginButton" fx:id="loginButton" layoutX="180.0" layoutY="451.0" mnemonicParsing="false">
       <opaqueInsets>
@@ -34,7 +33,9 @@
          <FontAwesomeIconView fill="WHITE" glyphName="ARROW_RIGHT" selectionStart="1" size="18" />
       </graphic>
    </Button>
-   <ImageView fitHeight="171.0" fitWidth="152.0" layoutX="125.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.39999999999998">
+   <ImageView fitHeight="165.0" fitWidth="240.0" layoutX="72.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="88.0">
       <Image url="@../Images/logo.png" />
    </ImageView>
+   <Button id="forgotPasswordBtn" layoutX="125.0" layoutY="528.0" mnemonicParsing="false" text="Forgot password" />
+   <Label id="errorLabel" fx:id="loginErrorLabel" layoutX="21.0" layoutY="568.0" text="Error: " textFill="WHITE" visible="false" />
 </AnchorPane>

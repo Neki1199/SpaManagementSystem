@@ -51,7 +51,7 @@
             </graphic>
          </Button>
       </VBox>
-      <ImageView fitHeight="85.0" fitWidth="79.0" layoutX="63.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="101.0" fitWidth="150.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../Images/logo.png" />
       </ImageView>
       <HBox layoutX="25.0" layoutY="635.0" prefHeight="50.0" prefWidth="150.0" styleClass="mainMenu">

@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +55,15 @@ public class DayView {
         for (Employee employee : aptController.employees) {
             TableColumn<AppointmentController.TimeSlot, Label> employeeColumn = new TableColumn<>(employee.getName());
             employeeColumn.setPrefWidth(170);
+
+            // Fill each column header with color and rows with grey
+            // assign a class style to the header
+            String headerStyle = "column-header-employee" + employee.getId();
+            String evenCell = "table-row-cell";
+            employeeColumn.getStyleClass().add(headerStyle);
+            employeeColumn.getStyleClass().add(evenCell);
+
+
             employeeColumn.setCellValueFactory(cellData -> {
                 AppointmentController.TimeSlot timeSlot = cellData.getValue();
                 return new SimpleObjectProperty<>(timeSlot.getAppointmentDetails(employee.getName()));
@@ -83,6 +93,8 @@ public class DayView {
             }
         } // set all timeSlots into table
         aptController.appointmentTable.setItems(timeSlots);
+
+
     }
 
     // To Create all: label, info in AppointmentColumn
@@ -96,7 +108,6 @@ public class DayView {
         }
     }
 
-
     public void populateAppointments(List<Appointment> appointments) throws SQLException {
         // Clear current appointment details
         for (AppointmentController.TimeSlot slot : timeSlots) {
@@ -106,7 +117,7 @@ public class DayView {
         // Add appointments to the corresponding time slots
         for (Appointment appointment : appointments) {
             String appointmentTime = appointment.getHour();  // startTime in db already in String
-            LocalTime startTime = LocalTime.parse(appointmentTime, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime startTime = LocalTime.parse((appointmentTime), DateTimeFormatter.ofPattern("HH:mm"));
             // Get duration of appointments
             Service theService = serviceDAO.get(appointment.getServiceId());
             if (theService == null) {
@@ -147,12 +158,21 @@ public class DayView {
                         if (label == null) {
                             label = new Label();
                             if (i == 0) {
-                                label.setText(appointmentText);
-                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 20 6 0 0;");
+                                LocalTime endTime = startTime.plus(Duration.ofMinutes(durationMinutes));
+                                label.setText(appointmentTime + " - " + String.valueOf(endTime));
+                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 20 20 0 0;" +
+                                        "-fx-text-fill: #4d4c4c;");
+                            } else if (i == 1) {
+                                if(i == span-1){
+                                    label.setStyle("-fx-background-color: " + backgroundColor + ";-fx-background-radius: 0 0 20 20;");
+                                    label.setText(appointmentText);
+                                }else{
+                                    label.setStyle("-fx-background-color: " + backgroundColor + ";");
+                                    label.setText(appointmentText);
+                                }
+
                             } else if (i == span-1) {
-                                label.setStyle("-fx-background-color: " + backgroundColor + ";-fx-background-radius: 0 0 20 6;" +
-                                        "-fx-alignment: bottom-center; -fx-text-fill: black");
-                                label.setText("...............................................");
+                                label.setStyle("-fx-background-color: " + backgroundColor + ";-fx-background-radius: 0 0 20 20;");
                             } else {
                                 label.setStyle("-fx-background-color: " + backgroundColor + ";");
                                 label.setText("");

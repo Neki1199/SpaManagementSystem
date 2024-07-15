@@ -1,22 +1,22 @@
 
-.mainLogin{
+AnchorPane{
     -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3A69A5 50%, #144c94 100%);
     -fx-alignment: center;
 }
 
-.mainLogin #loginLbl{
+#loginLbl{
     -fx-text-fill: #09418a;
     -fx-font-size: 1.2em;
     -fx-font-weight: bold;
 }
 
-.mainLogin VBox{
+VBox{
     -fx-background-color: #FFFFFF;
     -fx-alignment: center;
     -fx-background-radius: 10;
 }
 
-.mainLogin TextField, PasswordField{
+TextField, PasswordField{
     -fx-prompt-text-fill: #1758ab;
     -fx-text-fill: #000000;
     -fx-font-size: 1.2em;
@@ -29,7 +29,7 @@
 }
 
 
-.mainLogin Button {
+Button {
     -fx-background-color: linear-gradient(to bottom, #1758ab, #7999e8);
     -fx-text-fill: #FFFFFF;
     -fx-font-weight: bold;
@@ -38,14 +38,28 @@
     -fx-background-radius: 100;
 }
 
-.mainLogin Button:hover {
+Button:hover {
     -fx-background-color: #d9d4d4;
     -fx-cursor: hand;
 }
 
 
-.mainLogin #errorLabel{
+#errorLabel{
     -fx-font-size: 1em;
     -fx-font-weight: bold;
-    -fx-fill: #FFFFFF;
+    -fx-fill: #ffffff;
 }
+
+#forgotPasswordBtn{
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-width: 150;
+    -fx-pref-height: 30;
+    -fx-background-radius: 5;
+}
+
+#forgotPasswordBtn:hover{
+    -fx-text-fill: #7c7c7c;
+}
+
