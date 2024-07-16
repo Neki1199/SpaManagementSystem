@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -17,13 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DayView {
-    AppointmentController aptController;
-
-    EmployeeDAO employeeDAO = new EmpDAOImplement();
-    AppointmentDAO appointmentDAO = new AptDAOImplement();
-    ServiceDAO serviceDAO = new ServiceDAOImplement();
-    ClientDAO clientDAO = new ClientDAOImplement();
-
+    final AppointmentController aptController;
+    final EmployeeDAO employeeDAO = new EmpDAOImplement();
+    final AppointmentDAO appointmentDAO = new AptDAOImplement();
+    final ServiceDAO serviceDAO = new ServiceDAOImplement();
+    final ClientDAO clientDAO = new ClientDAOImplement();
 
     private final ObservableList<AppointmentController.TimeSlot> timeSlots = FXCollections.observableArrayList();
 
@@ -60,9 +57,7 @@ public class DayView {
             // assign a class style to the header
             String headerStyle = "column-header-employee" + employee.getId();
             String evenCell = "table-row-cell";
-            employeeColumn.getStyleClass().add(headerStyle);
-            employeeColumn.getStyleClass().add(evenCell);
-
+            employeeColumn.getStyleClass().addAll(headerStyle, evenCell);
 
             employeeColumn.setCellValueFactory(cellData -> {
                 AppointmentController.TimeSlot timeSlot = cellData.getValue();
@@ -93,61 +88,45 @@ public class DayView {
             }
         } // set all timeSlots into table
         aptController.appointmentTable.setItems(timeSlots);
-
-
     }
 
     // To Create all: label, info in AppointmentColumn
     public void onDateSelected() throws SQLException {
         LocalDate selectedDate = aptController.datePicker.getValue();
         if (selectedDate != null) {
-            String formattedDate = selectedDate.toString();
-            List<Appointment> appointments;
-            appointments = appointmentDAO.getFromDate(formattedDate);
-            populateAppointments(appointments);
+            List<Appointment> appointments = appointmentDAO.getFromDate(selectedDate.toString());
+            if (appointments.isEmpty()) {
+                clearAppointments();
+            } else {
+                populateAppointments(appointments);
+            }
         }
     }
 
-    public void populateAppointments(List<Appointment> appointments) throws SQLException {
-        // Clear current appointment details
+    private void clearAppointments() {
         for (AppointmentController.TimeSlot slot : timeSlots) {
             slot.appointmentDetails.clear();
         }
+        aptController.appointmentTable.refresh();
+    }
 
-        // Add appointments to the corresponding time slots
+    public void populateAppointments(List<Appointment> appointments) throws SQLException {
+        clearAppointments();
+
         for (Appointment appointment : appointments) {
-            String appointmentTime = appointment.getHour();  // startTime in db already in String
-            LocalTime startTime = LocalTime.parse((appointmentTime), DateTimeFormatter.ofPattern("HH:mm"));
-            // Get duration of appointments
+            LocalTime startTime = LocalTime.parse(appointment.getHour(), DateTimeFormatter.ofPattern("HH:mm"));
             Service theService = serviceDAO.get(appointment.getServiceId());
-            if (theService == null) {
-                System.err.println("Service not found for ID: " + appointment.getServiceId());
-                continue;
-            }
-            int durationMinutes = theService.getDuration();
+            if (theService == null) continue;
 
-            // To get the index of the timeColumn, where the appointment should start
+            int durationMinutes = theService.getDuration();
             int startIndex = (startTime.getHour() - 8) * 4 + (startTime.getMinute() / 15);
-            int span = durationMinutes / 15; // to know how many slots needed
+            int span = durationMinutes / 15;
 
             if (startIndex >= 0 && startIndex + span <= timeSlots.size()) {
                 Client client = clientDAO.get(appointment.getClientId());
-                if (client == null) {
-                    System.err.println("Client not found for ID: " + appointment.getClientId());
-                    continue;
-                }
-                Service service = serviceDAO.get(appointment.getServiceId());
-                if (service == null) {
-                    System.err.println("Service not found for ID: " + appointment.getServiceId());
-                    continue;
-                }
-                String appointmentText = client.getName() + "\n" + service.getName();
+                String appointmentText = client.getName() + "\n" + theService.getName();
                 String backgroundColor = AppointmentController.getColorForEmployee(appointment.getStaffId());
                 Employee employee = employeeDAO.get(appointment.getStaffId());
-                if (employee == null) {
-                    System.err.println("Employee not found for ID: " + appointment.getStaffId());
-                    continue;
-                }
                 String employeeName = employee.getName();
 
                 for (int i = 0; i < span; i++) {
@@ -159,25 +138,17 @@ public class DayView {
                             label = new Label();
                             if (i == 0) {
                                 LocalTime endTime = startTime.plus(Duration.ofMinutes(durationMinutes));
-                                label.setText(appointmentTime + " - " + String.valueOf(endTime));
-                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 20 20 0 0;" +
-                                        "-fx-text-fill: #4d4c4c;");
+                                label.setText(appointment.getHour() + " - " + endTime);
+                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 20 20 0 0; -fx-text-fill: #4d4c4c;");
                             } else if (i == 1) {
-                                if(i == span-1){
-                                    label.setStyle("-fx-background-color: " + backgroundColor + ";-fx-background-radius: 0 0 20 20;");
-                                    label.setText(appointmentText);
-                                }else{
-                                    label.setStyle("-fx-background-color: " + backgroundColor + ";");
-                                    label.setText(appointmentText);
-                                }
-
-                            } else if (i == span-1) {
-                                label.setStyle("-fx-background-color: " + backgroundColor + ";-fx-background-radius: 0 0 20 20;");
+                                label.setStyle("-fx-background-color: " + backgroundColor + ";");
+                                label.setText(appointmentText);
+                            } else if (i == span - 1) {
+                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 0 0 20 20;");
                             } else {
                                 label.setStyle("-fx-background-color: " + backgroundColor + ";");
                                 label.setText("");
                             }
-
                             slot.setAppointmentDetails(employeeName, label);
                         }
                     }

@@ -1,20 +1,15 @@
 package com.sms.BackEnd;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.*;
-
 public class Employee {
     private Integer id;
     private String name;
     private String role;
-    private int phone;
+    private String phone;
     private int admin;
     private String username;
     private String password;
 
-    public Employee(Integer id, String name, String role, int phone, int admin, String username, String password) {
+    public Employee(Integer id, String name, String role, String phone, int admin, String username, String password) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -48,11 +43,11 @@ public class Employee {
         this.role = role;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

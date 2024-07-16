@@ -20,16 +20,16 @@ public class AddAppointmentView {
 
     List<Client> clients = new ArrayList<>();
     List<Service> services = new ArrayList<>();
-    ClientDAO clientDAO = new ClientDAOImplement();
-    ServiceDAO serviceDAO = new ServiceDAOImplement();
-    EmployeeDAO employeeDAO = new EmpDAOImplement();
-    AppointmentDAO appointmentDAO = new AptDAOImplement();
+    final ClientDAO clientDAO = new ClientDAOImplement();
+    final ServiceDAO serviceDAO = new ServiceDAOImplement();
+    final EmployeeDAO employeeDAO = new EmpDAOImplement();
+    final AppointmentDAO appointmentDAO = new AptDAOImplement();
 
     public AddAppointmentView(AppointmentController appointmentController) {
         this.aptCon = appointmentController;
     }
 
-    public void initializeView() throws SQLException {
+    public void initializeView() {
         // Add clients into add appointment choiceBox
         aptCon.add.setOnAction(event -> {
             try {

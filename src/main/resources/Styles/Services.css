@@ -9,22 +9,6 @@ FontAwesomeIconView{
     -fx-size: 50;
 }
 
-TabPane #tab{
-    -fx-background-color: #3A69A563;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: bold;
-    -fx-pref-width: 140;
-    -fx-pref-height: 30;
-}
-
-TabPane{}
-
-TabPane AnchorPane{
-    -fx-background-color: #FFFFFF;
-    -fx-alignment: center;
-    -fx-background-radius: 0 0 5 5;
-}
-
 #thebox{
     -fx-background-color: #FFFFFF;
     -fx-alignment: center;
@@ -106,4 +90,10 @@ TableView Label{
     -fx-font-weight: bold;
     -fx-pref-width: 170;
     -fx-pref-height: 40;
+}
+
+Pane{
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-background-radius: 0 0 5 5;
 }

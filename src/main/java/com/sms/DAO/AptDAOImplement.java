@@ -1,8 +1,7 @@
 package com.sms.DAO;
 
 import com.sms.BackEnd.Appointment;
-import com.sms.BackEnd.Service;
-import com.sms.DataModels.ConnectDB;
+import com.sms.ConnectDB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -95,7 +94,7 @@ public class AptDAOImplement implements AppointmentDAO{
     }
 
     @Override
-    public int save(Appointment appointment) throws SQLException {
+    public int save(Appointment appointment) {
         return 0;
     }
 

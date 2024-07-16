@@ -1,4 +1,4 @@
-package com.sms.DataModels;
+package com.sms;
 import java.sql.*;
 
 public class ConnectDB {
@@ -18,7 +18,7 @@ public class ConnectDB {
                 stmt.execute("PRAGMA journal_mode=WAL;");
                 stmt.close();
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return con;

@@ -1,7 +1,7 @@
 package com.sms.DAO;
 
 import com.sms.BackEnd.Employee;
-import com.sms.DataModels.ConnectDB;
+import com.sms.ConnectDB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class EmpDAOImplement implements EmployeeDAO {
             int eID = rs.getInt("empID");
             String fullName = rs.getString("fullName");
             String role = rs.getString("role");
-            int phoneNo = rs.getInt("phoneNo");
+            String phoneNo = rs.getString("phoneNo");
             int isAdmin = rs.getInt("isAdmin");
             String username = rs.getString("username");
             String password = rs.getString("password");
@@ -50,7 +50,7 @@ public class EmpDAOImplement implements EmployeeDAO {
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, employee.getName());
         ps.setString(2, employee.getRole());
-        ps.setInt(3, employee.getPhone());
+        ps.setString(3, employee.getPhone());
         ps.setInt(4, employee.getAdmin());
         ps.setString(5, employee.getUsername());
         ps.setString(6, employee.getPassword());
@@ -71,7 +71,7 @@ public class EmpDAOImplement implements EmployeeDAO {
         ps.setInt(1, employee.getId());
         ps.setString(2, employee.getName());
         ps.setString(3, employee.getRole());
-        ps.setInt(4, employee.getPhone());
+        ps.setString(4, employee.getPhone());
         ps.setInt(5, employee.getAdmin());
         ps.setString(6, employee.getUsername());
         ps.setString(7, employee.getPassword());
@@ -80,7 +80,7 @@ public class EmpDAOImplement implements EmployeeDAO {
     }
 
     @Override
-    public int save(Employee employee) throws SQLException {
+    public int save(Employee employee) {
         return 0;
     }
 
@@ -118,7 +118,7 @@ public class EmpDAOImplement implements EmployeeDAO {
             int eID = rs.getInt("empID");
             String fullName = rs.getString("fullName");
             String role = rs.getString("role");
-            int phoneNo = rs.getInt("phoneNo");
+            String phoneNo = rs.getString("phoneNo");
             int isAdmin = rs.getInt("isAdmin");
             String username = rs.getString("username");
             String password = rs.getString("password");
@@ -127,12 +127,26 @@ public class EmpDAOImplement implements EmployeeDAO {
         return employee;
     }
 
+    @Override
+    public boolean usersExist() throws SQLException {
+        String query = "SELECT COUNT(*) FROM employees";
+        try (Connection connection = ConnectDB.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
     private List<Employee> getEmployees(List<Employee> employeeList, ResultSet rs) throws SQLException {
         while (rs.next()) {
             int eID = rs.getInt("empID");
             String fullName = rs.getString("fullName");
             String role = rs.getString("role");
-            int phoneNo = rs.getInt("phoneNo");
+            String phoneNo = rs.getString("phoneNo");
             int isAdmin = rs.getInt("isAdmin");
             String username = rs.getString("username");
             String password = rs.getString("password");

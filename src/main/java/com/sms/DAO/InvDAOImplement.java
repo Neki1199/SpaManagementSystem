@@ -1,7 +1,7 @@
 package com.sms.DAO;
 
 import com.sms.BackEnd.Inventory;
-import com.sms.DataModels.ConnectDB;
+import com.sms.ConnectDB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class InvDAOImplement implements InventoryDAO{
     }
 
     @Override
-    public int save(Inventory inventory) throws SQLException {
+    public int save(Inventory inventory) {
         return 0;
     }
 

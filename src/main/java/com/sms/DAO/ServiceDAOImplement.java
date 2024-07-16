@@ -1,12 +1,10 @@
 package com.sms.DAO;
 
-import com.sms.BackEnd.Employee;
 import com.sms.BackEnd.Service;
-import com.sms.DataModels.ConnectDB;
+import com.sms.ConnectDB;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ServiceDAOImplement implements ServiceDAO {
@@ -95,7 +93,7 @@ public class ServiceDAOImplement implements ServiceDAO {
     }
 
     @Override
-    public int save(Service service) throws SQLException {
+    public int save(Service service) {
         return 0;
     }
 

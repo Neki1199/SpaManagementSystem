@@ -1,7 +1,7 @@
 package com.sms.DAO;
 
 import com.sms.BackEnd.Client;
-import com.sms.DataModels.ConnectDB;
+import com.sms.ConnectDB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class ClientDAOImplement implements ClientDAO{
     }
 
     @Override
-    public int save(Client obj) throws SQLException {
+    public int save(Client obj) {
         return 0;
     }
 

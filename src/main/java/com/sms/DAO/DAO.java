@@ -9,6 +9,6 @@ public interface DAO<T> {
     List<T> getAll() throws SQLException;
     int insert(T obj) throws SQLException;
     int update(T obj) throws SQLException;
-    int save(T obj) throws SQLException;
+    int save(T obj);
     int delete(int id) throws SQLException;
 }

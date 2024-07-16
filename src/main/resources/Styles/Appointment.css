@@ -63,17 +63,13 @@ TabPane AnchorPane{
     -fx-background-radius: 0 0 5 5;
 }
 
-.table-view{
-    -fx-background-color: transparent;
-}
-
 .table-view .column-header {
     -fx-background-color: transparent;
 }
-
 .table-view .column-header-employee1{
-    -fx-background-color: #fd5b5b;
+    -fx-background-color: #b25858;
 }
+
 .table-view .column-header-employee2{
     -fx-background-color: #4e9d4e;
 }
@@ -92,14 +88,6 @@ TabPane AnchorPane{
     -fx-font-weight: bold;
 }
 
-.table-view .table-row-cell:odd {
-    -fx-background-color: white;
-}
-
-.table-view .table-row-cell:even {
-    -fx-background-color: #f2f2f2;
-}
-
 .table-view .table-cell{
     -fx-padding: -0.1em;
     -fx-border-color: #ffffff;
@@ -107,6 +95,14 @@ TabPane AnchorPane{
 
 .table-view .virtual-flow .scroll-bar{
     -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: white;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #f2f2f2;
 }
 
 TableView #time{

@@ -1,9 +1,10 @@
-package com.sms.StageViews;
+package com.sms;
 
 import com.sms.Controllers.AdminController;
 import com.sms.Controllers.StaffController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -94,7 +95,10 @@ public class ViewFactory {
         return reportsDashboard;
     }
 
-
+    public void showCreateUser(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/CreateFirstUser.fxml"));
+        createStageNonResizable(loader);
+    }
 
     // Method to show the Login View
     public void showLogin(){

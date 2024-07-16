@@ -1,7 +1,5 @@
 package com.sms;
 
-import com.sms.StageViews.ViewFactory;
-
 // Creates and instance of viewfactory (so that when two classes is called, one will work and the other wait, to
 // not overlap)
 public class Model {

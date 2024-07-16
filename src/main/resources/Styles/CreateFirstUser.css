@@ -1,0 +1,46 @@
+
+AnchorPane{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3A69A5 50%, #144c94 100%);
+    -fx-alignment: center;
+}
+
+GridPane{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(one-pass-box, #dedede, 2, 0, 0 ,2);
+
+}
+
+TextField{
+    -fx-prompt-text-fill: #1758ab;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.2em;
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-opacity: 0.5;
+    -fx-pref-width: 200;
+    -fx-pref-height: 35;
+    -fx-effect: dropshadow(one-pass-box, #dedede, 0, 1, 1 ,1);
+}
+
+
+Button {
+    -fx-background-color: #7c7b7b;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-width: 120;
+    -fx-pref-height: 40;
+    -fx-background-radius: 100;
+}
+
+Button:hover {
+    -fx-background-color: #d9d4d4;
+    -fx-cursor: hand;
+}
+
+
+#errorLabel{
+    -fx-font-size: 1em;
+    -fx-font-weight: bold;
+    -fx-fill: #ffffff;
+}

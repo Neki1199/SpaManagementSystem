@@ -47,8 +47,8 @@ public class AppointmentController extends Node implements Initializable {
     public Label errorLabel;
 
     public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
-    public DayView dayView = new DayView(this);
-    AddAppointmentView appointmentView = new AddAppointmentView(this);
+    public final DayView dayView = new DayView(this);
+    final AddAppointmentView appointmentView = new AddAppointmentView(this);
 
 
     @Override
@@ -60,11 +60,7 @@ public class AppointmentController extends Node implements Initializable {
         }
 
 
-        try {
-            appointmentView.initializeView();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        appointmentView.initializeView();
 
 
 //        try {
@@ -110,7 +106,7 @@ public class AppointmentController extends Node implements Initializable {
 
     // Represents a row in table
     public static class TimeSlot {
-        public String time;
+        public final String time;
         public final Map<String, Label> appointmentDetails;
 
         public TimeSlot(String time) {
