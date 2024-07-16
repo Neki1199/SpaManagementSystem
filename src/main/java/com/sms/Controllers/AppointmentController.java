@@ -2,8 +2,6 @@ package com.sms.Controllers;
 
 import com.sms.Calendar.AddAppointmentView;
 import com.sms.Calendar.DayView;
-
-import com.sms.DAO.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -15,9 +13,6 @@ import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 

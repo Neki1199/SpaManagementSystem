@@ -1,4 +1,14 @@
 package com.sms.Controllers;
 
-public class ReportsController {
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ReportsController extends Node implements Initializable {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

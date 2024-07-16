@@ -1,0 +1,109 @@
+AnchorPane{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3A69A5 50%, #144c94 100%);
+    -fx-alignment: center;
+    -fx-spacing: 30;
+}
+
+FontAwesomeIconView{
+    -fx-fill: #ffffff;
+    -fx-size: 50;
+}
+
+TabPane #tab{
+    -fx-background-color: #3A69A563;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-pref-width: 140;
+    -fx-pref-height: 30;
+}
+
+TabPane{}
+
+TabPane AnchorPane{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-background-radius: 0 0 5 5;
+}
+
+#thebox{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+
+    -fx-background-radius: 5 5 0 0;
+}
+
+#thebox Button{
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-background-color: #3A69A5;
+    -fx-alignment: center;
+    -fx-pref-width: 50;
+    -fx-pref-height: 30;
+    -fx-background-radius: 10;
+}
+
+#thebox Button:hover {
+    -fx-background-color: #d9d4d4;
+    -fx-cursor: hand;
+}
+
+
+#addService{
+    -fx-background-color: #effce1;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+}
+#addService Button{
+    -fx-background-color: #3A69A5;
+    -fx-pref-height: 30;
+    -fx-background-radius: 10;
+}
+
+
+.table-view{
+    -fx-background-color: #ffffff;
+}
+
+.table-view .column-header {
+    -fx-background-color: #5d6565;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: white;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #f2f2f2;
+}
+
+.table-view .table-cell{
+    -fx-border-color: #ffffff;
+}
+
+.table-view .virtual-flow .scroll-bar{
+    -fx-background-color: transparent;
+}
+
+TableView #time{
+    -fx-background-color: rgba(146, 193, 250, 0.39);
+    -fx-font-weight: bold;
+    -fx-pref-width: 50;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-radius: 2;
+}
+
+TableView Label{
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-text-fill: #333232;
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-pref-width: 170;
+    -fx-pref-height: 40;
+}
