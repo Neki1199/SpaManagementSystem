@@ -130,4 +130,25 @@ public class ServiceDAOImplement implements ServiceDAO {
         }
         return service;
     }
+
+    @Override
+    public List<Service> getServiceByType(String serviceT) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        List<Service> servicesList =  new ArrayList<Service>();
+        String sql = "SELECT * FROM services WHERE serviceType = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, serviceT);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int serviceId = rs.getInt("serviceId");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            double price = rs.getDouble("price");
+            String serviceType = rs.getString("serviceType");
+            int duration = rs.getInt("duration");
+            String staffType = rs.getString("staffType");
+            servicesList.add(new Service(serviceId, name, description, price, serviceType, duration, staffType));
+        }
+        return servicesList;
+    }
 }

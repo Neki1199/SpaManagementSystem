@@ -97,3 +97,12 @@ Pane{
     -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
     -fx-background-radius: 0 0 5 5;
 }
+
+Button{
+    -fx-background-color: #3A69A5;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-pref-height: 30;
+    -fx-background-radius: 10;
+}
+

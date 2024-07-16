@@ -143,8 +143,8 @@ public class DayView {
                             } else if (i == 1) {
                                 label.setStyle("-fx-background-color: " + backgroundColor + ";");
                                 label.setText(appointmentText);
-                            } else if (i == span - 1) {
-                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 0 0 20 20;");
+//                            } else if (i == span - 1) {
+//                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 0 0 20 20;");
                             } else {
                                 label.setStyle("-fx-background-color: " + backgroundColor + ";");
                                 label.setText("");
