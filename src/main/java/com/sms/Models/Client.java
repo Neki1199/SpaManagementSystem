@@ -1,8 +1,4 @@
-package com.sms.BackEnd;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+package com.sms.Models;
 
 public class Client {
     private Integer id;

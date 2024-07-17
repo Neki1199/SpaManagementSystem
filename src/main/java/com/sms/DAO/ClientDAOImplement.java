@@ -1,6 +1,6 @@
 package com.sms.DAO;
 
-import com.sms.BackEnd.Client;
+import com.sms.Models.Client;
 import com.sms.ConnectDB;
 
 import java.sql.*;

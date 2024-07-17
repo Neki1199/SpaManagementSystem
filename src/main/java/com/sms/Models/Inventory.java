@@ -1,4 +1,4 @@
-package com.sms.BackEnd;
+package com.sms.Models;
 
 public class Inventory {
     private Integer id;

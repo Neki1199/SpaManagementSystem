@@ -1,7 +1,6 @@
 package com.sms.Controllers;
 
-import com.sms.App;
-import com.sms.BackEnd.Employee;
+import com.sms.Models.Employee;
 import com.sms.DAO.EmpDAOImplement;
 import com.sms.DAO.EmployeeDAO;
 import com.sms.Model;

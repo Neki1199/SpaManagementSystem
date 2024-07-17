@@ -1,6 +1,5 @@
 package com.sms.Controllers;
 
-import com.sms.BackEnd.Employee;
 import com.sms.DAO.EmpDAOImplement;
 import com.sms.DAO.EmployeeDAO;
 import com.sms.Model;
@@ -12,8 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {

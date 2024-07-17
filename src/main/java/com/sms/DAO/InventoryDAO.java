@@ -1,6 +1,6 @@
 package com.sms.DAO;
 
-import com.sms.BackEnd.Inventory;
+import com.sms.Models.Inventory;
 
 public interface InventoryDAO extends DAO<Inventory>{
 }

@@ -1,7 +1,7 @@
 package com.sms.Controllers;
 
-import com.sms.Calendar.AddAppointmentView;
-import com.sms.Calendar.DayView;
+import com.sms.Controllers.Calendar.AddAppointmentView;
+import com.sms.Controllers.Calendar.DayView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
-import com.sms.BackEnd.*;
+import com.sms.Models.*;
 import javafx.scene.layout.Pane;
 
 
@@ -41,7 +42,7 @@ public class AppointmentController extends Node implements Initializable {
     public ChoiceBox<String> choiceBoxEmployee;
     public DatePicker datePickerAddAppointment;
     public Button addClientBtn;
-    public Pane dialogAdd;
+    public GridPane dialogAdd;
     public Button addAppoitnmentBtn;
     public Button cancelBtn;
     public Label errorLabel;

@@ -1,6 +1,6 @@
 package com.sms.Controllers;
 
-import com.sms.BackEnd.Service;
+import com.sms.Models.Service;
 import com.sms.DAO.ServiceDAO;
 import com.sms.DAO.ServiceDAOImplement;
 import javafx.collections.FXCollections;
@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -18,7 +20,6 @@ import java.util.ResourceBundle;
 
 public class ServicesController extends Node implements Initializable {
     public Button add;
-    public Pane dialogAdd;
     public Button addServiceBtn;
     public Button cancelBtn;
     public Label errorLabel;
@@ -37,6 +38,7 @@ public class ServicesController extends Node implements Initializable {
     public TableColumn<Service, String> serviceTypeColumn;
     public TableColumn<Service, String> staffTypeColumn;
     public TableView<Service> servicesTable;
+    public GridPane dialogAdd;
 
     ServiceDAO serviceDAO = new ServiceDAOImplement();
     @Override
@@ -128,9 +130,11 @@ public class ServicesController extends Node implements Initializable {
         populateStaffType();
     }
     public void populateServiceType() throws SQLException {
+        serviceTypeChoiceBox.setValue("Choose service type");
         serviceTypeChoiceBox.getItems().addAll("Massage", "Physio", "Beauty", "Treatment", "Spa");
     }
     public void populateStaffType() throws SQLException {
+        staffTypeChoiceBox.setValue("Choose role");
         staffTypeChoiceBox.getItems().addAll("Beautician", "Physiotherapist");
     }
 
@@ -143,10 +147,14 @@ public class ServicesController extends Node implements Initializable {
         String staffType = staffTypeChoiceBox.getValue();
         String description = descriptionField.getText();
 
-        if(!name.isEmpty() && !serviceType.isEmpty() && !duration.isEmpty() && !cost.isEmpty() && !staffType.isEmpty()) {
+        boolean exists = checkServiceExist(name);
+        if(!name.isEmpty() && !serviceType.isEmpty() && !duration.isEmpty() && !cost.isEmpty() && !staffType.isEmpty() && !exists) {
             Service service = new Service(null, name, description, Double.parseDouble(cost), serviceType, Integer.parseInt(duration), staffType);
             serviceDAO.insert(service);
             dialogAdd.setVisible(false);
+        }else if(exists){
+            errorLabel.setVisible(true);
+            errorLabel.setText("Error: Service already exists");
         }else{
             errorLabel.setVisible(true);
             errorLabel.setText("Error: Please fill all the fields");
@@ -199,5 +207,18 @@ public class ServicesController extends Node implements Initializable {
         List<Service> services = serviceDAO.getServiceByType("Physio");
         ObservableList<Service> serviceList = FXCollections.observableArrayList(services);
         servicesTable.setItems(serviceList);
+    }
+
+    private boolean checkServiceExist(String n) throws SQLException {
+        boolean serviceExist = false;
+        List<Service> services = serviceDAO.getAll();
+        for(Service service : services) {
+            String serviceName = service.getName();
+            if(serviceName.equals(n)){
+                serviceExist = true;
+                break;
+            }
+        }
+        return serviceExist;
     }
 }

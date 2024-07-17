@@ -6,14 +6,12 @@ AnchorPane{
 
 FontAwesomeIconView{
     -fx-fill: #ffffff;
-    -fx-size: 50;
 }
 
 #thebox{
     -fx-background-color: #FFFFFF;
     -fx-alignment: center;
     -fx-spacing: 20;
-
     -fx-background-radius: 5 5 0 0;
 }
 
@@ -30,26 +28,18 @@ FontAwesomeIconView{
     -fx-background-color: #d9d4d4;
     -fx-cursor: hand;
 }
-
-
-#addService{
-    -fx-background-color: #effce1;
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+#secondHbox{
+    -fx-background-color: #DDDDDD;
+    -fx-alignment: center;
+    -fx-spacing: 20;
 }
-#addService Button{
-    -fx-background-color: #3A69A5;
-    -fx-pref-height: 30;
-    -fx-background-radius: 10;
-}
-
 
 .table-view{
     -fx-background-color: #ffffff;
 }
 
 .table-view .column-header {
-    -fx-background-color: #5d6565;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #8baddc 50%, #6098e5 100%);
 }
 
 .table-view .column-header .label {
@@ -67,6 +57,8 @@ FontAwesomeIconView{
 
 .table-view .table-cell{
     -fx-border-color: #ffffff;
+    -fx-font-size: 12;
+    -fx-font-family: "Lucida Sans";
 }
 
 .table-view .virtual-flow .scroll-bar{
@@ -91,18 +83,27 @@ TableView Label{
     -fx-pref-width: 170;
     -fx-pref-height: 40;
 }
-
-Pane{
-    -fx-background-color: #ffffff;
-    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
-    -fx-background-radius: 0 0 5 5;
-}
-
 Button{
     -fx-background-color: #3A69A5;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
     -fx-pref-height: 30;
     -fx-background-radius: 10;
+}
+
+GridPane{
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-background-radius: 0 0 5 5;
+}
+
+GridPane Label{
+    -fx-text-fill: #3A69A5;
+    -fx-font-weight: bold;
+}
+
+ChoiceBox{
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 10;
 }
 

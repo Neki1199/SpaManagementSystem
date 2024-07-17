@@ -1,6 +1,6 @@
 package com.sms;
 
-import com.sms.BackEnd.*;
+import com.sms.Models.*;
 import com.sms.DAO.*;
 
 import java.sql.SQLException;

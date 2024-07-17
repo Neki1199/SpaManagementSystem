@@ -1,6 +1,6 @@
-package com.sms.Calendar;
+package com.sms.Controllers.Calendar;
 
-import com.sms.BackEnd.Appointment;
+import com.sms.Models.Appointment;
 import javafx.scene.control.Label;
 
 public class WeekView {

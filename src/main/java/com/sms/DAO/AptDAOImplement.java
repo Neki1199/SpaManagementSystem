@@ -1,6 +1,6 @@
 package com.sms.DAO;
 
-import com.sms.BackEnd.Appointment;
+import com.sms.Models.Appointment;
 import com.sms.ConnectDB;
 
 import java.sql.*;

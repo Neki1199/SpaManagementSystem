@@ -1,4 +1,4 @@
-package com.sms.BackEnd;
+package com.sms.Models;
 
 public class GetColor {
     public static String getColor(int index) {

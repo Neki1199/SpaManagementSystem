@@ -1,12 +1,13 @@
-package com.sms.Calendar;
+package com.sms.Controllers.Calendar;
 
-import com.sms.BackEnd.Appointment;
-import com.sms.BackEnd.Client;
-import com.sms.BackEnd.Employee;
-import com.sms.BackEnd.Service;
+import com.sms.Models.Appointment;
+import com.sms.Models.Client;
+import com.sms.Models.Employee;
+import com.sms.Models.Service;
 import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -163,21 +164,48 @@ public class AddAppointmentView {
         String employeeSelected = aptCon.choiceBoxEmployee.getValue();
         LocalDate dateNoFormat = aptCon.datePickerAddAppointment.getValue();
         String dateSelected = dateNoFormat.toString();
+        String hourNoFormat = aptCon.hourBox.getValue();
         int hourSelected = Integer.parseInt(aptCon.hourBox.getValue());
         int minuteSelected = Integer.parseInt(aptCon.minuteBox.getValue());
-        if (serviceSelected != null && !serviceSelected.equals("Choose service") && employeeSelected != null && !employeeSelected.equals("Choose employee") && !dateSelected.equals("Choose date")){
+
+        Service service = serviceDAO.getServiceByName(serviceSelected);
+        int duration = service.getDuration();
+        boolean isSlotAvailable = true;
+
+        // to check that an appointment does not exist already at that time, duration
+        LocalTime startTime = LocalTime.of(hourSelected, minuteSelected);
+        LocalTime endTime = startTime.plusMinutes(duration);
+        List<Appointment> appointments = appointmentDAO.getFromDate(dateSelected);
+        for (Appointment apt : appointments) {
+            int serviceId = apt.getServiceId();
+            Service theService = serviceDAO.get(serviceId);
+            LocalTime aptStartTime = LocalTime.parse(apt.getHour(), DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime aptEndTime = aptStartTime.plusMinutes(theService.getDuration());
+
+            // Check if there is any overlap
+            if (isOverlap(startTime, endTime, aptStartTime, aptEndTime)) {
+                isSlotAvailable = false;
+                break; // No need to continue checking
+            }
+        }
+
+        if (serviceSelected != null && !serviceSelected.equals("Choose service") && employeeSelected != null && !employeeSelected.equals("Choose employee") && !dateSelected.equals("Choose date") && isSlotAvailable){
             Client client = clientDAO.getClientByName(clientSelected);
-            Service service = serviceDAO.getServiceByName(serviceSelected);
             Employee employee = employeeDAO.getEmployeeByName(employeeSelected);
-            LocalTime time = LocalTime.of(hourSelected, minuteSelected);
-            String hour = time.format(DateTimeFormatter.ofPattern("HH:mm"));
+            String hour = startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
             Appointment newAppointment = new Appointment(null, client.getId(), service.getId(), employee.getId(), dateSelected, hour, "Not Paid");
             appointmentDAO.insert(newAppointment);
             aptCon.dialogAdd.setVisible(false);
             aptCon.appointmentTable.refresh();
-        } else {
+        } else if (!isSlotAvailable) {
+            aptCon.errorLabel.setText("Error: time slot full, choose a different hour");
+            aptCon.errorLabel.setVisible(true);
+        }else{
             aptCon.errorLabel.setText("Error: enter all details");
             aptCon.errorLabel.setVisible(true);
         }
+    }
+    private boolean isOverlap(LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
+        return start1.isBefore(end2) && end1.isAfter(start2);
     }
 }

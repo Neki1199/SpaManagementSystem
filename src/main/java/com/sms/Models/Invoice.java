@@ -1,11 +1,4 @@
-package com.sms.BackEnd;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+package com.sms.Models;
 
 public class Invoice {
     private int invoiceId;

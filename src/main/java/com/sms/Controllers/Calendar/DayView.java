@@ -1,6 +1,6 @@
-package com.sms.Calendar;
+package com.sms.Controllers.Calendar;
 
-import com.sms.BackEnd.*;
+import com.sms.Models.*;
 import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
 import javafx.beans.property.SimpleObjectProperty;
@@ -139,14 +139,12 @@ public class DayView {
                             if (i == 0) {
                                 LocalTime endTime = startTime.plus(Duration.ofMinutes(durationMinutes));
                                 label.setText(appointment.getHour() + " - " + endTime);
-                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 20 20 0 0; -fx-text-fill: #4d4c4c;");
+                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-text-fill: #4d4c4c; -fx-background-radius: 5 5 0 0;");
                             } else if (i == 1) {
-                                label.setStyle("-fx-background-color: " + backgroundColor + ";");
+                                label.setStyle("-fx-background-color: #faf7f7; -fx-font-weight: normal; -fx-font-style: italic; -fx-text-fill: #4d4c4c;");
                                 label.setText(appointmentText);
-//                            } else if (i == span - 1) {
-//                                label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-background-radius: 0 0 20 20;");
                             } else {
-                                label.setStyle("-fx-background-color: " + backgroundColor + ";");
+                                label.setStyle("-fx-background-color: #faf7f7;");
                                 label.setText("");
                             }
                             slot.setAppointmentDetails(employeeName, label);

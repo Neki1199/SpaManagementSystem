@@ -6,7 +6,6 @@ AnchorPane{
 
 FontAwesomeIconView{
     -fx-fill: #ffffff;
-    -fx-size: 50;
 }
 
 #bottomHbox{
@@ -152,26 +151,18 @@ ListView Label{
     -fx-background-radius: 10;
 }
 
-#pane{
-    -fx-pref-width: 200;
-    -fx-pref-height: 220;
-    -fx-background-color: rgb(255, 255, 255);
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 3, 1, 0, 1);
-
+GridPane{
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-background-radius: 0 0 5 5;
 }
 
-#pane Label{
-    -fx-alignment: center;
-    -fx-text-alignment: left;
+GridPane Label{
     -fx-text-fill: #3A69A5;
     -fx-font-weight: bold;
-    -fx-padding: 10;
-    -fx-font-size: 10;
-    -fx-pref-width: 60;
 }
 
-#pane GridPane #button{
+GridPane #button{
     -fx-background-color: #3A69A5;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
@@ -182,4 +173,9 @@ ListView Label{
 #errorlbl{
     -fx-pref-width: 250;
     -fx-alignment: center-left;
+}
+
+ChoiceBox{
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 10;
 }
