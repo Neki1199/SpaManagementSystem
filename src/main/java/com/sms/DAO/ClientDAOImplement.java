@@ -21,7 +21,7 @@ public class ClientDAOImplement implements ClientDAO{
         if (rs.next()) {
             int clientId = rs.getInt("clientId");
             String fullName = rs.getString("fullName");
-            int phoneNo = rs.getInt("phoneNo");
+            String phoneNo = rs.getString("phoneNo");
             String notes = rs.getString("notes");
             String email = rs.getString("email");
 
@@ -41,7 +41,7 @@ public class ClientDAOImplement implements ClientDAO{
         while (rs.next()) {
             int clientId = rs.getInt("clientId");
             String fullName = rs.getString("fullName");
-            int phoneNo = rs.getInt("phoneNo");
+            String phoneNo = rs.getString("phoneNo");
             String notes = rs.getString("notes");
             String email = rs.getString("email");
             Client client = new Client(clientId, fullName, phoneNo, notes, email);
@@ -57,7 +57,7 @@ public class ClientDAOImplement implements ClientDAO{
         String sql = "INSERT INTO clients(fullName, phoneNo, notes, email) VALUES(?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, client.getName());
-        ps.setInt(2, client.getPhone());
+        ps.setString(2, client.getPhone());
         ps.setString(3, client.getNotes());
         ps.setString(4, client.getEmail());
 
@@ -76,7 +76,7 @@ public class ClientDAOImplement implements ClientDAO{
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, client.getId());
         ps.setString(2, client.getName());
-        ps.setInt(3, client.getPhone());
+        ps.setString(3, client.getPhone());
         ps.setString(4, client.getNotes());
         ps.setString(5, client.getEmail());
         int result = ps.executeUpdate();
@@ -115,7 +115,7 @@ public class ClientDAOImplement implements ClientDAO{
         if (rs.next()) {
             int clientId = rs.getInt("clientId");
             String fullName = rs.getString("fullName");
-            int phoneNo = rs.getInt("phoneNo");
+            String phoneNo = rs.getString("phoneNo");
             String notes = rs.getString("notes");
             String email = rs.getString("email");
             client = new Client(clientId, fullName, phoneNo, notes, email);

@@ -3,11 +3,11 @@ package com.sms.Models;
 public class Client {
     private Integer id;
     private String name;
-    private int phone;
+    private String phone;
     private String notes;
     private String email;
 
-    public Client(Integer id, String name, int phone, String notes, String email) {
+    public Client(Integer id, String name, String phone, String notes, String email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -31,11 +31,11 @@ public class Client {
         this.name = name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
