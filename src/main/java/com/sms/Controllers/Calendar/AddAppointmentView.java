@@ -35,6 +35,7 @@ public class AddAppointmentView {
         aptCon.add.setOnAction(event -> {
             try {
                 showAddButtonDialog();
+                aptCon.choiceBoxService.setValue("Choose Service");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -60,6 +61,7 @@ public class AddAppointmentView {
             String[] clientName = nameAndPhoneClient.split("-");
             aptCon.searchClientField.setText(clientName[0]);
             aptCon.clientListView.setVisible(false);
+            aptCon.errorLabel.setVisible(false);
         });
 
         aptCon.serviceTypeBox.setOnAction(event ->{
@@ -119,6 +121,7 @@ public class AddAppointmentView {
         aptCon.errorLabel.setVisible(false);
         aptCon.dialogAdd.setVisible(true);
         aptCon.choiceBoxService.getItems().clear();
+        aptCon.serviceTypeBox.getItems().clear();
         aptCon.choiceBoxEmployee.getItems().clear();
         aptCon.hourBox.getItems().clear();
         aptCon.minuteBox.getItems().clear();

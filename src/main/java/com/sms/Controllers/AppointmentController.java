@@ -93,15 +93,15 @@ public class AppointmentController extends Node implements Initializable {
     // To get the label color of the Employee doing that service
     public static String getColorForEmployee(int employeeId) {
         String color = "";
-        if (employeeId == 1) {
+        if (employeeId == 1 || employeeId == 6) {
             color = "#fcabab";
-        } else if (employeeId == 2) {
+        } else if (employeeId == 2 || employeeId == 7) {
             color = "#bce8bc";
-        } else if (employeeId == 3) {
+        } else if (employeeId == 3 || employeeId == 8) {
             color = "#7a7af1";
-        } else if (employeeId == 4) {
+        } else if (employeeId == 4 || employeeId == 9) {
             color = "#facaa1";
-        } else if (employeeId == 5) {
+        } else if (employeeId == 5 || employeeId == 10) {
             color = "#a171a1";
         }
         return color;

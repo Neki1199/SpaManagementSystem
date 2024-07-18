@@ -7,6 +7,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -21,14 +22,18 @@
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../Styles/Appointment.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.AppointmentController">
     <TabPane layoutX="15.0" layoutY="98.0" prefHeight="594.0" prefWidth="870.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="98.0">
         <Tab id="tab" text="Day">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="877.0">
-            <DatePicker fx:id="datePicker" layoutX="15.0" layoutY="7.0" AnchorPane.topAnchor="7.0" />
-                <TableView fx:id="appointmentTable" editable="true" layoutX="15.0" layoutY="33.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="33.0">
-               <columns>
-                  <TableColumn id="time" fx:id="timeColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Time" />
-               </columns>
-                </TableView>
-            </AnchorPane>
+         <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="NEVER">
+            <content>
+                  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="877.0">
+                  <DatePicker fx:id="datePicker" layoutX="15.0" layoutY="7.0" AnchorPane.topAnchor="7.0" />
+                      <TableView fx:id="appointmentTable" editable="true" layoutX="15.0" layoutY="33.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="33.0">
+                     <columns>
+                        <TableColumn id="time" fx:id="timeColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Time" />
+                     </columns>
+                      </TableView>
+                  </AnchorPane>
+            </content>
+         </ScrollPane>
         </Tab>
         <Tab id="tab" text="Week">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

@@ -74,13 +74,13 @@ public class InvDAOImplement implements InventoryDAO{
     @Override
     public void update(Inventory inventory) throws SQLException {
         Connection con = ConnectDB.getConnection();
-        String sql = "UPDATE inventory set productId = ?, productName = ?, quantity = ?, cost = ?, description = ? WHERE productId = ?";
+        String sql = "UPDATE inventory set productName = ?, quantity = ?, cost = ?, description = ? WHERE productId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, inventory.getId());
-        ps.setString(2, inventory.getName());
-        ps.setInt(3, inventory.getQty());
-        ps.setDouble(4, inventory.getCost());
-        ps.setString(5, inventory.getDescription());
+        ps.setString(1, inventory.getName());
+        ps.setInt(2, inventory.getQty());
+        ps.setDouble(3, inventory.getCost());
+        ps.setString(4, inventory.getDescription());
+        ps.setInt(5, inventory.getId());
         ps.executeUpdate();
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);

@@ -77,17 +77,18 @@ public class ServiceDAOImplement implements ServiceDAO {
     @Override
     public void update(Service service) throws SQLException {
         Connection con = ConnectDB.getConnection();
-        String sql = "UPDATE services set serviceId = ?, name = ?, description = ?, price = ?, serviceType = ?, duration = ?, staffType = ? where serviceId = ?";
+        String sql = "UPDATE services set name = ?, description = ?, price = ?, serviceType = ?, duration = ?, staffType = ? where serviceId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, service.getId());
-        ps.setString(2, service.getName());
-        ps.setString(3, service.getDescription());
-        ps.setDouble(4, service.getPrice());
-        ps.setString(5, service.getServiceType());
-        ps.setInt(6, service.getDuration());
-        ps.setString(7, service.getStaffType());
-        ps.setInt(8, service.getId());
+        ps.setString(1, service.getName());
+        ps.setString(2, service.getDescription());
+        ps.setDouble(3, service.getPrice());
+        ps.setString(4, service.getServiceType());
+        ps.setInt(5, service.getDuration());
+        ps.setString(6, service.getStaffType());
+        ps.setInt(7, service.getId());
         ps.executeUpdate();
+        ConnectDB.closePreparedStatement(ps);
+        ConnectDB.closeConnection(con);
 
     }
 
