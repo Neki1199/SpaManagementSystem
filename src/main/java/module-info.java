@@ -3,6 +3,7 @@ module com.sms {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires org.xerial.sqlitejdbc;
 
 
     opens com.sms to javafx.fxml;
@@ -11,4 +12,5 @@ module com.sms {
     exports com.sms.Controllers;
     exports com.sms.DAO;
     exports com.sms.Models;
+    exports com.sms.Controllers.Calendar;
 }

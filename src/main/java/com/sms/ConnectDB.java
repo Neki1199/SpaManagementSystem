@@ -3,10 +3,7 @@ import java.sql.*;
 
 public class ConnectDB {
     private static Connection con;
-
-
-    private static final String url = "jdbc:sqlite:src/main/resources/SQLiteSMS/sms.db";
-
+    private static final String url = "jdbc:sqlite:src/main/java/com/sms/SQLiteSMS/sms.db";
     private ConnectDB() {}
 
     public static synchronized Connection getConnection() throws SQLException {
@@ -14,6 +11,7 @@ public class ConnectDB {
             try {
                 Class.forName("org.sqlite.JDBC");
                 con = DriverManager.getConnection(url);
+                con.setAutoCommit(true);
                 Statement stmt = con.createStatement();
                 stmt.execute("PRAGMA journal_mode=WAL;");
                 stmt.close();

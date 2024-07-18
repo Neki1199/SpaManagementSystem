@@ -70,19 +70,22 @@ public class ClientDAOImplement implements ClientDAO{
     }
 
     @Override
-    public int update(Client client) throws SQLException {
-        Connection con = ConnectDB.getConnection();
-        String sql = "UPDATE clients set clientId = ?, fullName = ?, phoneNo = ?, notes = ?, email = ? WHERE clientId = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, client.getId());
-        ps.setString(2, client.getName());
-        ps.setString(3, client.getPhone());
-        ps.setString(4, client.getNotes());
-        ps.setString(5, client.getEmail());
-        int result = ps.executeUpdate();
-        ConnectDB.closePreparedStatement(ps);
-        ConnectDB.closeConnection(con);
-        return result;
+    public void update(Client client) throws SQLException {
+        try(Connection con = ConnectDB.getConnection()) {
+            String sql = "UPDATE clients SET fullName = ?, phoneNo = ?, notes = ?, email = ? WHERE clientId = ?";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, client.getName());
+                ps.setString(2, client.getPhone());
+                ps.setString(3, client.getNotes());
+                ps.setString(4, client.getEmail());
+                ps.setInt(5, client.getId());
+                ps.executeUpdate();
+                ConnectDB.closePreparedStatement(ps);
+                ConnectDB.closeConnection(con);
+            } catch (SQLException e){
+                throw new SQLException(e.getMessage());
+            }
+        }
     }
 
     @Override

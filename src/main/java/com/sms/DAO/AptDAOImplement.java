@@ -76,7 +76,7 @@ public class AptDAOImplement implements AppointmentDAO{
     }
 
     @Override
-    public int update(Appointment appointment) throws SQLException {
+    public void update(Appointment appointment) throws SQLException {
         Connection con = ConnectDB.getConnection();
         String sql = "UPDATE appointments set appointmentId = ?, clientId = ?, serviceId = ?, staffId = ?, date = ?, hour = ?, status = ? where appointmentId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -88,9 +88,7 @@ public class AptDAOImplement implements AppointmentDAO{
         ps.setString(6, appointment.getHour());
         ps.setString(7, appointment.getStatus());
         ps.setInt(8, appointment.getAppointmentId());
-
-        int result = ps.executeUpdate();
-        return result;
+        ps.executeUpdate();
     }
 
     @Override

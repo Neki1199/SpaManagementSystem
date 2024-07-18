@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -63,9 +64,9 @@
            </graphic>
         </Button>
     </HBox>
-    <GridPane fx:id="dialogAdd" alignment="CENTER" hgap="50.0" layoutX="150.0" layoutY="95.0" vgap="20.0" visible="false">
+    <GridPane fx:id="dialogAdd" alignment="CENTER" hgap="55.0" layoutX="150.0" layoutY="95.0" vgap="20.0" visible="false">
         <columnConstraints>
-            <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="250.0" prefWidth="270.0" />
             <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" />
         </columnConstraints>
         <rowConstraints>
@@ -81,12 +82,6 @@
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" />
         </padding>
-        <ChoiceBox fx:id="choiceBoxClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="150.0" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-        <Button id="button" fx:id="addClientBtn" alignment="CENTER" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" text="Add new" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-           <GridPane.margin>
-               <Insets right="20.0" />
-           </GridPane.margin>
-        </Button>
         <ChoiceBox fx:id="choiceBoxService" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="150.0" GridPane.rowIndex="2">
            <GridPane.margin>
                <Insets />
@@ -113,10 +108,19 @@
             <GridPane.margin>
                 <Insets />
             </GridPane.margin>
-            <Button id="button" fx:id="addAppoitnmentBtn" mnemonicParsing="false" text="Add Appointment" />
+            <Button id="button" fx:id="addAppointmentBtn" mnemonicParsing="false" text="Add Appointment" />
             <Button id="button" fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
         </HBox>
         <Label id="errorlbl" fx:id="errorLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Error:" visible="false" GridPane.rowIndex="4" />
       <ChoiceBox fx:id="serviceTypeBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="250.0" spacing="10.0" GridPane.rowIndex="1">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <TextField fx:id="searchClientField" minWidth="-Infinity" prefHeight="26.0" prefWidth="150.0" promptText="Seach Client" />
+            <Button id="button" fx:id="searchClientBtn" alignment="CENTER" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" text="Search" />
+            <Button id="button" fx:id="addClientBtn" alignment="CENTER" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" text="Add new" />
+        </HBox>
     </GridPane>
+   <ListView fx:id="clientListView" editable="true" layoutX="150.0" layoutY="150.0" prefHeight="90.0" prefWidth="250.0" visible="false" />
 </AnchorPane>

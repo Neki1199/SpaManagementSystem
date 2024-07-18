@@ -64,7 +64,7 @@ public class EmpDAOImplement implements EmployeeDAO {
     }
 
     @Override
-    public int update(Employee employee) throws SQLException {
+    public void update(Employee employee) throws SQLException {
         Connection con = ConnectDB.getConnection();
         String sql = "UPDATE employees set empId = ?, fullName = ?, role = ?, phoneNo = ?, isAdmin = ?, username = ?, password = ? where empID = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -75,8 +75,8 @@ public class EmpDAOImplement implements EmployeeDAO {
         ps.setInt(5, employee.getAdmin());
         ps.setString(6, employee.getUsername());
         ps.setString(7, employee.getPassword());
-        int result = ps.executeUpdate();
-        return result;
+        ps.executeUpdate();
+
     }
 
     @Override

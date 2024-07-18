@@ -18,7 +18,6 @@ import java.util.*;
 import java.util.List;
 
 import com.sms.Models.*;
-import javafx.scene.layout.Pane;
 
 
 // Controls calendar UI
@@ -35,7 +34,6 @@ public class AppointmentController extends Node implements Initializable {
     public Button delete;
     public List<Employee> employees;
     public DatePicker datePicker1;
-    public ChoiceBox<String> choiceBoxClient;
     public ChoiceBox<String> hourBox;
     public ChoiceBox<String> minuteBox;
     public ChoiceBox<String> choiceBoxService;
@@ -44,14 +42,16 @@ public class AppointmentController extends Node implements Initializable {
     public DatePicker datePickerAddAppointment;
     public Button addClientBtn;
     public GridPane dialogAdd;
-    public Button addAppoitnmentBtn;
+    public Button addAppointmentBtn;
     public Button cancelBtn;
     public Label errorLabel;
 
     public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
     public final DayView dayView = new DayView(this);
     final AddAppointmentView appointmentView = new AddAppointmentView(this);
-
+    public TextField searchClientField;
+    public Button searchClientBtn;
+    public ListView<String> clientListView;
 
 
     @Override

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -38,6 +39,7 @@ public class ClientsController extends Node implements Initializable {
     ClientDAO clientDAO = new ClientDAOImplement();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         add.setOnAction(event -> {
             try {
                 showAddButtonDialog();
@@ -57,7 +59,11 @@ public class ClientsController extends Node implements Initializable {
             dialogAdd.setVisible(false);
         });
 
-        initializeColumns();
+        try {
+            initializeColumns();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // load clients initally
         try{
@@ -98,12 +104,58 @@ public class ClientsController extends Node implements Initializable {
         }
     }
 
-    private void initializeColumns() {
+    private void initializeColumns() throws SQLException {
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        // to edit tables
+        clientsTable.setEditable(true);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setOnEditCommit(event ->{
+            Client client = event.getRowValue();
+            client.setName(event.getNewValue());
+            updateClient(client);
+        });
+
+        phoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        phoneColumn.setOnEditCommit(event ->{
+            Client client = event.getRowValue();
+            client.setPhone(event.getNewValue());
+            updateClient(client);
+        });
+
+        notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        notesColumn.setOnEditCommit(event ->{
+            Client client = event.getRowValue();
+            client.setNotes(event.getNewValue());
+            updateClient(client);
+        });
+
+        emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        emailColumn.setOnEditCommit(event ->{
+            Client client = event.getRowValue();
+            client.setEmail(event.getNewValue());
+            updateClient(client);
+        });
+        loadAllClients();
+    }
+
+    private void updateClient(Client client){
+        try {
+            clientDAO.update(client);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void deleteClient(Client client){
+        try {
+            clientDAO.delete(client.getId());
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     private void loadAllClients() throws SQLException {

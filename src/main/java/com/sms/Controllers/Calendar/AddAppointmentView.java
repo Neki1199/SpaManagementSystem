@@ -1,5 +1,6 @@
 package com.sms.Controllers.Calendar;
 
+import com.sms.ConnectDB;
 import com.sms.Models.Appointment;
 import com.sms.Models.Client;
 import com.sms.Models.Employee;
@@ -7,8 +8,7 @@ import com.sms.Models.Service;
 import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
 
-import javax.swing.*;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -40,6 +40,28 @@ public class AddAppointmentView {
             }
         });
 
+        aptCon.searchClientBtn.setOnAction(event ->{
+            try {
+                searchClient();
+                if(aptCon.clientListView.getItems().isEmpty()){
+                    aptCon.clientListView.setVisible(false);
+                    aptCon.errorLabel.setText("Client not found");
+                    aptCon.errorLabel.setVisible(true);
+                }else{
+                    aptCon.clientListView.setVisible(true);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        aptCon.clientListView.setOnMouseClicked(event ->{
+            String nameAndPhoneClient = aptCon.clientListView.getSelectionModel().getSelectedItem().toString();
+            String[] clientName = nameAndPhoneClient.split("-");
+            aptCon.searchClientField.setText(clientName[0]);
+            aptCon.clientListView.setVisible(false);
+        });
+
         aptCon.serviceTypeBox.setOnAction(event ->{
             try {
                 String serviceTypeSelected = aptCon.serviceTypeBox.getValue();
@@ -61,7 +83,7 @@ public class AddAppointmentView {
                 throw new RuntimeException(e);            }
         });
 
-        aptCon.addAppoitnmentBtn.setOnAction(event ->{
+        aptCon.addAppointmentBtn.setOnAction(event ->{
             try{
                 getAllData();
                 aptCon.dayView.onDateSelected();
@@ -85,37 +107,25 @@ public class AddAppointmentView {
 
         });
 
-        aptCon.cancelBtn.setOnAction(event -> aptCon.dialogAdd.setVisible(false));
+        aptCon.cancelBtn.setOnAction(event -> {
+            aptCon.dialogAdd.setVisible(false);
+            aptCon.clientListView.setVisible(false);
+        });
     }
 
     // Event when add Button is clicked (set visible the dialog, and all clients to choicebox)
     public void showAddButtonDialog() throws SQLException {
+        aptCon.clientListView.setVisible(false);
         aptCon.errorLabel.setVisible(false);
         aptCon.dialogAdd.setVisible(true);
-        aptCon.choiceBoxClient.getItems().clear();
         aptCon.choiceBoxService.getItems().clear();
         aptCon.choiceBoxEmployee.getItems().clear();
         aptCon.hourBox.getItems().clear();
         aptCon.minuteBox.getItems().clear();
-        populateClientChoiceBox();
         populateServiceTypeBox();
         addTimesChoiceBox();
         aptCon.datePickerAddAppointment.setValue(LocalDate.now());
         aptCon.choiceBoxEmployee.setValue("Choose Employee"); // Set default value for choiceBoxEmployee
-    }
-
-    // To add strings inside all choiceBox (except times)
-    public void populateClientChoiceBox() throws SQLException {
-        // add clients choicebox
-        clients = clientDAO.getAll();
-        if(!clients.isEmpty()){
-            for (Client client : clients) {
-                aptCon.choiceBoxClient.getItems().add(client.getName());
-            }
-            aptCon.choiceBoxClient.setValue("Choose Existent Client");
-        } else {
-            aptCon.choiceBoxClient.setValue("No clients");
-        }
     }
 
     public void populateServiceTypeBox() throws SQLException {
@@ -182,7 +192,7 @@ public class AddAppointmentView {
     }
 
     public void getAllData() throws SQLException {
-        String clientSelected = aptCon.choiceBoxClient.getValue();
+        String clientSelected = aptCon.searchClientField.getText();
         String serviceSelected = aptCon.choiceBoxService.getValue();
         String employeeSelected = aptCon.choiceBoxEmployee.getValue();
         LocalDate dateNoFormat = aptCon.datePickerAddAppointment.getValue();
@@ -231,10 +241,23 @@ public class AddAppointmentView {
         }
     }
     private boolean isOverlap(int employee, int employeeApt, LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
-        if(start1.isBefore(end2) && end1.isAfter(start2) && employee == employeeApt){
-            return true;
-        }else{
-            return false;
+        return start1.isBefore(end2) && end1.isAfter(start2) && employee == employeeApt;
+    }
+
+    private void searchClient() throws SQLException {
+        String clientName = aptCon.searchClientField.getText();
+        Connection con = ConnectDB.getConnection();
+        String sql = "SELECT fullName, phoneNo FROM clients WHERE fullName LIKE ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, "%" + clientName + "%");
+        ResultSet rs = ps.executeQuery();
+
+        aptCon.clientListView.getItems().clear(); // clear listview
+
+        while (rs.next()) {
+            String name = rs.getString("fullName");
+            String phone = rs.getString("phoneNo");
+            aptCon.clientListView.getItems().add(name + "- " + phone);
         }
     }
 }

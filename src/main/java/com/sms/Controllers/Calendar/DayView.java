@@ -141,10 +141,10 @@ public class DayView {
                                 label.setText(appointment.getHour() + " - " + endTime);
                                 label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-text-fill: #4d4c4c; -fx-background-radius: 5 5 0 0;");
                             } else if (i == 1) {
-                                label.setStyle("-fx-background-color: #faf7f7; -fx-font-weight: normal; -fx-font-style: italic; -fx-text-fill: #4d4c4c;");
+                                label.setStyle("-fx-background-color: #faf0e9; -fx-font-weight: normal; -fx-font-style: italic; -fx-text-fill: #4d4c4c;");
                                 label.setText(appointmentText);
                             } else {
-                                label.setStyle("-fx-background-color: #faf7f7;");
+                                label.setStyle("-fx-background-color: #FAF0E9;");
                                 label.setText("");
                             }
                             slot.setAppointmentDetails(employeeName, label);

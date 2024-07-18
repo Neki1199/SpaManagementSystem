@@ -56,13 +56,21 @@ FontAwesomeIconView{
 }
 
 .table-view .table-cell{
-    -fx-border-color: #ffffff;
+    -fx-border-color: #d9d9d9;
     -fx-font-size: 12;
     -fx-font-family: "Lucida Sans";
 }
 
 .table-view .virtual-flow .scroll-bar{
     -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #4d4d4d;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #d0d0d0;
 }
 
 TableView #time{
