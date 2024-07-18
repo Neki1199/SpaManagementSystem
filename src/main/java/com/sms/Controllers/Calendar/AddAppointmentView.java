@@ -40,10 +40,21 @@ public class AddAppointmentView {
             }
         });
 
+        aptCon.serviceTypeBox.setOnAction(event ->{
+            try {
+                String serviceTypeSelected = aptCon.serviceTypeBox.getValue();
+                if (serviceTypeSelected != null && !serviceTypeSelected.equals("Choose Service Type")) {
+                    populateServiceChoiceBox(serviceTypeSelected);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         aptCon.choiceBoxService.setOnAction(event ->{
             try{
                 String serviceSelected = aptCon.choiceBoxService.getValue();
-                if (serviceSelected != null && !serviceSelected.equals("Choose service")) {
+                if (serviceSelected != null && !serviceSelected.equals("Choose Service")) {
                     populateEmployeeChoiceBox(serviceSelected);
                 }
             }catch(SQLException e){
@@ -87,11 +98,10 @@ public class AddAppointmentView {
         aptCon.hourBox.getItems().clear();
         aptCon.minuteBox.getItems().clear();
         populateClientChoiceBox();
-        populateServiceChoiceBox();
+        populateServiceTypeBox();
         addTimesChoiceBox();
         aptCon.datePickerAddAppointment.setValue(LocalDate.now());
         aptCon.choiceBoxEmployee.setValue("Choose Employee"); // Set default value for choiceBoxEmployee
-
     }
 
     // To add strings inside all choiceBox (except times)
@@ -102,25 +112,38 @@ public class AddAppointmentView {
             for (Client client : clients) {
                 aptCon.choiceBoxClient.getItems().add(client.getName());
             }
-            aptCon.choiceBoxClient.setValue("Choose existent client");
+            aptCon.choiceBoxClient.setValue("Choose Existent Client");
         } else {
             aptCon.choiceBoxClient.setValue("No clients");
         }
     }
 
-    public void populateServiceChoiceBox() throws SQLException {
-        // add services choices into choicebox
-        // TODO: Make it to appear in groups (Massage, Treatment, Beauty)
-        // TODO: Make it like a search box and in groups
+    public void populateServiceTypeBox() throws SQLException {
         services = serviceDAO.getAll();
-        aptCon.choiceBoxService.setValue("Choose service");
+        aptCon.serviceTypeBox.setValue("Choose Service Type");
+        ArrayList<String> serviceTypes = new ArrayList<>();
+        for (Service service : services) {
+            if(!serviceTypes.contains(service.getServiceType())){
+                serviceTypes.add(service.getServiceType());
+            }
+        }
+        aptCon.serviceTypeBox.getItems().addAll(serviceTypes);
+    }
+
+    public void populateServiceChoiceBox(String serviceTypeSelected) throws SQLException {
+        // add services depending on the service type selected
+        aptCon.choiceBoxService.getItems().clear();
+        switch (serviceTypeSelected) {
+            case "Massage", "Treatment", "Physio", "Beauty" -> services = serviceDAO.getServiceByType(serviceTypeSelected);
+        }
+
         if(!services.isEmpty()){
             for (Service service : services) {
                 aptCon.choiceBoxService.getItems().add(service.getName());
             }
-            aptCon.choiceBoxService.setValue("Choose service");
+            aptCon.choiceBoxService.setValue("Choose Service");
         } else {
-            aptCon.choiceBoxService.setValue("No services");
+            aptCon.choiceBoxService.setValue("No Services");
         }
     }
 
@@ -164,7 +187,6 @@ public class AddAppointmentView {
         String employeeSelected = aptCon.choiceBoxEmployee.getValue();
         LocalDate dateNoFormat = aptCon.datePickerAddAppointment.getValue();
         String dateSelected = dateNoFormat.toString();
-        String hourNoFormat = aptCon.hourBox.getValue();
         int hourSelected = Integer.parseInt(aptCon.hourBox.getValue());
         int minuteSelected = Integer.parseInt(aptCon.minuteBox.getValue());
 
@@ -177,13 +199,16 @@ public class AddAppointmentView {
         LocalTime endTime = startTime.plusMinutes(duration);
         List<Appointment> appointments = appointmentDAO.getFromDate(dateSelected);
         for (Appointment apt : appointments) {
+            int employeeApt = apt.getStaffId();
+            Employee employeeSelectedBefore = employeeDAO.getEmployeeByName(employeeSelected);
+            int employeeIDSelected = employeeSelectedBefore.getId();
             int serviceId = apt.getServiceId();
             Service theService = serviceDAO.get(serviceId);
             LocalTime aptStartTime = LocalTime.parse(apt.getHour(), DateTimeFormatter.ofPattern("HH:mm"));
             LocalTime aptEndTime = aptStartTime.plusMinutes(theService.getDuration());
 
             // Check if there is any overlap
-            if (isOverlap(startTime, endTime, aptStartTime, aptEndTime)) {
+            if (isOverlap(employeeApt, employeeIDSelected, startTime, endTime, aptStartTime, aptEndTime)) {
                 isSlotAvailable = false;
                 break; // No need to continue checking
             }
@@ -205,7 +230,11 @@ public class AddAppointmentView {
             aptCon.errorLabel.setVisible(true);
         }
     }
-    private boolean isOverlap(LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
-        return start1.isBefore(end2) && end1.isAfter(start2);
+    private boolean isOverlap(int employee, int employeeApt, LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
+        if(start1.isBefore(end2) && end1.isAfter(start2) && employee == employeeApt){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

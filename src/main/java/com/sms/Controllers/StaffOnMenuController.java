@@ -1,10 +1,7 @@
 package com.sms.Controllers;
 
-import com.sms.DAO.ClientDAO;
-import com.sms.DAO.ClientDAOImplement;
 import com.sms.DAO.EmpDAOImplement;
 import com.sms.DAO.EmployeeDAO;
-import com.sms.Models.Client;
 import com.sms.Models.Employee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;

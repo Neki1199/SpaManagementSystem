@@ -1,4 +1,4 @@
-module com.spams.sms {
+module com.sms {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
@@ -7,7 +7,8 @@ module com.spams.sms {
 
     opens com.sms to javafx.fxml;
     opens com.sms.Controllers to javafx.fxml;
-    opens com.sms.Models;
     exports com.sms;
     exports com.sms.Controllers;
+    exports com.sms.DAO;
+    exports com.sms.Models;
 }

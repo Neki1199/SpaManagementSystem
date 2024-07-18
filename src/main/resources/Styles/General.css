@@ -48,7 +48,7 @@ FontAwesomeIconView{
 }
 
 .table-view .table-row-cell:odd {
-    -fx-background-color: white;
+    -fx-background-color: #ffffff;
 }
 
 .table-view .table-row-cell:even {
@@ -95,15 +95,19 @@ GridPane{
     -fx-background-color: #ffffff;
     -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
     -fx-background-radius: 0 0 5 5;
+
 }
 
-GridPane Label{
+GridPane HBox Label{
     -fx-text-fill: #3A69A5;
     -fx-font-weight: bold;
+    -fx-pref-width: 50;
+    -fx-pref-height: 30;
 }
 
 ChoiceBox{
     -fx-font-family: "Lucida Sans";
     -fx-font-size: 10;
+    -fx-pref-height: 30;
 }
 

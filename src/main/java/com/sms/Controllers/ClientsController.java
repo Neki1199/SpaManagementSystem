@@ -3,7 +3,6 @@ package com.sms.Controllers;
 import com.sms.DAO.ClientDAO;
 import com.sms.DAO.ClientDAOImplement;
 import com.sms.Models.Client;
-import com.sms.Models.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -86,7 +85,7 @@ public class ClientsController extends Node implements Initializable {
         String notes = notesField.getText();
 
         boolean exists = checkClientExists(name, phone, email);
-        if(!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !notes.isEmpty() && !exists) {
+        if(!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !exists) {
             Client client = new Client(null, name, phone, notes, email);
             clientDAO.insert(client);
             dialogAdd.setVisible(false);

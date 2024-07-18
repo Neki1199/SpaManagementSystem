@@ -40,6 +40,7 @@ public class AppointmentController extends Node implements Initializable {
     public ChoiceBox<String> minuteBox;
     public ChoiceBox<String> choiceBoxService;
     public ChoiceBox<String> choiceBoxEmployee;
+    public ChoiceBox<String> serviceTypeBox;
     public DatePicker datePickerAddAppointment;
     public Button addClientBtn;
     public GridPane dialogAdd;
@@ -50,6 +51,7 @@ public class AppointmentController extends Node implements Initializable {
     public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
     public final DayView dayView = new DayView(this);
     final AddAppointmentView appointmentView = new AddAppointmentView(this);
+
 
 
     @Override
