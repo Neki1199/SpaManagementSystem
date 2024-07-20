@@ -128,16 +128,8 @@ ListView{
     -fx-background-color: #bebebe;
     -fx-text-fill: #000000;
     -fx-background-radius: 5;
-}
-
-ListView Label{
     -fx-text-alignment: center;
-    -fx-padding: 10;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-pref-width: 310;
-    -fx-pref-height: 90;
-    -fx-background-radius: 5;
+    -fx-font-style: italic;
 }
 
 #addAppointment{
@@ -195,4 +187,15 @@ Button{
 
 #deletebtn{
     -fx-background-color: #a45c5c;
+}
+
+#datePicker Label{
+    -fx-text-fill: #3A69A5;
+}
+
+#datePicker Button{
+    fx-background-color: #3A69A5;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-pref-height: 30;
 }

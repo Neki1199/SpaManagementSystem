@@ -50,39 +50,16 @@
       <TextField fx:id="phoneField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="213.0" promptText="Phone No" GridPane.rowIndex="2" />
       <Button id="button" fx:id="addClientBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="213.0" text="Add Client" GridPane.rowIndex="3" />
       <Button id="button" fx:id="cancelBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="213.0" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <HBox fx:id="boxUpdateDelete" prefHeight="30.0" prefWidth="230.0" spacing="30.0" visible="false" GridPane.rowIndex="3">
+         <Button id="button" fx:id="updateClientBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Update" />
+         <Button id="deletebtn" fx:id="deleteClientBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Delete" />
+      </HBox>
       <padding>
          <Insets left="20.0" top="-20.0" />
       </padding>
    </GridPane>
    <ListView fx:id="lisViewClientSearch" layoutX="585.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="97.0" />
    <Label fx:id="errorLblSearch" layoutX="585.0" layoutY="14.0" prefHeight="18.0" prefWidth="294.0" text="Error: " visible="false" />
-   <GridPane fx:id="editClientPane" alignment="CENTER" layoutX="350.0" layoutY="99.0" prefHeight="186.0" prefWidth="535.0" vgap="20.0" visible="false">
-      <columnConstraints>
-         <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" />
-         <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
-      </rowConstraints>
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
-      <padding>
-         <Insets left="20.0" top="-20.0" />
-      </padding>
-      <TextField fx:id="editName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="213.0" promptText="Client Name" GridPane.rowIndex="1" />
-      <TextArea fx:id="editNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="213.0" promptText="Notes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="editEmail" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="213.0" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="editPhone" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="213.0" promptText="Phone No" GridPane.rowIndex="2" />
-      <Button id="button" fx:id="cancelEditBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="213.0" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.rowIndex="3">
-         <Button id="button" fx:id="updateClientBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Update" />
-         <Button id="deletebtn" fx:id="deleteClientBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Delete" />
-      </HBox>
-   </GridPane>
    <BorderPane id="thebox" layoutX="15.0" layoutY="46.0" prefHeight="51.0" prefWidth="870.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="47.0">
       <left>
          <Button fx:id="add" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="114.0" text="Add New" BorderPane.alignment="CENTER">
@@ -98,15 +75,13 @@
          </Button>
       </left>
       <right>
-         <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="372.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <children>
-               <TextField fx:id="searchClientField" promptText="Enter Client" />
-               <Button fx:id="searchClientBtn" mnemonicParsing="false" prefWidth="56.0" text="Search" />
-               <Button fx:id="editClientBtn" mnemonicParsing="false" prefWidth="56.0" text="Edit" />
-            </children>
+         <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="424.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
                <Insets right="20.0" />
             </padding>
+            <TextField fx:id="searchClientField" promptText="Enter Client" />
+            <Button fx:id="searchClientBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Search" />
+            <Button fx:id="editClientBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Edit" />
          </HBox>
       </right>
    </BorderPane>

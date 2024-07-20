@@ -3,72 +3,43 @@ package com.sms.Controllers;
 import com.sms.Controllers.Calendar.AddAppointmentView;
 import com.sms.Controllers.Calendar.DayView;
 import com.sms.Controllers.Calendar.SearchEditAppointmentView;
+import com.sms.Models.Employee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
-
-import com.sms.Models.*;
-
-
-// Controls calendar UI
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class AppointmentController extends Node implements Initializable {
-
     public HBox hbox;
     public TableView<TimeSlot> appointmentTable;
     public TableColumn<TimeSlot, String> timeColumn;
-    public DatePicker datePicker;
+    public DatePicker datePicker, datePicker1, datePickerAddAppointment;
     public ListView<Label> listView;
-    public Button add;
-    public Button edit;
-    public Button delete;
+    public Button add, edit, delete, addClientBtn, addAppointmentBtn, cancelBtn;
+    public Button searchClientBtn, searchAppointmentBtn, addClientBtn1, cancelBtn1;
+    public Button updateAppointment, deleteAppointment;
+    public ChoiceBox<String> hourBox, minuteBox, choiceBoxService, choiceBoxEmployee, serviceTypeBox;
+    public Label errorLabel, errorLabel1, errorLabel2;
+    public TextField searchClientField, searchAppointmentField, nameField, emailField, phoneField;
+    public TextArea notesField;
+    public ListView<String> clientListView, listViewClientSearch;
+    public GridPane dialogAdd, addClientGrid;
+    public HBox boxUpdateDelete;
     public List<Employee> employees;
-    public DatePicker datePicker1;
-    public ChoiceBox<String> hourBox;
-    public ChoiceBox<String> minuteBox;
-    public ChoiceBox<String> choiceBoxService;
-    public ChoiceBox<String> choiceBoxEmployee;
-    public ChoiceBox<String> serviceTypeBox;
-    public DatePicker datePickerAddAppointment;
-    public Button addClientBtn;
-    public GridPane dialogAdd;
-    public Button addAppointmentBtn;
-    public Button cancelBtn;
-    public Label errorLabel;
 
     public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
     public final DayView dayView = new DayView(this);
     public final AddAppointmentView appointmentView = new AddAppointmentView(this);
-    final SearchEditAppointmentView searchEditAppointmentView = new SearchEditAppointmentView(this);
-    public TextField searchClientField;
-    public Button searchClientBtn;
-    public ListView<String> clientListView;
-    public TextField searchAppointmentField;
-    public Button searchAppointmentBtn;
-    public GridPane addClientGrid;
-    public Label errorLabel1;
-    public TextField nameField;
-    public TextArea notesField;
-    public TextField emailField;
-    public TextField phoneField;
-    public Button addClientBtn1;
-    public Button cancelBtn1;
-    public ListView<String> listViewClientSearch;
-    public HBox boxUpdateDelete;
-    public Button updateAppointment;
-    public Button deleteAppointment;
-    public Label errorLabel2;
+    public final SearchEditAppointmentView searchEditAppointmentView = new SearchEditAppointmentView(this);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -78,50 +49,20 @@ public class AppointmentController extends Node implements Initializable {
             throw new RuntimeException(e);
         }
 
-
         appointmentView.initializeView();
         searchEditAppointmentView.initializeView();
-
-
-//        try {
-//            WeekView weekView = new WeekView(this);
-//            weekView.initializeWeekView();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            MonthView monthView = new MonthView(this);
-//            monthView.initializeMonthView();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            ListAllView listAllView = new ListAllView(this);
-//            listAllView.initializeListAllView();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
     }
-
 
     // To get the label color of the Employee doing that service
     public static String getColorForEmployee(int employeeId) {
-        String color = "";
-        if (employeeId == 1 || employeeId == 6) {
-            color = "#fcabab";
-        } else if (employeeId == 2 || employeeId == 7) {
-            color = "#bce8bc";
-        } else if (employeeId == 3 || employeeId == 8) {
-            color = "#7a7af1";
-        } else if (employeeId == 4 || employeeId == 9) {
-            color = "#facaa1";
-        } else if (employeeId == 5 || employeeId == 10) {
-            color = "#a171a1";
-        }
-        return color;
+        return switch (employeeId) {
+            case 1, 6 -> "#fcabab";
+            case 2, 7 -> "#bce8bc";
+            case 3, 8 -> "#7a7af1";
+            case 4, 9 -> "#facaa1";
+            case 5, 10 -> "#a171a1";
+            default -> "";
+        };
     }
 
     // Represents a row in table
@@ -133,12 +74,15 @@ public class AppointmentController extends Node implements Initializable {
             this.time = time;
             this.appointmentDetails = new HashMap<>();
         }
+
         public Label getAppointmentDetails(String employeeName) {
             return appointmentDetails.get(employeeName);
         }
+
         public void setAppointmentDetails(String employeeName, Label label) {
             appointmentDetails.put(employeeName, label);
         }
+
         public String getTime() {
             return time;
         }

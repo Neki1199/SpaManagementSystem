@@ -5,11 +5,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,65 +32,75 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
    </TableView>
-   <HBox id="thebox" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="51.0" prefWidth="870.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="47.0">
-      <Button fx:id="add" mnemonicParsing="false">
-         <graphic>
-            <FontAwesomeIconView glyphName="PLUS" size="18" />
-         </graphic>
-      </Button>
-      <Button mnemonicParsing="false">
-         <graphic>
-            <FontAwesomeIconView glyphName="EDIT" size="18" />
-         </graphic>
-      </Button>
-      <Button mnemonicParsing="false">
-         <graphic>
-            <FontAwesomeIconView glyphName="MINUS" size="18" />
-         </graphic>
-      </Button>
-   </HBox>
    <HBox id="secondHbox" alignment="CENTER" fillHeight="false" layoutX="15.0" layoutY="98.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="870.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
-      <children>
-         <ChoiceBox fx:id="chooseServiceType" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="189.0" />
-      </children>
+      <ChoiceBox fx:id="chooseServiceType" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="189.0" />
    </HBox>
-   <GridPane fx:id="dialogAdd" alignment="CENTER" hgap="50.0" layoutX="150.0" layoutY="93.0" vgap="20.0" visible="false">
+   <GridPane fx:id="addServicePane" alignment="CENTER" hgap="50.0" layoutX="150.0" layoutY="93.0" vgap="20.0" visible="false" AnchorPane.leftAnchor="15.0">
       <columnConstraints>
          <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" />
          <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" />
       </columnConstraints>
       <rowConstraints>
          <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="26.0" prefHeight="26.0" valignment="CENTER" vgrow="NEVER" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="26.0" prefHeight="26.0" valignment="CENTER" vgrow="NEVER" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="26.0" prefHeight="26.0" valignment="CENTER" vgrow="NEVER" />
-         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="26.0" prefHeight="26.0" valignment="CENTER" vgrow="NEVER" />
+         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+         <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
          <RowConstraints maxHeight="24.79999389648438" minHeight="3.2000183105468807" prefHeight="8.79999389648438" vgrow="SOMETIMES" />
       </rowConstraints>
       <opaqueInsets>
          <Insets />
       </opaqueInsets>
-      <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="53.0" prefWidth="238.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Label id="errorlbl" fx:id="errorLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" text="Error:" visible="false" GridPane.rowIndex="5">
          <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-         <Button id="button" fx:id="addServiceBtn" mnemonicParsing="false" text="Add Service" />
-         <Button id="button" fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
-      </HBox>
-      <Label id="errorlbl" fx:id="errorLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" text="Error:" visible="false" GridPane.rowIndex="5" />
-      <TextField fx:id="nameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="213.0" promptText="Service Name" GridPane.rowIndex="1" />
-      <ChoiceBox fx:id="serviceTypeChoiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="durationField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="100.0" promptText="Duration" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <TextField fx:id="costField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="50.0" promptText="Cost" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <ChoiceBox fx:id="staffTypeChoiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="150.0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Insets bottom="20.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="nameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="213.0" promptText="Service Name" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="serviceTypeChoiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField id="smallField" fx:id="durationField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" promptText="Duration" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <TextField id="smallField" fx:id="priceField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" promptText="Price" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ChoiceBox fx:id="staffTypeChoiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="213.0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="50.0" text="Minutes" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets right="100.0" />
          </GridPane.margin>
       </Label>
-      <TextArea fx:id="descriptionField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextArea fx:id="descriptionField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <HBox fx:id="boxUpdateDelete" prefHeight="100.0" prefWidth="200.0" spacing="30.0" visible="false" GridPane.rowIndex="4">
+         <Button id="button" fx:id="updateServiceBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Update" />
+         <Button id="deletebtn" fx:id="deleteServiceBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Delete" />
+      </HBox>
+      <Button id="button" fx:id="addServiceBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="213.0" text="Add Service" GridPane.rowIndex="4" />
+      <Button id="button" fx:id="cancelBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="213.0" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <padding>
          <Insets left="20.0" right="20.0" />
       </padding>
    </GridPane>
+   <BorderPane id="thebox" layoutX="25.0" layoutY="56.0" prefHeight="51.0" prefWidth="870.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="47.0">
+      <left>
+         <Button fx:id="add" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="114.0" text="Add New" BorderPane.alignment="CENTER">
+            <graphic>
+               <FontAwesomeIconView glyphName="PLUS" size="18" />
+            </graphic>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <BorderPane.margin>
+               <Insets left="20.0" />
+            </BorderPane.margin>
+         </Button>
+      </left>
+      <right>
+         <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="372.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <padding>
+               <Insets right="20.0" />
+            </padding>
+            <TextField fx:id="searchServiceField" promptText="Enter Service Name" />
+            <Button fx:id="searchServiceBtn" mnemonicParsing="false" prefWidth="56.0" text="Search" />
+            <Button fx:id="editBtn" mnemonicParsing="false" prefWidth="56.0" text="Edit" />
+         </HBox>
+      </right>
+   </BorderPane>
+   <ListView fx:id="listViewServiceSearch" layoutX="595.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.rightAnchor="15.0" />
+   <Label id="errorLblSearch" fx:id="errorLabelSearch" layoutX="635.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" text="Error:" visible="false" />
 </AnchorPane>

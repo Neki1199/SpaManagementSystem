@@ -13,10 +13,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CreateFirstUserController implements Initializable {
-    public TextField fullname;
-    public TextField phoneno;
-    public TextField username;
-    public TextField password;
+    public TextField fullname, phoneno, username, password;
     public ChoiceBox<String> role;
     public CheckBox isadmin;
     public Button createAccount;

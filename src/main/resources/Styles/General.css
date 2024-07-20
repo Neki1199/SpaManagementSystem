@@ -118,7 +118,7 @@ GridPane TextField{
 }
 
 
-GridPane HBox Label{
+GridPane Label{
     -fx-text-fill: #3A69A5;
     -fx-font-weight: bold;
     -fx-pref-width: 50;
@@ -138,10 +138,25 @@ ChoiceBox{
     -fx-pref-height: 30;
 }
 
+
+ListView{
+    -fx-cell-size: 10;
+    -fx-background-color: #bebebe;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 5;
+    -fx-text-alignment: center;
+    -fx-font-style: italic;
+}
+
 #errorLblSearch{
     -fx-text-fill: #ffffff;
 }
 
 #deletebtn{
     -fx-background-color: #a45c5c;
+}
+
+#smallField{
+    -fx-pref-width: 70;
+    -fx-pref-height: 30;
 }

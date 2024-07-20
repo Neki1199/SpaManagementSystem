@@ -101,7 +101,8 @@ public class SearchEditAppointmentView {
 
         boolean isSlotAvailable = aptCon.appointmentView.checkSlotAvailability(dateSelected, hourSelected, minuteSelected, duration, employeeSelected);
         Client newClient = clientDAO.getClientByName(clientSelected);
-        if (isSlotAvailable || (appointment.getDate().equals(dateSelected) && appointment.getClientId() != newClient.getId())) {
+        Employee newEmployee = employeeDAO.getEmployeeByName(employeeSelected);
+        if (isSlotAvailable || (appointment.getDate().equals(dateSelected) && appointment.getClientId() != newClient.getId()) || (appointment.getDate().equals(dateSelected) && appointment.getStaffId() == newEmployee.getId())) {
             updateAppointmentDetails(appointment, clientSelected, serviceSelected, employeeSelected, dateSelected, hourSelected, minuteSelected);
             resetDialog();
         } else {

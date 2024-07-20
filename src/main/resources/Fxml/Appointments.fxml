@@ -26,7 +26,7 @@
         <Tab id="tab" text="Day">
             <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="NEVER">
                 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="877.0">
-                    <DatePicker fx:id="datePicker" layoutX="15.0" layoutY="7.0" AnchorPane.topAnchor="7.0" />
+                    <DatePicker id="datePicker" fx:id="datePicker" layoutX="15.0" layoutY="7.0" AnchorPane.topAnchor="7.0" />
                     <TableView fx:id="appointmentTable" editable="true" layoutX="15.0" layoutY="33.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="33.0">
                         <columns>
                             <TableColumn id="time" fx:id="timeColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Time" />
@@ -123,13 +123,13 @@
          </Button>
       </left>
       <right>
-          <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="372.0" spacing="10.0" BorderPane.alignment="CENTER">
+          <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="445.0" spacing="10.0" BorderPane.alignment="CENTER">
               <padding>
                   <Insets right="20.0" />
               </padding>
               <TextField fx:id="searchAppointmentField" prefHeight="26.0" prefWidth="219.0" promptText="Enter Client or Appointment ID" />
-              <Button fx:id="searchAppointmentBtn" mnemonicParsing="false" prefWidth="56.0" text="Search" />
-              <Button fx:id="edit" mnemonicParsing="false" prefWidth="56.0" text="Edit" />
+              <Button fx:id="searchAppointmentBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Search" />
+              <Button fx:id="edit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Edit" />
           </HBox>
       </right>
    </BorderPane>

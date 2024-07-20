@@ -13,7 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AddAppointmentView {
 
@@ -70,13 +72,13 @@ public class AddAppointmentView {
         services = serviceDAO.getAll();
         aptCon.serviceTypeBox.setValue("Choose Service Type");
         aptCon.choiceBoxService.setValue("Choose Service");
-        List<String> serviceTypes = new ArrayList<>();
+        Set<String> serviceTypes = new HashSet<>();
         for (Service service : services) {
-            if (!serviceTypes.contains(service.getServiceType())) {
+            if (!"Spa".equals(service.getServiceType())) {
                 serviceTypes.add(service.getServiceType());
             }
         }
-        aptCon.serviceTypeBox.getItems().addAll(serviceTypes);
+        aptCon.serviceTypeBox.getItems().addAll(new ArrayList<>(serviceTypes));
     }
 
     private void populateTimeChoiceBoxes() {

@@ -1,11 +1,6 @@
 package com.sms.Controllers;
 
-import com.sms.ConnectDB;
-import com.sms.DAO.AppointmentDAO;
-import com.sms.DAO.AptDAOImplement;
-import com.sms.DAO.ClientDAO;
-import com.sms.DAO.ClientDAOImplement;
-import com.sms.Models.Appointment;
+import com.sms.DAO.*;
 import com.sms.Models.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,13 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,267 +23,176 @@ public class ClientsController extends Node implements Initializable {
     public TableColumn<Client, String> phoneColumn;
     public TableColumn<Client, String> notesColumn;
     public TableColumn<Client, String> emailColumn;
-    public Button add;
-    public Button delete;
+    public Button add, delete, addClientBtn, cancelBtn, searchClientBtn, editClientBtn, updateClientBtn, deleteClientBtn;
     public GridPane dialogAdd;
-    public Button addClientBtn;
-    public Button cancelBtn;
-    public Label errorLabel;
-    public TextField nameField;
+    public Label errorLabel, errorLblSearch;
+    public TextField nameField, emailField, phoneField, searchClientField;
     public TextArea notesField;
-    public TextField emailField;
-    public TextField phoneField;
-    public TextField searchClientField;
-    public Button searchClientBtn;
     public ListView<String> lisViewClientSearch;
-    public Label errorLblSearch;
-    public Button editClientBtn;
-    public TextField editName;
-    public TextArea editNotes;
-    public TextField editEmail;
-    public TextField editPhone;
-    public Button cancelEditBtn;
-    public Button updateClientBtn;
-    public Button deleteClientBtn;
-    public GridPane editClientPane;
+    public HBox boxUpdateDelete;
 
-    ClientDAO clientDAO = new ClientDAOImplement();
-    AppointmentDAO appointmentDAO = new AptDAOImplement();
+    private final ClientDAO clientDAO = new ClientDAOImplement();
+    private final AppointmentDAO appointmentDAO = new AptDAOImplement();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        add.setOnAction(event -> showAddButtonDialog());
+        addClientBtn.setOnAction(event -> addClient());
+        cancelBtn.setOnAction(event -> {dialogAdd.setVisible(false);clearAll();});
+        searchClientBtn.setOnAction(event -> searchClient());
+        lisViewClientSearch.setOnMouseClicked(event -> selectClientFromList());
+        editClientBtn.setOnAction(event -> editClient());
+        updateClientBtn.setOnAction(event -> updateClient());
+        deleteClientBtn.setOnAction(event -> deleteClient());
 
-        add.setOnAction(event -> {
-            try {
-                showAddButtonDialog();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        addClientBtn.setOnAction(event -> {
-            try {
-                getClientData();
-                loadAllClients();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        cancelBtn.setOnAction(event -> {
-            dialogAdd.setVisible(false);
-        });
-
-        searchClientBtn.setOnAction(event -> {
-            try {
-                errorLblSearch.setVisible(false);
-                searchClient();
-                if (lisViewClientSearch.getItems().isEmpty()) {
-                    lisViewClientSearch.setVisible(false);
-                    errorLblSearch.setText("Client not found");
-                    errorLblSearch.setVisible(true);
-                } else {
-                    lisViewClientSearch.setVisible(true);
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        lisViewClientSearch.setOnMouseClicked(event -> {
-            String nameAndPhoneClient = lisViewClientSearch.getSelectionModel().getSelectedItem();
-            String[] clientName = nameAndPhoneClient.split("-");
-            searchClientField.setText(clientName[0]);
-            lisViewClientSearch.setVisible(false);
-            errorLblSearch.setVisible(false);
-        });
-
-        editClientBtn.setOnAction(event -> {
-            try {
-                editClient();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        updateClientBtn.setOnAction(event -> {
-            updateClient();
-        });
-
-        deleteClientBtn.setOnAction(event -> {
-            try {
-                deleteClientAppointments();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            deleteClient();
-        });
-
-        cancelEditBtn.setOnAction(event -> {
-            clearEdit();
-        });
-
-        try {
-            initializeColumns();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // load clients initially
-        try {
-            loadAllClients();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        initializeColumns();
+        loadAllClients();
     }
 
     private void deleteClientAppointments() throws SQLException {
-        String clientName = searchClientField.getText();
-        Client client = clientDAO.getClientByName(clientName);
+        Client client = clientDAO.getClientByName(searchClientField.getText());
         appointmentDAO.deleteFromClientID(client.getId());
     }
 
-    // Event when add Button is clicked (set visible the dialog, and all services to choicebox)
-    public void showAddButtonDialog() throws SQLException {
+    private void showAddButtonDialog() {
+        clearFields(nameField, emailField, phoneField);
+        notesField.clear();
         errorLabel.setVisible(false);
         dialogAdd.setVisible(true);
+        boxUpdateDelete.setVisible(false);
+        addClientBtn.setVisible(true);
+    }
+
+    private void searchClient() {
+        try {
+            String clientName = searchClientField.getText();
+            clientDAO.search(lisViewClientSearch, clientName);
+            if (lisViewClientSearch.getItems().isEmpty()) {
+                showError(errorLblSearch, "Client not found");
+                lisViewClientSearch.setVisible(false);
+            } else {
+                lisViewClientSearch.setVisible(true);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void selectClientFromList() {
+        String selectedItem = lisViewClientSearch.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            String[] clientName = selectedItem.split("-");
+            searchClientField.setText(clientName[0]);
+            lisViewClientSearch.setVisible(false);
+            errorLblSearch.setVisible(false);
+        }
+    }
+
+    private void editClient() {
+        try {
+            String clientName = searchClientField.getText();
+            Client client = clientDAO.getClientByName(clientName);
+            if (client == null) {
+                showError(errorLblSearch, "Client not found");
+            } else {
+                populateEditFields(client);
+                boxUpdateDelete.setVisible(true);
+                addClientBtn.setVisible(false);
+                dialogAdd.setVisible(true);
+                errorLblSearch.setVisible(false);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updateClient() {
+        try {
+            Client client = clientDAO.getClientByName(searchClientField.getText());
+            if (client != null) {
+                updateClientData(client);
+                initializeColumns();
+                loadAllClients();
+                dialogAdd.setVisible(false);
+                clearAll();
+            } else {
+                showError(errorLabel, "No changes made");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void clearAll() {
         nameField.clear();
         emailField.clear();
         phoneField.clear();
         notesField.clear();
+        searchClientField.clear();
+        lisViewClientSearch.getItems().clear();
+        errorLblSearch.setVisible(false);
+        errorLabel.setVisible(false);
     }
 
-    // search function for searchClientField
-    private void searchClient() throws SQLException {
-        String clientName = searchClientField.getText();
-        clientDAO.search(lisViewClientSearch, clientName);
-    }
-
-    private void editClient() throws SQLException {
-        String clientName = searchClientField.getText();
-        if(clientName.isEmpty()){
-            errorLblSearch.setText("Enter Client Full Name");
-            errorLblSearch.setVisible(true);
-        } else if(clientDAO.getClientByName(clientName) == null){
-            errorLblSearch.setText("Client not found");
-            errorLblSearch.setVisible(true);
-        } else {
-            Client client = clientDAO.getClientByName(clientName);
-
-            editClientPane.setVisible(true);
-            errorLblSearch.setVisible(false);
-
-            editName.setText(client.getName());
-            editPhone.setText(client.getPhone());
-            editEmail.setText(client.getEmail());
-            editNotes.setText(client.getNotes());
-        }
-    }
-
-    private void updateClient(){
-        Client client = null;
+    private void addClient() {
         try {
-            client = clientDAO.getClientByName(searchClientField.getText());
+            if (validateFields(nameField, emailField, phoneField)) {
+                String name = nameField.getText();
+                String email = emailField.getText();
+                String phone = phoneField.getText();
+                String notes = notesField.getText();
+                if (!checkClientExists(name, phone, email)) {
+                    Client client = new Client(null, name, phone, notes, email);
+                    clientDAO.insert(client);
+                    dialogAdd.setVisible(false);
+                    loadAllClients();
+                } else {
+                    showError(errorLabel, "Error: Client already exists");
+                }
+            } else {
+                showError(errorLabel, "Error: Please fill all the fields");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String name = editName.getText();
-        String email = editEmail.getText();
-        String phone = editPhone.getText();
-        String notes = editNotes.getText();
-
-        if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && (!client.getName().equals(name) || !client.getEmail().equals(email) || !client.getPhone().equals(phone) || !client.getNotes().equals(notes))) {
-            client.setName(name);
-            client.setPhone(phone);
-            client.setEmail(email);
-            client.setNotes(notes);
-            try {
-                updateClient(client);
-                initializeColumns();
-                loadAllClients();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            clearEdit();
-        } else {
-            errorLblSearch.setVisible(true);
-            errorLblSearch.setText("No changes made");
-        }
     }
 
-    // After click add service button
-    public void getClientData() throws SQLException {
-        String name = nameField.getText();
-        String email = emailField.getText();
-        String phone = phoneField.getText();
-        String notes = notesField.getText();
-
-        boolean exists = checkClientExists(name, phone, email);
-        if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !exists) {
-            Client client = new Client(null, name, phone, notes, email);
-            clientDAO.insert(client);
-            dialogAdd.setVisible(false);
-        } else if (exists) {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Error: Client already exists");
-        } else {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Error: Please fill all the fields");
-        }
-    }
-
-    private void initializeColumns() throws SQLException {
+    private void initializeColumns() {
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        // to edit tables
-        clientsTable.setEditable(true);
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        nameColumn.setOnEditCommit(event -> {
-            Client client = event.getRowValue();
-            client.setName(event.getNewValue());
-            updateClient(client);
-        });
 
-        phoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        phoneColumn.setOnEditCommit(event -> {
-            Client client = event.getRowValue();
-            client.setPhone(event.getNewValue());
-            updateClient(client);
-        });
-
-        notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        notesColumn.setOnEditCommit(event -> {
-            Client client = event.getRowValue();
-            client.setNotes(event.getNewValue());
-            updateClient(client);
-        });
-
-        emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        emailColumn.setOnEditCommit(event -> {
-            Client client = event.getRowValue();
-            client.setEmail(event.getNewValue());
-            updateClient(client);
-        });
         loadAllClients();
     }
 
-    private void updateClient(Client client) {
+    private void loadAllClients() {
         try {
-            clientDAO.update(client);
+            List<Client> clients = clientDAO.getAll();
+            ObservableList<Client> clientsList = FXCollections.observableArrayList(clients);
+            clientsTable.setItems(clientsList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkClientExists(String name, String phone, String email) {
+        try {
+            return clientDAO.getAll().stream()
+                    .anyMatch(client -> client.getName().equals(name) || client.getPhone().equals(phone) || client.getEmail().equals(email));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void deleteClient() {
-        String clientName = editName.getText();
         try {
-            Client clientToDelete = clientDAO.getClientByName(clientName);
+            deleteClientAppointments();
+            Client clientToDelete = clientDAO.getClientByName(searchClientField.getText());
             clientDAO.delete(clientToDelete.getId());
-            editClientPane.setVisible(false);
+            dialogAdd.setVisible(false);
             errorLblSearch.setVisible(false);
             searchClientField.clear();
             initializeColumns();
@@ -300,34 +202,54 @@ public class ClientsController extends Node implements Initializable {
         }
     }
 
-    private void loadAllClients() throws SQLException {
-        List<Client> clients = clientDAO.getAll();
-        ObservableList<Client> clientsList = FXCollections.observableArrayList(clients);
-        clientsTable.setItems(clientsList);
+    private void updateClientData(Client client) {
+        String name = nameField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+        String notes = notesField.getText();
+
+        if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() &&
+                (!client.getName().equals(name) || !client.getEmail().equals(email) ||
+                        !client.getPhone().equals(phone) || !client.getNotes().equals(notes))) {
+            client.setName(name);
+            client.setPhone(phone);
+            client.setEmail(email);
+            client.setNotes(notes);
+            try {
+                clientDAO.update(client);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            showError(errorLblSearch, "No changes made");
+        }
     }
 
-    public boolean checkClientExists(String n, String pho, String em) throws SQLException {
-        boolean clientExist = false;
-        List<Client> clients = clientDAO.getAll();
-        for (Client client : clients) {
-            String clientName = client.getName();
-            String clientPhone = client.getPhone();
-            String clientEmail = client.getEmail();
-            if (clientName.equals(n) || clientPhone.equals(pho) || clientEmail.equals(em)) {
-                clientExist = true;
-                break;
+    private void populateEditFields(Client client) {
+        nameField.setText(client.getName());
+        phoneField.setText(client.getPhone());
+        emailField.setText(client.getEmail());
+        notesField.setText(client.getNotes());
+    }
+
+    private boolean validateFields(TextField... fields) {
+        for (TextField field : fields) {
+            if (field.getText().isEmpty()) {
+                return false;
             }
         }
-        return clientExist;
+        return true;
     }
 
-    private void clearEdit() {
-        errorLblSearch.setVisible(false);
-        editClientPane.setVisible(false);
-        searchClientField.clear();
-        editName.clear();
-        editPhone.clear();
-        editEmail.clear();
-        editNotes.clear();
+    private void clearFields(TextField... fields) {
+        for (TextField field : fields) {
+            field.clear();
+        }
+    }
+
+
+    private void showError(Label label, String message) {
+        label.setText(message);
+        label.setVisible(true);
     }
 }
