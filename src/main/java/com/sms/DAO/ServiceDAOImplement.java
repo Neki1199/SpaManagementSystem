@@ -2,6 +2,7 @@ package com.sms.DAO;
 
 import com.sms.Models.Service;
 import com.sms.ConnectDB;
+import javafx.scene.control.ListView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -105,6 +106,22 @@ public class ServiceDAOImplement implements ServiceDAO {
         ps.setInt(1, id);
         int result = ps.executeUpdate();
         return result;
+    }
+
+    @Override
+    public void search(ListView<String> list, String toSearch) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        String sql = "SELECT name FROM services WHERE name LIKE ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, "%" + toSearch + "%");
+        ResultSet rs = ps.executeQuery();
+
+        list.getItems().clear(); // clear listview
+
+        while (rs.next()) {
+            String name = rs.getString("name");
+            list.getItems().add(name);
+        }
     }
 
     @Override

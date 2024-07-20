@@ -2,6 +2,7 @@ package com.sms.DAO;
 
 import com.sms.Models.Employee;
 import com.sms.ConnectDB;
+import javafx.scene.control.ListView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -90,8 +91,24 @@ public class EmpDAOImplement implements EmployeeDAO {
         String sql = "DELETE FROM employees WHERE empID = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
-        int result = ps.executeUpdate();
-        return result;
+        return ps.executeUpdate();
+    }
+
+    @Override
+    public void search(ListView<String> list, String toSearch) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        String sql = "SELECT fullName, phoneNo FROM employees WHERE fullName LIKE ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, "%" + toSearch + "%");
+        ResultSet rs = ps.executeQuery();
+
+        list.getItems().clear(); // clear listview
+
+        while (rs.next()) {
+            String name = rs.getString("fullName");
+            String phone = rs.getString("phoneNo");
+            list.getItems().add(name + "- " + phone);
+        }
     }
 
     @Override

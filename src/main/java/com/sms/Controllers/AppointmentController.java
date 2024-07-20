@@ -2,6 +2,7 @@ package com.sms.Controllers;
 
 import com.sms.Controllers.Calendar.AddAppointmentView;
 import com.sms.Controllers.Calendar.DayView;
+import com.sms.Controllers.Calendar.SearchEditAppointmentView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -48,11 +49,26 @@ public class AppointmentController extends Node implements Initializable {
 
     public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
     public final DayView dayView = new DayView(this);
-    final AddAppointmentView appointmentView = new AddAppointmentView(this);
+    public final AddAppointmentView appointmentView = new AddAppointmentView(this);
+    final SearchEditAppointmentView searchEditAppointmentView = new SearchEditAppointmentView(this);
     public TextField searchClientField;
     public Button searchClientBtn;
     public ListView<String> clientListView;
-
+    public TextField searchAppointmentField;
+    public Button searchAppointmentBtn;
+    public GridPane addClientGrid;
+    public Label errorLabel1;
+    public TextField nameField;
+    public TextArea notesField;
+    public TextField emailField;
+    public TextField phoneField;
+    public Button addClientBtn1;
+    public Button cancelBtn1;
+    public ListView<String> listViewClientSearch;
+    public HBox boxUpdateDelete;
+    public Button updateAppointment;
+    public Button deleteAppointment;
+    public Label errorLabel2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,6 +80,7 @@ public class AppointmentController extends Node implements Initializable {
 
 
         appointmentView.initializeView();
+        searchEditAppointmentView.initializeView();
 
 
 //        try {

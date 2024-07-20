@@ -18,17 +18,16 @@ FontAwesomeIconView{
 
 #thebox{
     -fx-background-color: #FFFFFF;
-    -fx-alignment: center;
+    -fx-alignment: center-right;
     -fx-spacing: 20;
-    -fx-padding: 10;
     -fx-background-radius: 5 5 0 0;
 }
 
 #thebox Button{
     -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
-    -fx-background-color: #3A69A5;
+    -fx-background-color: #d9873e;
     -fx-alignment: center;
-    -fx-pref-width: 50;
+    -fx-pref-width: 100;
     -fx-pref-height: 30;
     -fx-background-radius: 10;
 }
@@ -174,6 +173,7 @@ GridPane #button{
 }
 
 #errorlbl{
+    -fx-text-fill: #000000;
     -fx-pref-width: 250;
     -fx-alignment: center-left;
 }
@@ -182,4 +182,17 @@ ChoiceBox{
     -fx-font-family: "Lucida Sans";
     -fx-font-size: 10;
     -fx-pref-height: 30;
+}
+
+
+Button{
+    -fx-background-color: #3A69A5;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-pref-height: 30;
+    -fx-background-radius: 10;
+}
+
+#deletebtn{
+    -fx-background-color: #a45c5c;
 }

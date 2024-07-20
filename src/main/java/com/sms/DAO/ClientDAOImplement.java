@@ -3,6 +3,7 @@ package com.sms.DAO;
 import com.sms.Models.Client;
 import com.sms.ConnectDB;
 
+import javafx.scene.control.ListView;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,23 @@ public class ClientDAOImplement implements ClientDAO{
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
         return result;
+    }
+
+    @Override
+    public void search(ListView<String> listView, String toSearch) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        String sql = "SELECT fullName, phoneNo FROM clients WHERE fullName LIKE ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, "%" + toSearch + "%");
+        ResultSet rs = ps.executeQuery();
+
+        listView.getItems().clear(); // clear listview
+
+        while (rs.next()) {
+            String name = rs.getString("fullName");
+            String phone = rs.getString("phoneNo");
+            listView.getItems().add(name + "- " + phone);
+        }
     }
 
     @Override

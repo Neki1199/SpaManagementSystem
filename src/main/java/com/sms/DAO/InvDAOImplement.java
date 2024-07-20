@@ -2,6 +2,7 @@ package com.sms.DAO;
 
 import com.sms.Models.Inventory;
 import com.sms.ConnectDB;
+import javafx.scene.control.ListView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -101,5 +102,21 @@ public class InvDAOImplement implements InventoryDAO{
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
         return result;
+    }
+
+    @Override
+    public void search(ListView<String> list, String toSearch) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        String sql = "SELECT productName FROM inventory WHERE productName LIKE ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, "%" + toSearch + "%");
+        ResultSet rs = ps.executeQuery();
+
+        list.getItems().clear(); // clear listview
+
+        while (rs.next()) {
+            String name = rs.getString("productName");
+            list.getItems().add(name);
+        }
     }
 }
