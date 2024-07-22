@@ -166,6 +166,7 @@ public class AddAppointmentView {
 
                 resetAddAppointmentDialog();
                 aptCon.dayView.onDateSelected();
+                aptCon.weekView.onDateSelected();
             } else {
                 aptCon.errorLabel.setText("Error: time slot full, choose a different hour");
                 aptCon.errorLabel.setVisible(true);

@@ -39,7 +39,10 @@ public class ClientsController extends Node implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         add.setOnAction(event -> showAddButtonDialog());
         addClientBtn.setOnAction(event -> addClient());
-        cancelBtn.setOnAction(event -> {dialogAdd.setVisible(false);clearAll();});
+        cancelBtn.setOnAction(event -> {
+            dialogAdd.setVisible(false);
+            clearAll();
+        });
         searchClientBtn.setOnAction(event -> searchClient());
         lisViewClientSearch.setOnMouseClicked(event -> selectClientFromList());
         editClientBtn.setOnAction(event -> editClient());
@@ -204,7 +207,7 @@ public class ClientsController extends Node implements Initializable {
 
         if (!name.isEmpty() || !email.isEmpty() || !phone.isEmpty() ||
                 !client.getName().equals(name) || !client.getEmail().equals(email) ||
-                        !client.getPhone().equals(phone) || !client.getNotes().equals(notes)) {
+                !client.getPhone().equals(phone) || !client.getNotes().equals(notes)) {
             client.setName(name);
             client.setPhone(phone);
             client.setEmail(email);

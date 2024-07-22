@@ -14,7 +14,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 
 public class DayView {
     private final AppointmentController aptController;
@@ -102,6 +104,10 @@ public class DayView {
         LocalDate selectedDate = aptController.datePicker.getValue();
         if (selectedDate != null) {
             List<Appointment> appointments = appointmentDAO.getFromDate(selectedDate.toString());
+            String month = selectedDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+            String day = selectedDate.getDayOfMonth() + "";
+            String year = selectedDate.getYear() + "";
+            aptController.dayMonthLabel.setText(day + " " + month + " " + year);
             if (appointments.isEmpty()) {
                 clearAppointments();
             } else {

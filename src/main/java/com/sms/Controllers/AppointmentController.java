@@ -3,12 +3,14 @@ package com.sms.Controllers;
 import com.sms.Controllers.Calendar.AddAppointmentView;
 import com.sms.Controllers.Calendar.DayView;
 import com.sms.Controllers.Calendar.SearchEditAppointmentView;
+import com.sms.Controllers.Calendar.WeekView;
 import com.sms.Models.Employee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import java.net.URL;
@@ -22,8 +24,7 @@ public class AppointmentController extends Node implements Initializable {
     public HBox hbox;
     public TableView<TimeSlot> appointmentTable;
     public TableColumn<TimeSlot, String> timeColumn;
-    public DatePicker datePicker, datePicker1, datePickerAddAppointment;
-    public ListView<Label> listView;
+    public DatePicker datePicker, datePickerAddAppointment;
     public Button add, edit, delete, addClientBtn, addAppointmentBtn, cancelBtn;
     public Button searchClientBtn, searchAppointmentBtn, addClientBtn1, cancelBtn1;
     public Button updateAppointment, deleteAppointment;
@@ -38,13 +39,22 @@ public class AppointmentController extends Node implements Initializable {
 
     public final ObservableList<TimeSlot> timeSlots = FXCollections.observableArrayList();
     public final DayView dayView = new DayView(this);
+    public final WeekView weekView = new WeekView(this);
     public final AddAppointmentView appointmentView = new AddAppointmentView(this);
     public final SearchEditAppointmentView searchEditAppointmentView = new SearchEditAppointmentView(this);
+
+    public DatePicker datePickerWeek;
+    public TableView<String> weekTable;
+    public TableColumn<String, String> timeColumnWeek;
+    public Label monthLabel;
+    public AnchorPane weekAnchor;
+    public Label dayMonthLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             dayView.initializeDayView();
+            weekView.initializeWeekView();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

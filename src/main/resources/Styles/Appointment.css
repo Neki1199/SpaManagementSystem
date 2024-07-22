@@ -62,7 +62,7 @@ TabPane AnchorPane{
 }
 
 .table-view .column-header {
-    -fx-background-color: transparent;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #8baddc 50%, #6098e5 100%);
 }
 .table-view .column-header-employee1, .table-view .column-header-employee6{
     -fx-background-color: #b25858;

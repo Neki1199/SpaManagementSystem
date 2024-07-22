@@ -55,6 +55,7 @@ public class SearchEditAppointmentView {
             try {
                 updateAppointment();
                 aptCon.dayView.onDateSelected();
+                aptCon.weekView.onDateSelected();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -69,6 +70,7 @@ public class SearchEditAppointmentView {
                 int appointmentID = Integer.parseInt(aptCon.searchAppointmentField.getText());
                 appointmentDAO.delete(appointmentID);
                 aptCon.dayView.onDateSelected();
+                aptCon.weekView.onDateSelected();
                 resetDialog();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
