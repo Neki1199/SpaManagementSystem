@@ -50,11 +50,6 @@ public class ClientsController extends Node implements Initializable {
         loadAllClients();
     }
 
-    private void deleteClientAppointments() throws SQLException {
-        Client client = clientDAO.getClientByName(searchClientField.getText());
-        appointmentDAO.deleteFromClientID(client.getId());
-    }
-
     private void showAddButtonDialog() {
         clearFields(nameField, emailField, phoneField);
         notesField.clear();
@@ -189,7 +184,6 @@ public class ClientsController extends Node implements Initializable {
 
     private void deleteClient() {
         try {
-            deleteClientAppointments();
             Client clientToDelete = clientDAO.getClientByName(searchClientField.getText());
             clientDAO.delete(clientToDelete.getId());
             dialogAdd.setVisible(false);
@@ -208,9 +202,9 @@ public class ClientsController extends Node implements Initializable {
         String phone = phoneField.getText();
         String notes = notesField.getText();
 
-        if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() &&
-                (!client.getName().equals(name) || !client.getEmail().equals(email) ||
-                        !client.getPhone().equals(phone) || !client.getNotes().equals(notes))) {
+        if (!name.isEmpty() || !email.isEmpty() || !phone.isEmpty() ||
+                !client.getName().equals(name) || !client.getEmail().equals(email) ||
+                        !client.getPhone().equals(phone) || !client.getNotes().equals(notes)) {
             client.setName(name);
             client.setPhone(phone);
             client.setEmail(email);

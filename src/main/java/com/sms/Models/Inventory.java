@@ -3,14 +3,14 @@ package com.sms.Models;
 public class Inventory {
     private Integer id;
     private String name;
-    private int qty;
+    private int quantity;
     private double cost;
     private String description;
 
-    public Inventory(Integer id, String name, int qty, double cost, String description) {
+    public Inventory(Integer id, String name, int quantity, double cost, String description) {
         this.id = id;
         this.name = name;
-        this.qty = qty;
+        this.quantity = quantity;
         this.cost = cost;
         this.description = description;
     }
@@ -31,12 +31,12 @@ public class Inventory {
         this.name = name;
     }
 
-    public int getQty() {
-        return qty;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getCost() {
@@ -60,7 +60,7 @@ public class Inventory {
         return "Inventory{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", qty=" + qty +
+                ", qty=" + quantity +
                 ", cost=" + cost +
                 ", description='" + description + '\'' +
                 '}';

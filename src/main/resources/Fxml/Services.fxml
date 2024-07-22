@@ -91,7 +91,7 @@
          </Button>
       </left>
       <right>
-         <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="372.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <HBox id="thebox" alignment="CENTER" prefHeight="51.0" prefWidth="424.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
                <Insets right="20.0" />
             </padding>

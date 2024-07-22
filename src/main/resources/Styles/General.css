@@ -160,3 +160,9 @@ ListView{
     -fx-pref-width: 70;
     -fx-pref-height: 30;
 }
+
+#errorlbl{
+    -fx-text-fill: #363636;
+    -fx-pref-width: 200;
+    -fx-pref-height: 30;
+}

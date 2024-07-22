@@ -1,5 +1,6 @@
 package com.sms.DAO;
 
+import com.sms.Models.Client;
 import com.sms.Models.Inventory;
 import com.sms.ConnectDB;
 import javafx.scene.control.ListView;
@@ -58,7 +59,7 @@ public class InvDAOImplement implements InventoryDAO{
         String sql = "INSERT INTO inventory(productName, quantity, cost, description) VALUES(?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, inventory.getName());
-        ps.setInt(2, inventory.getQty());
+        ps.setInt(2, inventory.getQuantity());
         ps.setDouble(3, inventory.getCost());
         ps.setString(4, inventory.getDescription());
 
@@ -78,7 +79,7 @@ public class InvDAOImplement implements InventoryDAO{
         String sql = "UPDATE inventory set productName = ?, quantity = ?, cost = ?, description = ? WHERE productId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, inventory.getName());
-        ps.setInt(2, inventory.getQty());
+        ps.setInt(2, inventory.getQuantity());
         ps.setDouble(3, inventory.getCost());
         ps.setString(4, inventory.getDescription());
         ps.setInt(5, inventory.getId());
@@ -118,5 +119,26 @@ public class InvDAOImplement implements InventoryDAO{
             String name = rs.getString("productName");
             list.getItems().add(name);
         }
+    }
+
+    @Override
+    public Inventory getProductByName(String name) throws SQLException {
+        Connection con = ConnectDB.getConnection();
+        Inventory inventory = null;
+
+        String sql = "SELECT productId, productName, quantity, cost, description FROM inventory WHERE productName = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int productId = rs.getInt("productId");
+            String productName = rs.getString("productName");
+            int quantity = rs.getInt("quantity");
+            double cost = rs.getDouble("cost");
+            String description = rs.getString("description");
+            inventory = new Inventory(productId, productName, quantity, cost, description);
+        }
+        return inventory;
     }
 }
