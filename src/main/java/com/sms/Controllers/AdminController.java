@@ -16,14 +16,16 @@ public class AdminController implements Initializable{
         // listener of SelectedMenuItem to know which menu button is selected, to change the center of admin and staff.fxml
         Model.getInstance().getViewFactory().adminSelectedMenuItemProperty().addListener((observableValue, oldVal, newVal) -> {
             switch (newVal){
+                case "Dashboard" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
                 case "Appointments" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAppointmentsView());
+                case "Pending Payments" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getPaymentsView());
                 case "Clients" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getClientsView());
                 case "Services" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getServicesView());
                 case "Inventory" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getInventoryView());
                 case "Staff" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getStaffView());
                 case "Invoices" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getInvoicesView());
                 case "Reports" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getReportsView());
-                default -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAppointmentsView());
+                default -> admin_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
             }
         });
     }

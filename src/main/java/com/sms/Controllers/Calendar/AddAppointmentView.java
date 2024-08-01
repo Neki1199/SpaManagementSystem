@@ -1,21 +1,17 @@
 package com.sms.Controllers.Calendar;
 
-import com.sms.Controllers.ClientsController;
+import com.sms.Controllers.*;
 import com.sms.Models.Appointment;
 import com.sms.Models.Client;
 import com.sms.Models.Employee;
 import com.sms.Models.Service;
-import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AddAppointmentView {
 
@@ -167,6 +163,7 @@ public class AddAppointmentView {
                 resetAddAppointmentDialog();
                 aptCon.dayView.onDateSelected();
                 aptCon.weekView.onDateSelected();
+                NotifyAppointmentsChanges.incrementAppointmentCount();
             } else {
                 aptCon.errorLabel.setText("Error: time slot full, choose a different hour");
                 aptCon.errorLabel.setVisible(true);

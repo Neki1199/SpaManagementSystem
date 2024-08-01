@@ -1,6 +1,9 @@
 package com.sms.Controllers.Calendar;
 
 import com.sms.Controllers.AppointmentController;
+import com.sms.Controllers.DashboardController;
+import com.sms.Controllers.NotifyAppointmentsChanges;
+import com.sms.Controllers.PaymentsController;
 import com.sms.DAO.*;
 import com.sms.Models.Appointment;
 import com.sms.Models.Client;
@@ -54,8 +57,6 @@ public class SearchEditAppointmentView {
         aptCon.updateAppointment.setOnAction(event -> {
             try {
                 updateAppointment();
-                aptCon.dayView.onDateSelected();
-                aptCon.weekView.onDateSelected();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -71,6 +72,7 @@ public class SearchEditAppointmentView {
                 appointmentDAO.delete(appointmentID);
                 aptCon.dayView.onDateSelected();
                 aptCon.weekView.onDateSelected();
+                NotifyAppointmentsChanges.decrementAppointmentCount();
                 resetDialog();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -106,6 +108,9 @@ public class SearchEditAppointmentView {
         Employee newEmployee = employeeDAO.getEmployeeByName(employeeSelected);
         if (isSlotAvailable || (appointment.getDate().equals(dateSelected) && appointment.getClientId() != newClient.getId()) || (appointment.getDate().equals(dateSelected) && appointment.getStaffId() == newEmployee.getId())) {
             updateAppointmentDetails(appointment, clientSelected, serviceSelected, employeeSelected, dateSelected, hourSelected, minuteSelected);
+            aptCon.dayView.onDateSelected();
+            aptCon.weekView.onDateSelected();
+            NotifyAppointmentsChanges.incrementAppointmentCount();
             resetDialog();
         } else {
             showError(aptCon.errorLabel, "Error: time slot full, choose a different hour");

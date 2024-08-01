@@ -14,6 +14,7 @@ public class StaffMenuController implements Initializable {
     public Button servicesBtn;
     public Button configBtn;
     public Button logoutBtn;
+    public Button paymentsBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -31,6 +32,11 @@ public class StaffMenuController implements Initializable {
         appointmentsBtn.setOnAction(event -> onAppointment());
         clientsBtn.setOnAction(event -> onClients());
         servicesBtn.setOnAction(event -> onServices());
+        paymentsBtn.setOnAction(event -> onPayments());
+    }
+
+    private void onPayments() {
+        Model.getInstance().getViewFactory().staffSelectedMenuItemProperty().set("Pending Payments");
     }
 
     private void onAppointment(){

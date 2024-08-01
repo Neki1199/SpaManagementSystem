@@ -20,6 +20,14 @@
                     <Font size="11.0" />
                 </font>
             </Button>
+         <Button id="apptBtn" fx:id="paymentsBtn" mnemonicParsing="false" prefHeight="94.0" text="Pending Payments">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="20" />
+            </graphic>
+            <font>
+               <Font size="11.0" />
+            </font>
+         </Button>
             <Button fx:id="clientsBtn" mnemonicParsing="false" text="Clients">
                 <graphic>
                     <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="20" />
@@ -31,7 +39,7 @@
                 </graphic>
             </Button>
         </VBox>
-        <ImageView fitHeight="129.0" fitWidth="169.0" layoutX="16.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="129.0" fitWidth="169.0" layoutX="16.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="5.0">
             <Image url="@../Images/logo.png" />
         </ImageView>
         <HBox layoutX="25.0" layoutY="620.0" prefHeight="50.0" prefWidth="150.0" styleClass="mainMenu">

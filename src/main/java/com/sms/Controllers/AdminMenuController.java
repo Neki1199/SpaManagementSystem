@@ -19,6 +19,9 @@ public class AdminMenuController implements Initializable {
     public Button configBtn;
     public Button logoutBtn;
     public Button servicesBtn;
+    public Button dashboardBtn;
+    public Button paymentsBtn;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,6 +42,18 @@ public class AdminMenuController implements Initializable {
         staffBtn.setOnAction(event -> onStaff());
         invoicesBtn.setOnAction(event -> onInvoices());
         reportsBtn.setOnAction(event -> onReports());
+        dashboardBtn.setOnAction(event -> onDashboard());
+        paymentsBtn.setOnAction(event -> onPayments());
+        //configBtn.setOnAction(event -> onConfig());
+
+    }
+
+    private void onPayments() {
+        Model.getInstance().getViewFactory().adminSelectedMenuItemProperty().set("Pending Payments");
+    }
+
+    private void onDashboard() {
+        Model.getInstance().getViewFactory().adminSelectedMenuItemProperty().set("Dashboard");
     }
 
     private void onReports() {

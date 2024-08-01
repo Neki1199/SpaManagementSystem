@@ -28,7 +28,7 @@
             <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="NEVER">
                 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="877.0">
                     <DatePicker id="datePicker" fx:id="datePicker" layoutX="15.0" layoutY="7.0" AnchorPane.topAnchor="7.0" />
-                    <TableView fx:id="appointmentTable" editable="true" layoutX="15.0" layoutY="33.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="33.0">
+                    <TableView fx:id="appointmentTable" editable="true" layoutX="15.0" layoutY="33.0" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
                         <columns>
                             <TableColumn id="time" fx:id="timeColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Time" />
                         </columns>
@@ -42,21 +42,24 @@
             </ScrollPane>
         </Tab>
         <Tab id="tab" text="Week">
-            <AnchorPane fx:id="weekAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <DatePicker fx:id="datePickerWeek" layoutX="14.0" layoutY="27.0" AnchorPane.topAnchor="7.0" />
-            <TableView fx:id="weekTable" editable="true" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="33.0">
-               <columns>
-                  <TableColumn id="time" fx:id="timeColumnWeek" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Time" />
-               </columns>
-            </TableView>
-            <Label fx:id="monthLabel" layoutX="391.0" layoutY="11.0" prefHeight="18.0" prefWidth="90.0" text="Month" textFill="#5e5d5d" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="10.0">
-               <font>
-                  <Font name="Lucida Sans Demibold Roman" size="14.0" />
-               </font></Label>
-            </AnchorPane>
-        </Tab>
-        <Tab id="tab" text="Month">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="NEVER">
+            <content>
+                  <AnchorPane fx:id="weekAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <DatePicker fx:id="datePickerWeek" layoutX="14.0" layoutY="27.0" AnchorPane.topAnchor="7.0" />
+                  <TableView fx:id="weekTable" editable="true" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
+                     <columns>
+                        <TableColumn id="time" fx:id="timeColumnWeek" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Time" />
+                     </columns>
+                  </TableView>
+                  <Label fx:id="monthLabel" layoutX="391.0" layoutY="11.0" prefHeight="18.0" prefWidth="90.0" text="Month" textFill="#5e5d5d" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="Lucida Sans Demibold Roman" size="14.0" />
+                     </font>
+                  </Label>
+                  <HBox fx:id="boxColorLabel" alignment="CENTER" layoutX="29.0" layoutY="515.0" prefHeight="38.0" prefWidth="822.0" spacing="20.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  </AnchorPane>
+            </content>
+         </ScrollPane>
         </Tab>
         <Tab id="tab" text="List All">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

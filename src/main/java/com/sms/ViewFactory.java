@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 
@@ -28,6 +29,8 @@ public class ViewFactory {
     private AnchorPane staffDashboard;
     private AnchorPane invoicesDashboard;
     private AnchorPane reportsDashboard;
+    private AnchorPane principalDashboard;
+    private AnchorPane paymentsDashboard;
 
     public ViewFactory() {
         this.adminSelectedMenuItem = new SimpleStringProperty("");
@@ -35,6 +38,17 @@ public class ViewFactory {
     }
 
     // Method to get the AnchorPane to be attached with the staff and admin menu
+    public AnchorPane getDashboardView() {
+        if (principalDashboard == null) {
+            try {
+                principalDashboard = new FXMLLoader(getClass().getResource("/Fxml/Dashboard.fxml")).load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return principalDashboard;
+    }
+
     public AnchorPane getAppointmentsView() {
         if (appointmentsDashboard == null) {
             try {
@@ -98,6 +112,15 @@ public class ViewFactory {
         return reportsDashboard;
     }
 
+    public AnchorPane getPaymentsView() {
+        if(paymentsDashboard == null){
+            try{
+                paymentsDashboard = new FXMLLoader(getClass().getResource("/Fxml/Payments.fxml")).load();
+            } catch (Exception e) {throw new RuntimeException(e);}
+        }
+        return paymentsDashboard;
+    }
+
     public void showCreateUser(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/CreateFirstUser.fxml"));
         createStageNonResizable(loader);
@@ -109,14 +132,24 @@ public class ViewFactory {
         createStageNonResizable(loader);
     }
 
-    public void showStaffAppointments(){
+    public void showDashboard(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Dashboard.fxml"));
+        createStage(loader);
+    }
+
+    public void showPayments(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Payments.fxml"));
+        createStage(loader);
+    }
+
+    public void showStaff(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Staff.fxml"));
         StaffController controller = new StaffController();
         loader.setController(controller);
         createStage(loader);
     }
 
-    public void showAdminAppointments(){
+    public void showAdmin(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin.fxml"));
         AdminController controller = new AdminController();
         loader.setController(controller);

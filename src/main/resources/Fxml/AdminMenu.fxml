@@ -12,9 +12,25 @@
 <VBox prefHeight="700.0" prefWidth="200.0" styleClass="mainMenu" stylesheets="@../Styles/Menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sms.Controllers.AdminMenuController">
    <AnchorPane prefHeight="700.0" prefWidth="200.0">
       <VBox layoutX="25.0" layoutY="120.0" prefHeight="500.0" prefWidth="150.0" styleClass="mainMenu">
+         <Button id="apptBtn" fx:id="dashboardBtn" mnemonicParsing="false" text="Dashboard">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="DASHBOARD" size="20" />
+            </graphic>
+            <font>
+               <Font size="11.0" />
+            </font>
+         </Button>
          <Button id="apptBtn" fx:id="appointmentsBtn" mnemonicParsing="false" text="Appointments">
             <graphic>
                <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR_CHECK_ALT" size="20" />
+            </graphic>
+            <font>
+               <Font size="11.0" />
+            </font>
+         </Button>
+         <Button id="apptBtn" fx:id="paymentsBtn" mnemonicParsing="false" prefHeight="94.0" text="Pending Payments">
+            <graphic>
+               <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="20" />
             </graphic>
             <font>
                <Font size="11.0" />
@@ -51,7 +67,7 @@
             </graphic>
          </Button>
       </VBox>
-      <ImageView fitHeight="101.0" fitWidth="150.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="101.0" fitWidth="150.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="5.0">
          <Image url="@../Images/logo.png" />
       </ImageView>
       <HBox layoutX="25.0" layoutY="635.0" prefHeight="50.0" prefWidth="150.0" styleClass="mainMenu">

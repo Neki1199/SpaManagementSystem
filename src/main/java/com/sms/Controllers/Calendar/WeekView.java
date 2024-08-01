@@ -4,12 +4,14 @@ import com.sms.Controllers.AppointmentController;
 import com.sms.DAO.*;
 import com.sms.Models.Appointment;
 import com.sms.Models.Client;
+import com.sms.Models.Employee;
 import com.sms.Models.Service;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
@@ -27,6 +29,7 @@ public class WeekView {
     private final AppointmentDAO appointmentDAO = new AptDAOImplement();
     private final ServiceDAO serviceDAO = new ServiceDAOImplement();
     private final ClientDAO clientDAO = new ClientDAOImplement();
+    private final EmployeeDAO employeeDAO = new EmpDAOImplement();
     ObservableList<String> timeSlots = FXCollections.observableArrayList();
 
     public WeekView(AppointmentController appointmentController) {
@@ -36,6 +39,7 @@ public class WeekView {
     public void initializeWeekView() throws SQLException {
         apCon.datePickerWeek.setValue(LocalDate.now());
         onDateSelected();
+        createEmployeeLabelColor();
         apCon.datePickerWeek.setOnAction(event -> {
             try {
                 onDateSelected();
@@ -67,10 +71,14 @@ public class WeekView {
                 timeSlots.add(timeFormatted);
             }
         }
-        TableColumn<String, String> timeColumn = new TableColumn<>("Time");
-        timeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue()));
-        apCon.weekTable.getColumns().add(timeColumn);
+        // Set the cell value factory correctly
+        apCon.timeColumnWeek.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue()));
+        // Bind the timeSlots to the TableView
         apCon.weekTable.setItems(timeSlots);
+        // Ensure the time column is added to the TableView
+        if (!apCon.weekTable.getColumns().contains(apCon.timeColumnWeek)) {
+            apCon.weekTable.getColumns().add(apCon.timeColumnWeek);
+        }
     }
 
     private void loadDaysColumn() throws SQLException {
@@ -137,5 +145,30 @@ public class WeekView {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void createEmployeeLabelColor() throws SQLException {
+        List<Employee> employees = employeeDAO.getAll();
+        if (!employees.isEmpty()) {
+            for(Employee employee: employees){
+                Label employeeLabel = new Label();
+                employeeLabel.setText(employee.getName());
+                String color = getColor(employee.getId());
+                employeeLabel.setStyle("-fx-background-color: " + color + ";");
+
+                apCon.boxColorLabel.getChildren().add(employeeLabel);
+            }
+        }
+    }
+
+    public static String getColor(int employeeId) {
+        return switch (employeeId) {
+            case 1, 6 -> "#b25858";
+            case 2, 7 -> "#4e9d4e";
+            case 3, 8 -> "#4545F1";
+            case 4, 9 -> "#f3b55b";
+            case 5, 10 -> "#793979";
+            default -> "";
+        };
     }
 }

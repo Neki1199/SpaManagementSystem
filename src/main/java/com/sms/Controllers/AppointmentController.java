@@ -49,6 +49,7 @@ public class AppointmentController extends Node implements Initializable {
     public Label monthLabel;
     public AnchorPane weekAnchor;
     public Label dayMonthLabel;
+    public HBox boxColorLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

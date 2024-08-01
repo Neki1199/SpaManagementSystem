@@ -74,6 +74,6 @@ public class LoginController implements Initializable {
         // to retrieve the stage of that object (if not, is not possible to get the stage)
         Stage stage = (Stage) loginErrorLabel.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(stage);
-        Model.getInstance().getViewFactory().showAdminAppointments();
+        Model.getInstance().getViewFactory().showAdmin();
     }
 }

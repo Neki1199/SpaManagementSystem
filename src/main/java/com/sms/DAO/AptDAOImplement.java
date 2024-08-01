@@ -186,4 +186,15 @@ public class AptDAOImplement implements AppointmentDAO{
         }
         return clientAppointments;
     }
+
+    @Override
+    public List<Appointment> getNotPaid(List<Appointment> appointments) throws SQLException {
+        List<Appointment> notPaidAppointments = new ArrayList<>();
+        for(Appointment appointment : appointments) {
+            if(appointment.getStatus().equals("Not Paid")){
+                notPaidAppointments.add(appointment);
+            }
+        }
+        return notPaidAppointments;
+    }
 }

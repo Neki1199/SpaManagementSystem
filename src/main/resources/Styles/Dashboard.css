@@ -1,0 +1,43 @@
+AnchorPane{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3A69A5 50%, #144c94 100%);
+    -fx-alignment: center;
+    -fx-spacing: 30;
+}
+
+FontAwesomeIconView{
+    -fx-fill: #ffffff;
+}
+
+ListView{
+    -fx-cell-size: 10;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 5;
+    -fx-text-alignment: center;
+    -fx-font-style: italic;
+    -fx-effect: dropshadow(three-pass-box, #000000, 2, 0, 0, 2);
+
+}
+
+Label{
+    -fx-background-color: #5a90c9;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, #000000, 2, 0, 0, 1);
+}
+
+#date{
+    -fx-background-color: transparent;
+}
+
+#boxStock{
+    -fx-background-color: transparent;
+}
+
+HBox{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, #000000, 2, 0, 0, 2);
+}

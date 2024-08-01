@@ -6,13 +6,15 @@ public class Inventory {
     private int quantity;
     private double cost;
     private String description;
+    private String url;
 
-    public Inventory(Integer id, String name, int quantity, double cost, String description) {
+    public Inventory(Integer id, String name, int quantity, double cost, String description, String url) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.cost = cost;
         this.description = description;
+        this.url = url;
     }
 
     public Integer getId() {
@@ -64,6 +66,14 @@ public class Inventory {
                 ", cost=" + cost +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
 

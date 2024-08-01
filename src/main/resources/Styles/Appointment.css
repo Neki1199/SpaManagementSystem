@@ -47,27 +47,47 @@ HBox Label{
     -fx-font-weight: bold;
 }
 
-TabPane #tab{
-    -fx-background-color: #3A69A563;
-    -fx-text-fill: #ffffff;
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #ffffff;
+    -fx-effect: innershadow(two-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-border-color: transparent transparent #dddddd transparent;
+}
+
+.tab-pane .tab{
+    -fx-background-color: #ffffff;
     -fx-font-weight: bold;
-    -fx-pref-width: 180;
+    -fx-pref-width: 100;
     -fx-pref-height: 30;
 }
 
+.tab-pane .tab:selected{
+    -fx-background-color: #eeeeee;
+}
+
+.tab-pane .tab .tab-label{
+    -fx-alignment: CENTER;
+    -fx-text-fill: #4d4d4d;
+    -fx-font-weight: bold;
+    -fx-cursor:hand;
+}
+
+.tab-pane .tab:selected .tab-label{
+    -fx-border-color: transparent transparent #144c94 transparent;
+}
+
 TabPane AnchorPane{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #ffffff;
     -fx-alignment: center;
     -fx-background-radius: 0 0 5 5;
 }
 
 .table-view .column-header {
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #8baddc 50%, #6098e5 100%);
+    -fx-background-color: #3A69A5;
 }
+
 .table-view .column-header-employee1, .table-view .column-header-employee6{
     -fx-background-color: #b25858;
 }
-
 .table-view .column-header-employee2, .table-view .column-header-employee7{
     -fx-background-color: #4e9d4e;
 }

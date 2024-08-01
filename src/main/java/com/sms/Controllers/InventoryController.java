@@ -31,6 +31,7 @@ public class InventoryController extends Node implements Initializable {
     public ListView<String> listViewProductSearch;
     public HBox boxUpdateDelete;
     public Label errorLabelSearch;
+    public TextField urlField;
 
     InventoryDAO inventoryDAO = new InvDAOImplement();
 
@@ -93,6 +94,7 @@ public class InventoryController extends Node implements Initializable {
                 descriptionField.setText(product.getDescription());
                 quantityField.setText(String.valueOf(product.getQuantity()));
                 priceField.setText(String.valueOf(product.getCost()));
+                urlField.setText(product.getUrl());
                 boxUpdateDelete.setVisible(true);
                 addProductBtn.setVisible(false);
                 dialogAdd.setVisible(true);
@@ -125,14 +127,17 @@ public class InventoryController extends Node implements Initializable {
         String description = descriptionField.getText();
         int quantity = Integer.parseInt(quantityField.getText());
         double cost = Double.parseDouble(priceField.getText());
+        String url = urlField.getText();
 
         if (!name.isEmpty() || quantity >= 0 || cost >= 0 || !inventory.getDescription().equals(description) ||
-                !inventory.getName().equals(name) || inventory.getQuantity() != quantity || inventory.getCost() != cost)
+                !inventory.getName().equals(name) || inventory.getQuantity() != quantity ||
+                inventory.getCost() != cost || !inventory.getUrl().equals(url))
         {
             inventory.setName(name);
             inventory.setQuantity(quantity);
             inventory.setCost(cost);
             inventory.setDescription(description);
+            inventory.setUrl(url);
 
             try {
                 inventoryDAO.update(inventory);
@@ -150,6 +155,7 @@ public class InventoryController extends Node implements Initializable {
         quantityField.clear();
         priceField.clear();
         searchProductField.clear();
+        urlField.clear();
         listViewProductSearch.getItems().clear();
         errorLabelSearch.setVisible(false);
         errorLabel.setVisible(false);
@@ -161,6 +167,7 @@ public class InventoryController extends Node implements Initializable {
         priceField.clear();
         quantityField.clear();
         descriptionField.clear();
+        urlField.clear();
         errorLabel.setVisible(false);
         boxUpdateDelete.setVisible(false);
         addProductBtn.setVisible(true);
@@ -173,9 +180,10 @@ public class InventoryController extends Node implements Initializable {
                 String price = priceField.getText();
                 String quantity = quantityField.getText();
                 String description = descriptionField.getText();
+                String url = urlField.getText();
 
                 if (!checkProductExists(name)) {
-                    Inventory newProduct = new Inventory(null, name, Integer.parseInt(quantity), Double.parseDouble(price), description);
+                    Inventory newProduct = new Inventory(null, name, Integer.parseInt(quantity), Double.parseDouble(price), description, url);
                     inventoryDAO.insert(newProduct);
                     dialogAdd.setVisible(false);
                     loadAllProducts();
@@ -196,6 +204,7 @@ public class InventoryController extends Node implements Initializable {
         priceField.clear();
         quantityField.clear();
         descriptionField.clear();
+        urlField.clear();
         errorLabel.setVisible(false);
     }
 

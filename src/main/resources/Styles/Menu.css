@@ -11,29 +11,24 @@
 }
 
 .mainMenu VBox{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: transparent;
     -fx-alignment: center;
-    -fx-background-radius: 5;
+    -fx-spacing: 10;
 }
 
 .mainMenu VBox Button {
-    -fx-background-color: #85a3c2;
-    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 5, 0, 0, 6);
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, #000000, 5, 0, 0, 0);
     -fx-graphic-text-gap: 10;
     -fx-alignment: baseline-left;
     -fx-text-fill: #FFFFFF;
-    /*-fx-font-weight: bold;*/
-    -fx-pref-width: 120;
+    -fx-pref-width: 150;
     -fx-pref-height: 40;
-    -fx-background-radius: 10;
-}
 
-.mainMenu #apptBtn{
-    -fx-font-size: 11;
 }
 
 .mainMenu VBox Button:hover {
-    -fx-background-color: #d9d4d4;
+    -fx-background-color: #4f4e4e;
     -fx-cursor: hand;
 }
 

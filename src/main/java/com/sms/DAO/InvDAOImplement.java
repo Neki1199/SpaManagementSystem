@@ -14,7 +14,7 @@ public class InvDAOImplement implements InventoryDAO{
     public Inventory get(int id) throws SQLException {
         Inventory inventory = null;
         Connection con = ConnectDB.getConnection();
-        String sql = "SELECT productId, productName, quantity, cost, description FROM inventory WHERE productId = ?";
+        String sql = "SELECT productId, productName, quantity, cost, description, url FROM inventory WHERE productId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -24,8 +24,9 @@ public class InvDAOImplement implements InventoryDAO{
             int quantity = rs.getInt("quantity");
             double cost = rs.getDouble("cost");
             String description = rs.getString("description");
+            String url = rs.getString("url");
 
-            inventory = new Inventory(productId, productName, quantity, cost, description);
+            inventory = new Inventory(productId, productName, quantity, cost, description, url);
         }
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
@@ -46,7 +47,8 @@ public class InvDAOImplement implements InventoryDAO{
             int quantity = rs.getInt("quantity");
             double cost = rs.getDouble("cost");
             String description = rs.getString("description");
-            inventoryList.add(new Inventory(productId, productName, quantity, cost, description));
+            String url = rs.getString("url");
+            inventoryList.add(new Inventory(productId, productName, quantity, cost, description, url));
         }
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
@@ -56,12 +58,13 @@ public class InvDAOImplement implements InventoryDAO{
     @Override
     public int insert(Inventory inventory) throws SQLException {
         Connection con = ConnectDB.getConnection();
-        String sql = "INSERT INTO inventory(productName, quantity, cost, description) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO inventory(productName, quantity, cost, description, url) VALUES(?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, inventory.getName());
         ps.setInt(2, inventory.getQuantity());
         ps.setDouble(3, inventory.getCost());
         ps.setString(4, inventory.getDescription());
+        ps.setString(5, inventory.getUrl());
 
         int result = ps.executeUpdate();
         ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -76,13 +79,14 @@ public class InvDAOImplement implements InventoryDAO{
     @Override
     public void update(Inventory inventory) throws SQLException {
         Connection con = ConnectDB.getConnection();
-        String sql = "UPDATE inventory set productName = ?, quantity = ?, cost = ?, description = ? WHERE productId = ?";
+        String sql = "UPDATE inventory set productName = ?, quantity = ?, cost = ?, description = ?, url = ? WHERE productId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, inventory.getName());
         ps.setInt(2, inventory.getQuantity());
         ps.setDouble(3, inventory.getCost());
         ps.setString(4, inventory.getDescription());
-        ps.setInt(5, inventory.getId());
+        ps.setString(5, inventory.getUrl());
+        ps.setInt(6, inventory.getId());
         ps.executeUpdate();
         ConnectDB.closePreparedStatement(ps);
         ConnectDB.closeConnection(con);
@@ -126,7 +130,7 @@ public class InvDAOImplement implements InventoryDAO{
         Connection con = ConnectDB.getConnection();
         Inventory inventory = null;
 
-        String sql = "SELECT productId, productName, quantity, cost, description FROM inventory WHERE productName = ?";
+        String sql = "SELECT productId, productName, quantity, cost, description, url FROM inventory WHERE productName = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
@@ -137,7 +141,8 @@ public class InvDAOImplement implements InventoryDAO{
             int quantity = rs.getInt("quantity");
             double cost = rs.getDouble("cost");
             String description = rs.getString("description");
-            inventory = new Inventory(productId, productName, quantity, cost, description);
+            String url = rs.getString("url");
+            inventory = new Inventory(productId, productName, quantity, cost, description, url);
         }
         return inventory;
     }

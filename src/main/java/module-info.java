@@ -4,6 +4,7 @@ module com.sms {
     requires java.sql;
     requires java.desktop;
     requires org.xerial.sqlitejdbc;
+    requires org.controlsfx.controls;
 
 
     opens com.sms to javafx.fxml;

@@ -17,6 +17,7 @@ public class StaffController implements Initializable {
         Model.getInstance().getViewFactory().adminSelectedMenuItemProperty().addListener((observableValue, oldVal, newVal) -> {
             switch (newVal){
                 case "Appointments" -> staff_parent.setCenter(Model.getInstance().getViewFactory().getAppointmentsView());
+                case "Pending Payments" -> staff_parent.setCenter(Model.getInstance().getViewFactory().getPaymentsView());
                 case "Clients" -> staff_parent.setCenter(Model.getInstance().getViewFactory().getClientsView());
                 case "Services" -> staff_parent.setCenter(Model.getInstance().getViewFactory().getServicesView());
                 default -> staff_parent.setCenter(Model.getInstance().getViewFactory().getAppointmentsView());

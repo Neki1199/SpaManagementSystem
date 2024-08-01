@@ -12,4 +12,5 @@ public interface AppointmentDAO extends DAO<Appointment> {
 
     List<Appointment> getFromDate(String formattedDate) throws SQLException;
     List<Appointment> getFromClient(Integer clientId) throws SQLException;
+    List<Appointment> getNotPaid(List<Appointment> appointments) throws SQLException;
 }
