@@ -110,6 +110,7 @@ public class SearchEditAppointmentView {
             updateAppointmentDetails(appointment, clientSelected, serviceSelected, employeeSelected, dateSelected, hourSelected, minuteSelected);
             aptCon.dayView.onDateSelected();
             aptCon.weekView.onDateSelected();
+            NotifyAppointmentsChanges.decrementAppointmentCount();
             NotifyAppointmentsChanges.incrementAppointmentCount();
             resetDialog();
         } else {

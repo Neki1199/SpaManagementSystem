@@ -32,6 +32,10 @@
     -fx-cursor: hand;
 }
 
+.mainMenu VBox Button:focused{
+    -fx-background-color: #4f4e4e;
+}
+
 .mainMenu HBox{
     -fx-background-color: #FFFFFF;
     -fx-alignment: center;

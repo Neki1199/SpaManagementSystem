@@ -15,15 +15,18 @@ FontAwesomeIconView{
 
 HBox{
     -fx-background-color: #ffffff;
-    -fx-background-radius: 5;
-    -fx-alignment: center;
-    -fx-effect: dropshadow(three-pass-box, #000000, 2, 0, 0, 2);
+}
+
+#topBox{
+    -fx-border-color: transparent transparent #bbbbbb transparent;
+    -fx-effect: dropshadow(three-pass-box, #000000, 0, 0, 0, 0);
+    -fx-background-radius: 0;
 }
 
 BorderPane{
     -fx-background-color: #ffffff;
     -fx-background-radius: 5;
-    -fx-effect: dropshadow(three-pass-box, #000000, 0, 0, 0, 1);
+    -fx-effect: dropshadow(three-pass-box, #000000, 2, 0, 0, 2);
 }
 
 .table-view{
@@ -73,4 +76,39 @@ TableView Label{
     -fx-font-weight: bold;
     -fx-pref-width: 170;
     -fx-pref-height: 40;
+}
+
+Button{
+    -fx-background-color: #3A69A5;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 2, 0, 0, 2);
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-pref-height: 40;
+    -fx-background-radius: 10;
+}
+
+#addProduct{
+    -fx-background-color: #d9873e;
+}
+
+#cash{
+    -fx-background-color: #949494;
+}
+
+#card{
+    -fx-background-color: #6e6e6e;
+}
+
+#delete{
+    -fx-background-color: #b94949;
+}
+
+#costBox{
+    -fx-background-color: #a8a8a8;
+    -fx-background-radius: 0 5 5 0;
+}
+
+#serviceProductBox{
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5 0 0 5;
 }
