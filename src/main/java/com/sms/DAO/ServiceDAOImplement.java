@@ -104,8 +104,7 @@ public class ServiceDAOImplement implements ServiceDAO {
         String sql = "DELETE FROM services WHERE serviceId = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
-        int result = ps.executeUpdate();
-        return result;
+        return ps.executeUpdate();
     }
 
     @Override

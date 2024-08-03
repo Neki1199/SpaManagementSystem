@@ -2,9 +2,6 @@ package com.sms.DAO;
 
 import com.sms.Models.Appointment;
 import com.sms.ConnectDB;
-import com.sms.Models.Client;
-import com.sms.Models.Employee;
-import com.sms.Models.Service;
 import javafx.scene.control.ListView;
 
 import java.sql.*;
@@ -12,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AptDAOImplement implements AppointmentDAO{
-
-    ClientDAO clientDAO = new ClientDAOImplement();
-    ServiceDAO serviceDAO = new ServiceDAOImplement();
-    EmployeeDAO employeeDAO = new EmpDAOImplement();
 
     @Override
     public Appointment get(int id) throws SQLException {

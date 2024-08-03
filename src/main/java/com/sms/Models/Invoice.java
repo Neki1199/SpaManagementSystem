@@ -1,58 +1,58 @@
 package com.sms.Models;
 
 public class Invoice {
-    private int invoiceId;
-    private int clientId;
-    private int services;
-    private int product;
-    private int amount;
+    private Integer invoiceId;
+    private Integer clientId;
+    private String orderDate;
+    private double totalCost;
+    private String paymentMethod;
 
-    public Invoice(int invoiceId, int clientId, int services, int product, int amount) {
+    public Invoice(Integer invoiceId, Integer clientId, String orderDate, double totalCost, String paymentMethod) {
         this.invoiceId = invoiceId;
         this.clientId = clientId;
-        this.services = services;
-        this.product = product;
-        this.amount = amount;
+        this.orderDate = orderDate;
+        this.totalCost = totalCost;
+        this.paymentMethod = paymentMethod;
     }
 
-    public int getInvoiceId() {
+    public Integer getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(int invoiceId) {
+    public void setInvoiceId(Integer invoiceId) {
         this.invoiceId = invoiceId;
     }
 
-    public int getClientId() {
+    public Integer getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
     }
 
-    public int getServices() {
-        return services;
+    public String getOrderDate() {
+        return orderDate;
     }
 
-    public void setServices(int services) {
-        this.services = services;
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public int getProduct() {
-        return product;
+    public double getTotalCost() {
+        return totalCost;
     }
 
-    public void setProduct(int product) {
-        this.product = product;
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
-    public int getAmount() {
-        return amount;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     @Override
@@ -60,10 +60,11 @@ public class Invoice {
         return "Invoice{" +
                 "invoiceId=" + invoiceId +
                 ", clientId=" + clientId +
-                ", services=" + services +
-                ", product=" + product +
-                ", amount=" + amount +
+                ", orderDate=" + orderDate +
+                ", totalCost=" + totalCost +
+                ", paymentMethod=" + paymentMethod +
                 '}';
     }
 }
+
 
