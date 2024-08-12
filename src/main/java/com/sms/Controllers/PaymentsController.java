@@ -1,5 +1,6 @@
 package com.sms.Controllers;
 
+
 import com.sms.DAO.*;
 import com.sms.Models.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,6 +41,9 @@ public class PaymentsController implements Initializable {
     private final EmployeeDAO employeeDAO = new EmpDAOImplement();
     private final ServiceDAO serviceDAO = new ServiceDAOImplement();
     private final InventoryDAO inventoryDAO = new InvDAOImplement();
+    private final InvoiceDAO invoiceDAO = new InvoiceDAOImplement();
+    private final InvoiceItemDAO invoiceItemDAO = new InvItemDAOImplement();
+    public DialogPane paymentCompletedPane;
 
     private List<Appointment> notPaidAppointments;
 
@@ -97,11 +101,89 @@ public class PaymentsController implements Initializable {
         addProductFinalBtn.setOnAction(event -> addProduct());
         addSpaFinalBtn.setOnAction(event -> addSpa());
         deleteProductBtn.setOnAction(event -> deleteServiceProduct());
+        cashPayBtn.setOnAction(event -> {
+            try {
+                cashPayProcess();
+                initializeColumns(today);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        cardPayBtn.setOnAction(event -> {
+            try {
+                cardPayProcess();
+                initializeColumns(today);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void cardPayProcess() throws SQLException {
+        Integer clientId = clientDAO.getClientByName(clientNameLbl.getText()).getId();
+        Invoice cardInvoice = new Invoice(null, clientId, String.valueOf(LocalDate.now()),
+                Double.parseDouble(totalCostLbl.getText()), "Card");
+        invoiceDAO.insert(cardInvoice);
+        // So that Invoices Controller knows when there is a change, and refresh the columns
+        creatInvoiceItems(cardInvoice);
+        paymentPane.setVisible(false);
+        clearPaymentPane();
+        NotifyAppointmentsChanges.decrementAppointmentCount();
+        NotifyAppointmentsChanges.incrementAppointmentCount();
+    }
+
+    private void cashPayProcess() throws SQLException {
+        Integer clientId = clientDAO.getClientByName(clientNameLbl.getText()).getId();
+        Invoice cashInvoice = new Invoice(null, clientId, String.valueOf(LocalDate.now()),
+                Double.parseDouble(totalCostLbl.getText()), "Cash");
+        invoiceDAO.insert(cashInvoice);
+        creatInvoiceItems(cashInvoice);
+        paymentPane.setVisible(false);
+        clearPaymentPane();
+        NotifyAppointmentsChanges.decrementAppointmentCount();
+        NotifyAppointmentsChanges.incrementAppointmentCount();
+    }
+
+    private void creatInvoiceItems(Invoice invoice) throws SQLException {
+        for(Node node : serviceProductBox.getChildren()){
+            if(node instanceof Label label){
+                String[] type = label.getText().split("- ");
+
+                if(type[0].equals("Product")){
+                    Inventory product = inventoryDAO.getProductByName(type[1]);
+                    createInvoiceItemProduct(invoice, product);
+                }else if(type[0].equals("Service")){
+                    Service service = serviceDAO.getServiceByName(type[1]);
+                    createInvoiceItemService(invoice, service);
+                }
+            }
+        }
+        changeAppointmentStatus();
+    }
+
+    private void createInvoiceItemService(Invoice invoice, Service service){
+        InvoiceItem invoiceItem = new InvoiceItem(invoice.getInvoiceId(), service.getName(), "Service", service.getId(),
+                1, service.getPrice());
+        try {
+            invoiceItemDAO.insert(invoiceItem);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createInvoiceItemProduct(Invoice invoice, Inventory product){
+        InvoiceItem invoiceItem = new InvoiceItem(invoice.getInvoiceId(), product.getName(), "Product", product.getId(),
+                1, product.getCost());
+        try {
+            invoiceItemDAO.insert(invoiceItem);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void initializeColumns(LocalDate today) throws SQLException {
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("clientId"));
-        // Get the names by using nested property value factories
+
         nameColumn.setCellValueFactory(cellData -> {
             try {
                 Client client = clientDAO.get(cellData.getValue().getClientId());
@@ -111,6 +193,7 @@ public class PaymentsController implements Initializable {
                 return new SimpleStringProperty("Unknown");
             }
         });
+
         employeeColumn.setCellValueFactory(cellData -> {
             try {
                 Employee employee = employeeDAO.get(cellData.getValue().getStaffId());
@@ -120,6 +203,7 @@ public class PaymentsController implements Initializable {
                 return new SimpleStringProperty("Unknown");
             }
         });
+
         serviceColumn.setCellValueFactory(cellData -> {
             try {
                 Service service = serviceDAO.get(cellData.getValue().getServiceId());
@@ -129,6 +213,7 @@ public class PaymentsController implements Initializable {
                 return new SimpleStringProperty("Unknown");
             }
         });
+
         loadAppointments(today);
     }
 
@@ -137,13 +222,11 @@ public class PaymentsController implements Initializable {
         paymentTable.getItems().clear();
         noAppointmentText.setVisible(false);
 
-        // get appointment with status not paid
         if (appointments.isEmpty()) {
             noAppointmentText.setVisible(true);
         } else {
             notPaidAppointments = appointmentDAO.getNotPaid(appointments);
             if (notPaidAppointments.isEmpty()) {
-                paymentTable.getItems().clear();
                 noAppointmentText.setVisible(true);
             } else {
                 ObservableList<Appointment> notPaidAppointmentsList = FXCollections.observableArrayList(notPaidAppointments);
@@ -180,7 +263,7 @@ public class PaymentsController implements Initializable {
         clientNameLbl.setText(clientDAO.get(appointment.getClientId()).getName());
         Service service = serviceDAO.get(appointment.getServiceId());
 
-        addLabelToBox(serviceProductBox, service.getName(), "300");
+        addLabelToBox(serviceProductBox, "Service- " + service.getName(), "300");
         addLabelToBox(costBox, String.valueOf(service.getPrice()), "100");
         updateTotalCost(service.getPrice());
     }
@@ -206,7 +289,7 @@ public class PaymentsController implements Initializable {
         String productToAdd = productsList.getSelectionModel().getSelectedItem();
         try {
             Inventory product = inventoryDAO.getProductByName(productToAdd);
-            addLabelToBox(serviceProductBox, product.getName(), "300");
+            addLabelToBox(serviceProductBox, "Product- " + product.getName(), "300");
             addLabelToBox(costBox, String.valueOf(product.getCost()), "100");
             updateTotalCost(product.getCost());
         } catch (SQLException e) {
@@ -221,7 +304,7 @@ public class PaymentsController implements Initializable {
         String spaToAdd = spaList.getSelectionModel().getSelectedItem();
         try {
             Service spaService = serviceDAO.getServiceByName(spaToAdd);
-            addLabelToBox(serviceProductBox, spaService.getName(), "300");
+            addLabelToBox(serviceProductBox,  "Service- " + spaService.getName(), "300");
             addLabelToBox(costBox, String.valueOf(spaService.getPrice()), "100");
             updateTotalCost(spaService.getPrice());
         } catch (SQLException e) {
@@ -243,6 +326,19 @@ public class PaymentsController implements Initializable {
             List<Service> spaServices = serviceDAO.getServiceByType("Spa");
             for(Service service : spaServices) {
                 spaList.getItems().add(service.getName());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void changeAppointmentStatus(){
+        Appointment appointment = paymentTable.getSelectionModel().getSelectedItem();
+        try {
+            List<Appointment> clientAppointments = checkClientAppointments(appointment.getClientId(), notPaidAppointments);
+            for (Appointment clientAppointment : clientAppointments) {
+                clientAppointment.setStatus("Paid");
+                appointmentDAO.update(clientAppointment);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

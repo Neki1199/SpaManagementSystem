@@ -37,7 +37,11 @@ public class ServicesController extends Node implements Initializable {
         initializeChoiceBoxes();
         initializeEventHandlers();
         initializeColumns();
-        loadInitialServices();
+        try {
+            loadAllServices();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initializeChoiceBoxes() {
@@ -65,14 +69,6 @@ public class ServicesController extends Node implements Initializable {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         serviceTypeColumn.setCellValueFactory(new PropertyValueFactory<>("serviceType"));
         staffTypeColumn.setCellValueFactory(new PropertyValueFactory<>("staffType"));
-    }
-
-    private void loadInitialServices() {
-        try {
-            loadAllServices();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void loadServicesByType(String serviceType) {

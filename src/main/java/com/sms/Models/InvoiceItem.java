@@ -2,13 +2,15 @@ package com.sms.Models;
 
 public class InvoiceItem {
     private Integer invoiceId;
+    private String itemName;
     private String itemType;
     private Integer itemId;
     private int quantity;
     private double itemPrice;
 
-    public InvoiceItem(Integer invoiceId, String itemType, Integer itemId, int quantity, double itemPrice) {
+    public InvoiceItem(Integer invoiceId, String itemName, String itemType, Integer itemId, int quantity, double itemPrice) {
         this.invoiceId = invoiceId;
+        this.itemName = itemName;
         this.itemType = itemType;
         this.itemId = itemId;
         this.quantity = quantity;
@@ -55,10 +57,20 @@ public class InvoiceItem {
         this.itemPrice = itemPrice;
     }
 
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     @Override
     public String toString() {
         return "InvoiceItem{" +
                 "invoiceId=" + invoiceId +
+                ", itemName='" + itemName + '\'' +
                 ", itemType='" + itemType + '\'' +
                 ", itemId=" + itemId +
                 ", quantity=" + quantity +

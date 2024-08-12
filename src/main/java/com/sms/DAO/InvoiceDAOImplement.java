@@ -1,6 +1,7 @@
 package com.sms.DAO;
 
 import com.sms.ConnectDB;
+import com.sms.Models.Client;
 import com.sms.Models.Invoice;
 import javafx.scene.control.ListView;
 
@@ -109,5 +110,25 @@ public class InvoiceDAOImplement implements InvoiceDAO {
             String invoiceId = String.valueOf(rs.getInt("invoiceId"));
             list.getItems().add(invoiceId);
         }
+    }
+
+    @Override
+    public List<Invoice> getByClient(Integer clientID) throws SQLException{
+        Connection con = ConnectDB.getConnection();
+        List<Invoice> invoiceList =  new ArrayList<Invoice>();
+        String sql = "SELECT * FROM invoices WHERE clientId = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, clientID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Integer invoiceId = rs.getInt("invoiceId");
+            Integer clientId = rs.getInt("clientId");
+            String orderDate = rs.getString("orderDate");
+            double total = rs.getDouble("totalCost");
+            String paymentMethod = rs.getString("paymentMethod");
+            Invoice invoice = new Invoice(invoiceId, clientId, orderDate, total, paymentMethod);
+            invoiceList.add(invoice);
+        }
+        return invoiceList;
     }
 }
